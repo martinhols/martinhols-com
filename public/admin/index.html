@@ -181,7 +181,10 @@ function enc(i,max,type='image/jpeg',q=.86){return new Promise((res,rej)=>{const
 const progress=(pct,t)=>{S.msg=t;const x=$('#msg');if(!x)return;x.className='msg';x.style.display='block';x.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;margin-bottom:8px"><span>${esc(t)}</span><b>${Math.round(pct)}%</b></div><div class="bar" style="background:#ffffff26;height:8px"><i style="width:${pct}%;transition:width .25s"></i></div>`};
 const metaKey=n=>String(n||'').toLowerCase().replace(/\.[^.]+$/,'');
 const getMeta=()=>{try{return JSON.parse(localStorage.getItem('photoMeta')||'{}')}catch(e){return{}}};
-function importMeta(txt){const a=JSON.parse(txt);if(!Array.isArray(a))throw new Error('Expected a list');const m=getMeta();a.forEach(x=>{if(x.original)m[metaKey(x.original)]=x});try{localStorage.setItem('photoMeta',JSON.stringify(m))}catch(e){}return a.length}
+function dHash(im){const st=(i,w,h)=>{const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.imageSmoothingQuality='high';x.drawImage(i,0,0,w,h);return c};const p=st(st(im,340,320),17,16).getContext('2d').getImageData(0,0,17,16).data;let b='';for(let y=0;y<16;y++)for(let x=0;x<16;x++){const l=i=>.299*p[i]+.587*p[i+1]+.114*p[i+2];b+=l((y*17+x)*4)>l((y*17+x+1)*4)?'1':'0'}return BigInt('0b'+b).toString(16).padStart(64,'0')}
+const hamm=(a,c)=>{let v=BigInt('0x'+a)^BigInt('0x'+c),n=0;while(v){n+=Number(v&1n);v>>=1n}return n};
+function findMeta(f,im){const m=getMeta(),k=metaKey(f.name);if(m[k])return m[k];let h;try{h=dHash(im)}catch(e){return null}let best=null,bd=65;Object.keys(m).forEach(q=>{if(q[0]!=='#')return;const d=hamm(h,q.slice(1));if(d<bd){bd=d;best=m[q]}});return best}
+function importMeta(txt){const a=JSON.parse(txt);if(!Array.isArray(a))throw new Error('Expected a list');const m=getMeta();a.forEach(x=>{if(x.hash)m['#'+x.hash]=x;if(x.original)m[metaKey(x.original)]=x});try{localStorage.setItem('photoMeta',JSON.stringify(m))}catch(e){}return a.length}
 async function uploadFiles(files,toProject){
  files=[...files].filter(f=>f.type.startsWith('image/'));if(!files.length)return;
  if(toProject){if(!S.proj?.id){const ok=await saveProject(true);if(!ok)return}if(S.photos.length+files.length>24)return say('Up to 24 photos per project.',1)}
