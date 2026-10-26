@@ -552,3 +552,5 @@ body.menu-open{overflow:hidden}
 .next li b{font-weight:600;color:var(--ink)}
 .company{margin-top:8px;padding-top:20px;border-top:1px solid var(--line)}
 @media (max-width:1099px){.next{margin-top:28px}.next li{padding:14px 0}.next li p{font-size:17px;line-height:25px}}
+
+.fld input:-webkit-autofill,.fld textarea:-webkit-autofill{-webkit-box-shadow:0 0 0 100px #082A43 inset;-webkit-text-fill-color:var(--ink);caret-color:var(--ink);transition:background-color 9999s}

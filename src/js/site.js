@@ -36,9 +36,9 @@
       var data = {}; new FormData(f).forEach(function (v, k) { data[k] = v; });
       btn.disabled = true;
       fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-        .then(function (r) { if (!r.ok) throw new Error('send failed'); return r.json(); })
+        .then(function (r) { if (!r.ok) return r.json().catch(function () { return {}; }).then(function (j) { var e = new Error('send failed'); e.info = (j.error || r.status) + (j.detail ? ': ' + j.detail : ''); throw e; }); return r.json(); })
         .then(function () { f.reset(); say('Thank you. I received your request and usually reply the same day.', 'ok'); })
-        .catch(function () { say('Sorry, sending failed. Please email me directly at martin@thearrows.nl.', 'err'); })
+        .catch(function (e) { say('Sorry, sending failed. Please email me directly at martin@thearrows.nl.' + (e && e.info ? ' (' + e.info + ')' : ''), 'err'); })
         .then(function () { btn.disabled = false; });
     });
   }

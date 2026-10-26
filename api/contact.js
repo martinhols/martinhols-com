@@ -29,6 +29,6 @@ export default async function handler(req, res) {
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({ from, to: to.split(',').map((s) => s.trim()), reply_to: email, subject: `Quote request: ${clean(b.type, 60) || 'event'} — ${name}`, html, text }),
   });
-  if (!r.ok) return res.status(502).json({ ok: false, error: 'send' });
+  if (!r.ok) { let d = ''; try { d = (await r.json()).message || ''; } catch {} return res.status(502).json({ ok: false, error: 'send', detail: `${r.status} ${d}`.slice(0, 300) }); }
   return res.status(200).json({ ok: true });
 }
