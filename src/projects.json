@@ -1,0 +1,10 @@
+[
+ {"slug":"mysteryland-2025","cat":"festivals","title":"Mysteryland","file":"portfolio/mysteryland-sunset-stone-hand-stage.jpg","pos":"50% 45%","alt":"Mysteryland main stage at sunset, a giant stone hand holding the DJ booth","href":"/projects/mysteryland-2025"},
+ {"slug":"defqon1","cat":"festivals","title":"Defqon.1","file":"portfolio/defqon1-main-stage-daylight.jpg","pos":"50% 40%","alt":"Defqon.1 main stage in daylight","href":"/portfolio/festivals"},
+ {"slug":"f1-las-vegas","cat":"sport","title":"F1 Las Vegas Grand Prix","file":"portfolio/f1-las-vegas-grandstand-sphere.jpg","pos":"50% 50%","alt":"Grandstand crowd at the Formula 1 Las Vegas Grand Prix with the Sphere in the background","href":"/portfolio/sport"},
+ {"slug":"live-show","cat":"shows-music","title":"Live show","file":"portfolio/live-show-flame-jets-video-screen.jpg","pos":"50% 50%","alt":"Flame jets in front of a giant video screen during a live show","href":"/portfolio/shows-music"},
+ {"slug":"tomorrowland","cat":"festivals","title":"Tomorrowland","file":"portfolio/tomorrowland-stage-fireworks-crowd.jpg","pos":"50% 50%","alt":"Tomorrowland mainstage with fireworks over a packed crowd at night","href":"/portfolio/festivals"},
+ {"slug":"corporate-event","cat":"corporate","title":"Corporate event","file":"portfolio/corporate-event-circular-auditorium.jpg","pos":"50% 50%","alt":"Corporate event in a circular auditorium","href":"/portfolio/corporate"},
+ {"slug":"handball","cat":"sport","title":"Handball","file":"portfolio/handball-match-arena-crowd.jpg","pos":"50% 50%","alt":"Handball match in a packed arena","href":"/portfolio/sport"},
+ {"slug":"defqon1-dj-sets","cat":"shows-music","title":"Defqon.1 · DJ sets","file":"portfolio/defqon1-dj-circular-led-booth.jpg","pos":"50% 50%","alt":"DJ with raised arms inside a circular LED stage at Defqon.1","href":"/portfolio/shows-music"}
+]
