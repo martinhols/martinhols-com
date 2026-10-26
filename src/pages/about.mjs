@@ -19,6 +19,9 @@ const logos = [
   ['logo-concert-at-sea.png', 'Concert at SEA', ''],
   ['logo-agents-after-all.png', 'Agents After All', ''],
   ['logo-7th-sunday-festival.png', '7th Sunday Festival', ''],
+  ['logo-sendcloud.png', 'Sendcloud', ''],
+  ['logo-google.png', 'Google', ''],
+  ['logo-bakertilly.png', 'Baker Tilly', ''],
 ];
 
 const facts = [
