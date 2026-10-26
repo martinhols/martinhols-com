@@ -13,6 +13,12 @@ const logos = [
   ['logo-hema.png', 'HEMA', ''],
   ['logo-bynder.png', 'Bynder', ''],
   ['logo-as-watson.png', 'AS Watson', ''],
+  ['logo-pinkpop.png', 'Pinkpop', ''],
+  ['logo-down-the-rabbit-hole.png', 'Down The Rabbit Hole', ''],
+  ['logo-zwarte-cross.png', 'Zwarte Cross', ''],
+  ['logo-concert-at-sea.png', 'Concert at SEA', ''],
+  ['logo-agents-after-all.png', 'Agents After All', ''],
+  ['logo-7th-sunday-festival.png', '7th Sunday Festival', ''],
 ];
 
 const facts = [
