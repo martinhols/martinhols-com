@@ -97,10 +97,10 @@ img{max-width:100%}
 .projects{padding:48px}
 .projects .hd{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;min-height:90px}
 .projects h2{font:300 44px/52px var(--font-display);letter-spacing:-.01em;margin-top:10px}
-.pgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:32px}
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:32px}
 .pc{text-decoration:none;color:var(--ink);display:block}
-.pc img{width:100%;height:300px;object-fit:cover;display:block;border-radius:var(--radius-md)}
-.pc .k{margin-top:20px}.pc .tt{margin-top:8px;font:500 20px/28px var(--font-display)}
+.pc img{width:100%;height:280px;object-fit:cover;display:block;border-radius:var(--radius-md)}
+.pc .k{margin-top:20px}.pc .tt{margin-top:8px;font:500 22px/30px var(--font-display)}
 .pc:hover .tt{color:var(--accent-text)}
 .car{display:none}
 

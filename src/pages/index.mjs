@@ -15,13 +15,7 @@ const slides0 = [
 const chosen = heroPhotos();
 const slides = chosen.length ? chosen : slides0;
 
-const ORDER = ['festivals', 'corporate', 'sport', 'shows-music'];
-const pinned = PROJECTS.filter((p) => p.db && p.db.pinned);
-const pick = [];
-ORDER.forEach((c) => { const f = pinned.find((p) => p.cat === c); if (f) pick.push(f); });
-pinned.forEach((p) => { if (pick.length < 4 && !pick.includes(p)) pick.push(p); });
-const featured = pick.length ? pick : PROJECTS.slice(0, 4);
-const projects = featured.map((p) => ({ cat: CATS[p.cat], title: p.title, file: p.file, pos: p.pos, alt: p.alt, href: p.href }));
+const projects = PROJECTS.slice(0, 3).map((p) => ({ cat: CATS[p.cat], title: p.title, file: p.file, pos: p.pos, alt: p.alt, href: p.href }));
 
 const cats0 = [
   { n: '01', name: 'Festivals', slug: 'festivals', file: 'tomorrowland-mainstage-fireworks.jpg', pos: '50% 40%', alt: 'Festivals' },
@@ -125,7 +119,7 @@ export const page = {
 
   <section class="panel projects" aria-labelledby="projects-h">
     <div class="hd">
-      <div><p class="t-eyebrow acc">Projects</p><h2 id="projects-h">Highlighted projects</h2></div>
+      <div><p class="t-eyebrow acc">Projects</p><h2 id="projects-h">Latest projects</h2></div>
       <a class="btn btn-p" href="/projects">All projects <span class="ic">${ARROW16}</span></a>
     </div>
     <div class="pgrid">
