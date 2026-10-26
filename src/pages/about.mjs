@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { SITE } from '../site.mjs';
 import { img, header, contactSection, footer, ARROW16, ICONS } from '../layout.mjs';
 
@@ -76,6 +77,9 @@ const specs = [
   ['Super fast delivery', 'An event moves fast, and so does its story online. That’s why I deliver high-quality, fully edited images during the event itself, so your team can share them while everyone is still talking about the night. The rest follows within 24 hours.', 'f1-las-vegas-grand-prix.jpg', '30% 40%', 'Performer at the Formula 1 Las Vegas Grand Prix'],
 ];
 
+const sizesJ = JSON.parse(fs.readFileSync(new URL('../img/sizes.json', import.meta.url)));
+const logoCell = ([f, a]) => { const [w, h] = sizesJ[f] || [100, 40]; const k = Math.min(40 / h, 92 / w); return `<div><span class="lg" role="img" aria-label="${a.replace(/&/g, '&amp;')}" style="--u:url(/img/${f});width:${Math.round(w * k)}px;height:${Math.round(h * k)}px"></span></div>`; };
+const logoGrid = `<div class="ah-logos" aria-label="Events and brands I’ve worked for">${logos.slice(0, 24).map(logoCell).join('')}</div>`;
 const e = (s) => s.replace(/&/g, '&amp;');
 const btns = `<a class="btn btn-p" href="/contact">Request a quote <span class="ic">${ARROW16}</span></a><a class="btn btn-o plain" href="/portfolio">View portfolio</a>`;
 const mbtns = `<a class="m-btn p" href="/contact">Request a quote <span class="ic">${ARROW16}</span></a><a class="m-btn l" href="/portfolio">View portfolio <span class="ic">${ARROW16}</span></a>`;
@@ -112,6 +116,7 @@ export const page = {
       <h1>Over 2,000 events. One photographer who knows how they run.</h1>
       <p class="lead">Brands such as Albert Heijn, Tomorrowland and Formula 1 trust me to represent them at their events.</p>
       <div class="ah-btns d-btns">${btns}</div>
+      ${logoGrid}
       <div class="stats ah-stats">${stat(SITE.events, 'events shot')}${stat(SITE.years, 'years in the field')}</div>
       <div class="m-btns">${mbtns}</div>
     </div>
@@ -125,11 +130,6 @@ export const page = {
       <div><p class="nm">Martin Hols</p><p class="t-eyebrow">Event photographer</p></div>
     </div>
   </header>
-
-  <section class="cream trusted lgrid" data-theme="cream" aria-labelledby="lg-h">
-    <p class="t-eyebrow dim" id="lg-h">Events and brands I’ve worked for</p>
-    <div class="logos logos24">${Array.from({ length: 24 }, (_, i) => logos[i] ? `<div>${img(logos[i][0], logos[i][1], { style: logos[i][2] })}</div>` : '<div class="empty" aria-hidden="true"></div>').join('')}</div>
-  </section>
 
   <section class="intro cream" data-theme="cream" aria-labelledby="intro-h">
     <div class="ph">
