@@ -1,4 +1,5 @@
 import { SITE } from '../site.mjs';
+import { PROJECTS, CATS } from './projects.mjs';
 import { img, header, contactSection, footer, ARROW, ARROW16, ICONS } from '../layout.mjs';
 
 const slides = [
@@ -10,11 +11,7 @@ const slides = [
   { file: 'defqon1-pyro-show.jpg', name: 'Defqon.1', pos: '50% 50%', alt: 'Pyro show on the Defqon.1 stage' },
 ];
 
-const projects = [
-  { cat: 'Festivals', title: 'Tomorrowland · Mainstage', file: 'tomorrowland-mainstage-fireworks.jpg', pos: '50% 40%', alt: 'Tomorrowland mainstage' },
-  { cat: 'Sport', title: 'Project title', file: 'handball-match-arena.jpg', pos: '50% 50%', alt: 'Handball match in a packed arena' },
-  { cat: 'Shows / Music', title: 'Project title', file: 'singer-blue-light-show.jpg', pos: '62% 35%', alt: 'Singer on stage under blue light' },
-];
+const projects = PROJECTS.slice(0, 3).map((p) => ({ cat: CATS[p.cat], title: p.title, file: p.file, pos: p.pos, alt: p.alt, href: p.href }));
 
 const cats = [
   { n: '01', name: 'Festivals', slug: 'festivals', file: 'tomorrowland-mainstage-fireworks.jpg', pos: '50% 40%', alt: 'Festivals' },
@@ -31,7 +28,7 @@ const logos = [
   ['logo-formula-1.png', 'Formula 1', 'width:147px;height:64px'],
 ];
 
-const projCard = (p, aria = false) => `<a class="pj" href="/projects"${aria ? ' aria-hidden="true" tabindex="-1"' : ''}>${img(p.file, aria ? '' : p.alt, { style: `object-position:${p.pos}` })}<p class="t-eyebrow acc k">${p.cat}</p><p class="tt">${p.title}</p></a>`;
+const projCard = (p, aria = false) => `<a class="pj" href="${p.href}"${aria ? ' aria-hidden="true" tabindex="-1"' : ''}>${img(p.file, aria ? '' : p.alt, { style: `object-position:${p.pos}` })}<p class="t-eyebrow acc k">${p.cat}</p><p class="tt">${p.title}</p></a>`;
 
 export const page = {
   path: '/',
@@ -120,7 +117,7 @@ export const page = {
       <a class="btn btn-p" href="/projects">All projects <span class="ic">${ARROW16}</span></a>
     </div>
     <div class="pgrid">
-      ${projects.map((p) => `<a class="pc" href="/projects">${img(p.file, p.alt, { style: `object-position:${p.pos}` })}<p class="t-eyebrow acc k">${p.cat}</p><p class="tt">${p.title}</p></a>`).join('')}
+      ${projects.map((p) => `<a class="pc" href="${p.href}">${img(p.file, p.alt, { style: `object-position:${p.pos}` })}<p class="t-eyebrow acc k">${p.cat}</p><p class="tt">${p.title}</p></a>`).join('')}
     </div>
     <div class="car"><div class="cartrack">${projects.map((p) => projCard(p)).join('')}${projects.map((p) => projCard(p, true)).join('')}</div></div>
     <a class="m-btn p btn-m" href="/projects" style="margin-top:20px">All projects <span class="ic">${ARROW16}</span></a>

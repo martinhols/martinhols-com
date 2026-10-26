@@ -6,8 +6,8 @@ import { esc, img, header, contactSection, footer, ARROW, ARROW16 } from '../lay
 const STATIC = JSON.parse(readFileSync(new URL('../projects.json', import.meta.url)));
 const fromDb = dbProjects.filter((d) => d.hero_url).map((d) => ({ slug: d.slug, cat: d.category, title: d.title, file: d.hero_url, pos: '50% 50%', alt: `${d.title}, event photography by Martin Hols`, href: `/projects/${d.slug}`, db: d }));
 const dbSlugs = new Set(fromDb.map((p) => p.slug));
-const PROJECTS = [...fromDb, ...STATIC.filter((p) => !dbSlugs.has(p.slug))];
-const CATS = Object.fromEntries(SITE.categories.map((c) => [c.slug, c.name]));
+export const PROJECTS = [...fromDb, ...STATIC.filter((p) => !dbSlugs.has(p.slug))];
+export const CATS = Object.fromEntries(SITE.categories.map((c) => [c.slug, c.name]));
 
 const card = (p, cls = 'prc') => `<a class="${cls}" data-c="${p.cat}" href="${p.href}"><span class="im">${img(p.file, p.alt, { style: `object-position:${p.pos}` })}</span><span class="tx"><span class="tt"><span class="ce">${CATS[p.cat]}</span><span class="nm">${esc(p.title)}</span></span><span class="rb">${ARROW}</span></span></a>`;
 
