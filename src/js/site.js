@@ -125,8 +125,6 @@
   function tick() { if (ready(i + 1)) { show(i + 1); play(); } else { timer = setTimeout(tick, 300); } }
   function play() { stop(); if (!reduce) timer = setTimeout(tick, 4000); }
   function stop() { if (timer) { clearTimeout(timer); timer = null; } }
-  s.addEventListener('mouseenter', function () { s.classList.add('paused'); stop(); });
-  s.addEventListener('mouseleave', function () { s.classList.remove('paused'); show(i); play(); });
   s.addEventListener('focusin', function () { s.classList.add('paused'); stop(); });
   s.addEventListener('focusout', function () { s.classList.remove('paused'); play(); });
   if (reduce) { s.querySelector('.s-count').style.display = 'none'; }
