@@ -20,6 +20,7 @@ export function img(file, alt, opts = {}) {
   const [w, h] = (L ? [L.w, L.h] : !remote && sizes[file]) || [];
   const a = [`src="${L ? (opts.thumb ? L.thumb : L.src) : remote ? file : '/img/' + file}"`, `alt="${esc(alt)}"`];
   if (w) a.push(`width="${w}"`, `height="${h}"`);
+  if (L && L.srcset) a.push(`srcset="${L.srcset}"`, `sizes="${opts.sizes || (opts.priority ? '100vw' : opts.thumb ? '(min-width:1100px) 25vw, 50vw' : '(min-width:1100px) 50vw, 100vw')}"`);
   if (opts.cls) a.push(`class="${opts.cls}"`);
   if (opts.style) a.push(`style="${opts.style}"`);
   if (opts.priority) a.push('fetchpriority="high"');

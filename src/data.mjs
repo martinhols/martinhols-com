@@ -44,7 +44,11 @@ async function localize(dist, urls, dims) {
         let thumb = `/img/db/${base}.jpg`;
         try { await download(url.replace(/\.jpg$/, '-s.jpg'), path.join(dir, base + '-s.jpg')); thumb = `/img/db/${base}-s.jpg`; } catch {}
         const [w, h] = dims[url] || [];
-        localMap[url] = { src: `/img/db/${base}.jpg`, thumb, w, h };
+        const set = [];
+        for (const wd of [640, 1280, 2400]) {
+          try { await download(url.replace(/\.jpg$/, `-${wd}.webp`), path.join(dir, `${base}-${wd}.webp`)); set.push(`/img/db/${base}-${wd}.webp ${wd}w`); } catch {}
+        }
+        localMap[url] = { src: `/img/db/${base}.jpg`, thumb, w, h, srcset: set.length ? set.join(', ') : '' };
       } catch (e) { console.warn('[data] foto overgeslagen:', e.message); }
     }
   };
