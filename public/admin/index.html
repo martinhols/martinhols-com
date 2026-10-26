@@ -179,13 +179,16 @@ async function dbPhoto(id,patch){const{data,error}=await sb.from('photos').updat
 function loadImg(file){return new Promise((res,rej)=>{const i=new Image,u=URL.createObjectURL(file);i.onload=()=>{res(i)};i.onerror=()=>rej(new Error('Not a valid image'));i.src=u})}
 function enc(i,max,type='image/jpeg',q=.86){return new Promise((res,rej)=>{const k=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);c.toBlob(b=>b?res({b,w:c.width,h:c.height}):rej(new Error('resize')),type,q)})}
 const progress=(pct,t)=>{S.msg=t;const x=$('#msg');if(!x)return;x.className='msg';x.style.display='block';x.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;margin-bottom:8px"><span>${esc(t)}</span><b>${Math.round(pct)}%</b></div><div class="bar" style="background:#ffffff26;height:8px"><i style="width:${pct}%;transition:width .25s"></i></div>`};
+const metaKey=n=>String(n||'').toLowerCase().replace(/\.[^.]+$/,'');
+const getMeta=()=>{try{return JSON.parse(localStorage.getItem('photoMeta')||'{}')}catch(e){return{}}};
+function importMeta(txt){const a=JSON.parse(txt);if(!Array.isArray(a))throw new Error('Expected a list');const m=getMeta();a.forEach(x=>{if(x.original)m[metaKey(x.original)]=x});try{localStorage.setItem('photoMeta',JSON.stringify(m))}catch(e){}return a.length}
 async function uploadFiles(files,toProject){
  files=[...files].filter(f=>f.type.startsWith('image/'));if(!files.length)return;
  if(toProject){if(!S.proj?.id){const ok=await saveProject(true);if(!ok)return}if(S.photos.length+files.length>24)return say('Up to 24 photos per project.',1)}
  const N=files.length,fails=[];let n=0;
  for(const f of files){n++;const at=(k,t)=>progress(((n-1)+k)/N*100,`Photo ${n} of ${N} · ${t}`);
   try{at(0,'reading '+f.name);const im=await loadImg(f);at(.1,'making the large version');const {b,w,h}=await enc(im,2400);
-   const base=slug([toProject?S.proj.slug:'',cleanN(f.name)].filter(Boolean).join('-'))||'photo';const file=base+'.jpg';
+   const MT=toProject?null:getMeta()[metaKey(f.name)];const base=(MT&&MT.file&&slug(cleanN(MT.file)))||slug([toProject?S.proj.slug:'',cleanN(f.name)].filter(Boolean).join('-'))||'photo';const file=base+'.jpg';
    const path=`${toProject?S.proj.slug:'single'}/${Date.now()}-${file}`;
    const put=async(p,blob,type)=>{const r=await sb.storage.from('photos').upload(p,blob,{contentType:type});if(r.error)throw r.error};
    at(.25,'making smaller versions');
@@ -195,6 +198,7 @@ async function uploadFiles(files,toProject){
    at(.95,'saving');const url=sb.storage.from('photos').getPublicUrl(path).data.publicUrl,P=S.proj;
    const row={file,url,width:w,height:h,bytes:b.size};
    if(toProject){row.project_id=P.id;row.event=P.event_name||null;row.year=P.event_date?+P.event_date.slice(0,4):null;row.city=P.location||null;row.categories=P.categories||[];row.taken_on=P.event_date||null}
+   if(MT){['alt','caption','event','year','city','taken_on'].forEach(k=>{if(MT[k]!=null&&MT[k]!=='')row[k]=MT[k]});if(Array.isArray(MT.categories))row.categories=MT.categories.filter(k=>CN[k]);if(Array.isArray(MT.subjects))row.subjects=MT.subjects;if(MT.portfolio)row.portfolio=true;if(MT.top){row.top=true;row.portfolio=true}}
    const{data,error}=await sb.from('photos').insert(row).select().single();if(error)throw error;S.all.push(data);URL.revokeObjectURL(im.src)
   }catch(e){fails.push(`${f.name}: ${e.message||e}`)}}
  S.photos=S.proj?S.all.filter(x=>x.project_id===S.proj.id):[];S.singles=S.all.filter(x=>!x.project_id);
@@ -262,6 +266,7 @@ function vSingle(){const L=S.singles,p=L[S.ss]||L[0],need=L.filter(x=>!(x.alt||'
  const ck=p?[[(p.alt||'').trim(),'Alt text','Describes what is visible'],[p.file&&p.file===slug(cleanN(p.file))+'.jpg','File name','Descriptive and lowercase'],[p.event&&p.year,'Event and year',[p.event,p.year].filter(Boolean).join(' · ')||'Still empty'],[p.city,'City and country',p.city||'Still empty'],[(p.categories||[]).length,'Categories',(p.categories||[]).map(k=>CN[k]).join(', ')||'Still empty']]:[];
  app.innerHTML=head('Add photos.',`<button class="btn o" data-act="draft">Save draft</button>${btnPub('Publish','site')}`)+`
 <div class="sgrid"><aside><button class="drop" data-drop="single"><span class="ic">${I.up}</span><b>Drop photos here</b><span>One or many. Each gets its own details.</span></button>
+<button class="btn o" data-act="impmeta" style="margin-top:12px;width:100%">Import descriptions (${Object.keys(getMeta()).length} ready)</button><input type="file" id="metaIn" accept=".json,application/json" hidden>
 <div class="row" style="margin:24px 0 8px"><span class="lb">${L.length} photos</span><span class="cnt warn">${need} need alt text</span></div>
 <div class="plist">${L.map((x,i)=>`<button class="lr ${x===p?'on':''}" data-ss="${i}"><span class="t"><img class="imgc" src="${esc(x.url)}" alt=""></span><span><span class="n">${esc(x.file)}</span><span class="m"><span class="st ${(x.alt||'').trim()?'ok':'no'}"></span>${(x.alt||'').trim()?'Ready':'Needs alt text'}</span></span></button>`).join('')}</div>
 ${p?`<div class="where" style="margin-top:24px"><p class="eyebrow" style="color:var(--accent-text)">Checks · photo ${L.indexOf(p)+1}</p><h3 style="font:400 30px/38px var(--font-display);margin:8px 0">${ck.filter(x=>x[0]).length} of 5 done</h3><ul class="ck">${ck.map(([y,t,s])=>`<li><span class="o ${y?'y':''}">${I.chk}</span><span>${t}<small>${esc(s)}</small></span></li>`).join('')}</ul></div>`:''}</aside>
@@ -322,9 +327,11 @@ function bind(){
   else if(a==='site')await publishSite();
   else if(a==='sugall'){for(const p of S.photos.filter(x=>(x.slot||x.portfolio)&&!(x.alt||'').trim()))await dbPhoto(p.id,{alt:suggest(p)});show()}
   else if(a==='savephoto'||a==='savenext'){const p=S.singles[S.ss],o=readSingle();await dbPhoto(p.id,o);say('Photo saved.');if(a==='savenext')S.ss=Math.min(S.ss+1,S.singles.length-1);show()}
+  else if(a==='impmeta'){$('#metaIn').click()}
   else if(a==='delphoto'){const p=S.singles[S.ss];if(!confirm('Delete this photo?'))return;await sb.from('photos').delete().eq('id',p.id);await loadAll();S.ss=0;show()}
  }catch(x){say(x.message||String(x),1)}});
 }
+document.addEventListener('change',async e=>{if(e.target.id!=='metaIn')return;try{const f=e.target.files[0];if(!f)return;const n=importMeta(await f.text());say(n+' descriptions loaded. Now drop the matching photos.');show()}catch(x){say('Import failed: '+x.message,1)}});
 $('#fileIn').onchange=e=>{uploadFiles(e.target.files,e.target.dataset.t==='project');e.target.value=''};
 init();
 </script>
