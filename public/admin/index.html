@@ -205,9 +205,9 @@ async function uploadFiles(files,toProject){
    for(const wd of [640,1280,2400]){if(wd>Math.max(im.width,im.height)&&wd!==640)continue;const v=await enc(im,wd,'image/webp',.8);if(v.b.type!=='image/webp')break;jobs.push([path.replace(/\.jpg$/,'-'+wd+'.webp'),v.b,'image/webp'])}
    let done=0;at(.5,'uploading');await Promise.all(jobs.map(([p,bl,t])=>put(p,bl,t).then(()=>{done++;at(.5+.45*done/jobs.length,`uploading (${done}/${jobs.length} files)`)})));
    at(.95,'saving');const url=sb.storage.from('photos').getPublicUrl(path).data.publicUrl,P=S.proj;
-   const row={file,url,width:w,height:h,bytes:b.size,marked:true};
+   const row={file,url,width:w,height:h,bytes:b.size,marked:false,portfolio:false,top:false};
    if(toProject){row.project_id=P.id;row.event=P.event_name||null;row.year=P.event_date?+P.event_date.slice(0,4):null;row.city=P.location||null;row.categories=P.categories||[];row.taken_on=P.event_date||null}
-   if(MT){['alt','caption','event','year','city','taken_on'].forEach(k=>{if(MT[k]!=null&&MT[k]!=='')row[k]=MT[k]});if(Array.isArray(MT.categories))row.categories=MT.categories.filter(k=>CN[k]);if(Array.isArray(MT.subjects))row.subjects=MT.subjects;if(MT.portfolio)row.portfolio=true;if(MT.top){row.top=true;row.portfolio=true}}
+   if(MT){['alt','caption','event','year','city','taken_on'].forEach(k=>{if(MT[k]!=null&&MT[k]!=='')row[k]=MT[k]});if(Array.isArray(MT.categories))row.categories=MT.categories.filter(k=>CN[k]);if(Array.isArray(MT.subjects))row.subjects=MT.subjects;}
    const{data,error}=await sb.from('photos').insert(row).select().single();if(error)throw error;S.all.push(data);URL.revokeObjectURL(im.src)
   }catch(e){fails.push(`${f.name}: ${e.message||e}`)}}
  S.photos=S.proj?S.all.filter(x=>x.project_id===S.proj.id):[];S.singles=S.all.filter(x=>!x.project_id);
