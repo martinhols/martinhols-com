@@ -24,11 +24,12 @@ if (fs.existsSync(path.join(root, 'public'))) fs.cpSync(path.join(root, 'public'
 const pages = [];
 for (const f of fs.readdirSync(path.join(root, 'src/pages')).filter((x) => x.endsWith('.mjs')).sort()) {
   const mod = await import(pathToFileURL(path.join(root, 'src/pages', f)).href);
-  const p = mod.page;
-  const out = p.path === '/' ? 'index.html' : p.path.replace(/^\//, '') + '/index.html';
-  fs.mkdirSync(path.dirname(path.join(dist, out)), { recursive: true });
-  fs.writeFileSync(path.join(dist, out), layout(p));
-  pages.push(p);
+  for (const p of mod.pages || [mod.page]) {
+    const out = p.path === '/' ? 'index.html' : p.path.replace(/^\//, '') + '/index.html';
+    fs.mkdirSync(path.dirname(path.join(dist, out)), { recursive: true });
+    fs.writeFileSync(path.join(dist, out), layout(p));
+    pages.push(p);
+  }
 }
 
 // sitemap + robots

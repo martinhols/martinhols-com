@@ -87,7 +87,7 @@ export const page = {
   ],
   body: `
   <header class="panel hero ah" id="main">
-    ${header('about')}
+    ${header('/about')}
     <div class="hero-main">
       <p class="t-eyebrow acc">Meet your photographer</p>
       <h1>Over 2,000 events. One photographer who knows how they run.</h1>

@@ -43,6 +43,50 @@
     });
   }
 
+  // Portfolio: filter en lightbox
+  var gal = document.querySelector('[data-gallery]');
+  if (gal) {
+    var tiles = Array.prototype.slice.call(gal.querySelectorAll('.tile'));
+    var lb = document.getElementById('lb');
+    var lbImg = lb.querySelector('[data-lb-img]');
+    var cur = -1, lastFocus = null;
+    var vis = function () { return tiles.filter(function (t) { return !t.hidden; }); };
+    var fp = document.querySelector('.fp');
+    if (fp) fp.addEventListener('click', function (e) {
+      var a = e.target.closest('a[data-filter]'); if (!a) return;
+      e.preventDefault();
+      var k = a.getAttribute('data-filter');
+      tiles.forEach(function (t) { t.hidden = !(k === 'all' || t.getAttribute('data-cat') === k); });
+      fp.querySelectorAll('a').forEach(function (x) { x.classList.toggle('on', x === a); if (x === a) x.setAttribute('aria-current', 'true'); else x.removeAttribute('aria-current'); });
+    });
+    var show = function (i) {
+      var v = vis(); if (!v.length) return;
+      cur = (i + v.length) % v.length; var t = v[cur];
+      lbImg.src = t.getAttribute('href'); lbImg.alt = t.getAttribute('data-alt') || '';
+      lb.querySelector('[data-lb-name]').textContent = t.getAttribute('data-name');
+      lb.querySelector('[data-lb-rank]').textContent = t.getAttribute('data-rank') + ' · ' + t.getAttribute('data-catname');
+      lb.querySelector('[data-lb-count]').textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(v.length).padStart(2, '0');
+    };
+    var open = function (t) { lastFocus = t; lb.hidden = false; document.body.classList.add('lb-open'); show(vis().indexOf(t)); lb.querySelector('.x').focus(); };
+    var close = function () { lb.hidden = true; document.body.classList.remove('lb-open'); lbImg.removeAttribute('src'); if (lastFocus) lastFocus.focus(); };
+    gal.addEventListener('click', function (e) { var t = e.target.closest('.tile'); if (!t) return; e.preventDefault(); open(t); });
+    lb.addEventListener('click', function (e) {
+      if (e.target.closest('[data-lb-close]')) close();
+      else if (e.target.closest('[data-lb-prev]')) show(cur - 1);
+      else if (e.target.closest('[data-lb-next]')) show(cur + 1);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (lb.hidden) return;
+      if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') show(cur - 1); else if (e.key === 'ArrowRight') show(cur + 1);
+    });
+    var sx = null;
+    lb.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1)); });
+  }
+
+  // FAQ: op mobiel ingeklapt
+  if (window.matchMedia('(max-width:1099px)').matches) document.querySelectorAll('.faq details[open]').forEach(function (d) { d.removeAttribute('open'); });
+
   // Hero-slider
   var s = document.querySelector('[data-slider]');
   if (!s) return;
