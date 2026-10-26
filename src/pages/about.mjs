@@ -22,6 +22,7 @@ const logos = [
   ['logo-sendcloud.png', 'Sendcloud', ''],
   ['logo-google.png', 'Google', ''],
   ['logo-bakertilly.png', 'Baker Tilly', ''],
+  ['logo-sport-vibes.png', 'Sport Vibes', ''],
 ];
 
 const facts = [
