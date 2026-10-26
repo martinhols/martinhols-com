@@ -24,6 +24,8 @@ const logos = [
   ['logo-bakertilly.png', 'Baker Tilly', ''],
   ['logo-sport-vibes.png', 'Sport Vibes', ''],
   ['logo-la-fuente.png', 'La Fuente', ''],
+  ['logo-538.png', 'Radio 538', ''],
+  ['logo-slam.png', 'SLAM!', ''],
 ];
 
 const facts = [
