@@ -87,6 +87,17 @@
   // FAQ: op mobiel ingeklapt
   if (window.matchMedia('(max-width:1099px)').matches) document.querySelectorAll('.faq details[open]').forEach(function (d) { d.removeAttribute('open'); });
 
+  // About-carrousel
+  document.querySelectorAll('[data-pcar]').forEach(function (c) {
+    var ps = c.querySelectorAll('.ps'), ds = c.querySelectorAll('.pdots button'), k = 0, t = null;
+    var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function go(x) { k = (x + ps.length) % ps.length; ps.forEach(function (p, q) { p.classList.toggle('on', q === k); }); ds.forEach(function (d, q) { d.classList.toggle('on', q === k); }); }
+    function start() { if (!rm) { clearInterval(t); t = setInterval(function () { go(k + 1); }, 5000); } }
+    ds.forEach(function (d) { d.addEventListener('click', function () { go(+d.getAttribute('data-go')); start(); }); });
+    c.addEventListener('mouseenter', function () { clearInterval(t); }); c.addEventListener('mouseleave', start);
+    start();
+  });
+
   // Hero-slider
   var s = document.querySelector('[data-slider]');
   if (!s) return;

@@ -133,7 +133,10 @@ export const page = {
 
   <section class="intro cream" data-theme="cream" aria-labelledby="intro-h">
     <div class="ph">
-      ${img('martin-hols-portrait.jpg', 'Portrait of Martin Hols')}
+      <div class="pcar" data-pcar role="group" aria-roledescription="carousel" aria-label="Martin Hols at work">
+        ${['Martin Hols smiling behind his Canon camera while photographing an event', 'Martin Hols with a camera on a monopod at a festival crowd barrier', 'Martin Hols raising his Canon camera to photograph a crowd'].map((alt, i) => `<div class="ps${i ? '' : ' on'}" role="group" aria-roledescription="slide" aria-label="${i + 1} of 3">${img(`martin-at-work-${i + 1}.jpg`, alt, { sizes: '(min-width:1100px) 520px, 100vw' })}</div>`).join('')}
+        <div class="pdots" role="tablist" aria-label="Choose photo">${[1, 2, 3].map((n) => `<button type="button" class="${n === 1 ? 'on' : ''}" aria-label="Photo ${n}" data-go="${n - 1}"></button>`).join('')}</div>
+      </div>
       ${award}
     </div>
     <div class="tx">
