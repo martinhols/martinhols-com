@@ -78,7 +78,7 @@ const specs = [
 ];
 
 const sizesJ = JSON.parse(fs.readFileSync(new URL('../img/sizes.json', import.meta.url)));
-const logoCell = ([f, a]) => { const [w, h] = sizesJ[f] || [100, 40]; const k = Math.min(40 / h, 92 / w); return `<div><span class="lg" role="img" aria-label="${a.replace(/&/g, '&amp;')}" style="--u:url(/img/${f});width:${Math.round(w * k)}px;height:${Math.round(h * k)}px"></span></div>`; };
+const logoCell = ([f, a]) => { const [w, h] = sizesJ[f] || [100, 40]; const k = Math.min(46 / h, 120 / w); return `<div><span class="lg" role="img" aria-label="${a.replace(/&/g, '&amp;')}" style="--u:url(/img/${f});width:${Math.round(w * k)}px;height:${Math.round(h * k)}px"></span></div>`; };
 const logoGrid = `<div class="ah-logos" aria-label="Events and brands I’ve worked for">${logos.slice(0, 24).map(logoCell).join('')}</div>`;
 const e = (s) => s.replace(/&/g, '&amp;');
 const btns = `<a class="btn btn-p" href="/contact">Request a quote <span class="ic">${ARROW16}</span></a><a class="btn btn-o plain" href="/portfolio">View portfolio</a>`;
