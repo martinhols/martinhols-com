@@ -87,7 +87,7 @@ img{max-width:100%}
 .cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .cat{position:relative;display:block;height:520px;border-radius:var(--radius-lg);overflow:hidden;background:var(--bg);text-decoration:none;color:var(--ink)}
 .cat>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.cat .fade{position:absolute;inset:0;background:linear-gradient(to top,#051E31E6 0%,#051E3180 38%,#051E3100 68%)}
+.cat .fade{position:absolute;inset:0;opacity:0;transition:opacity .35s;background:linear-gradient(to top,#051E31E6 0%,#051E3180 38%,#051E3100 68%)}
 .cat .num{position:absolute;left:24px;top:24px;font:500 14px/20px var(--font-display);letter-spacing:.08em;text-transform:uppercase}
 .cat .nm{position:absolute;left:24px;bottom:28px;right:90px;font:400 30px/38px var(--font-display)}
 .cat .notch{padding:16px 17px 17px 28px;right:-1px;bottom:-1px}
@@ -474,7 +474,7 @@ body.menu-open{overflow:hidden}
 .ft{position:relative;display:block;height:324px;border-radius:16px;overflow:hidden;background:var(--surface);color:var(--ink);text-decoration:none}
 .ft img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
 .ft:hover img{transform:scale(1.05)}
-.ft .fade{position:absolute;inset:0;background:linear-gradient(to top,#051E31D9 0%,#051E3100 55%)}
+.ft .fade{position:absolute;inset:0;opacity:0;transition:opacity .35s;background:linear-gradient(to top,#051E31D9 0%,#051E3100 55%)}
 .ft .cap{position:absolute;left:20px;bottom:18px;right:72px;display:block}
 .ft .ce{display:block;font:500 11px/14px var(--font-display);letter-spacing:.18em;text-transform:uppercase;color:var(--accent-text)}
 .ft .nm{display:block;margin-top:6px;font:500 20px/24px var(--font-display)}
@@ -904,3 +904,13 @@ body.lb-open{overflow:hidden}
   .keep{padding:24px 16px 8px}
   .keep .hh .btn{display:none}
 }
+
+/* overlays on cards only on hover; text keeps a soft shadow */
+.cat:hover .fade,.cat:focus-visible .fade,.ft:hover .fade,.ft:focus-visible .fade{opacity:1}
+.cat :is(h3,p,span.nm,.nm,.tt),.ft :is(h3,p,.nm,.tt){text-shadow:0 1px 14px rgba(5,30,49,.55)}
+/* heroes / contact / next-project: much lighter shade so photo colours stay true */
+.phero .shade{background:linear-gradient(to top,#051E3173 0%,#051E3100 45%),linear-gradient(to bottom,#051E3166 0%,#051E3100 18%)}
+.nxp .shade{background:linear-gradient(to right,#051E3199 0%,#051E3140 45%,#051E3100 100%)}
+.contact::before{background:linear-gradient(to right,#051E3199 0%,#051E3166 45%,#051E3100 100%)}
+.phero h1,.phero .lead,.nxp h2,.contact h2,.contact p{text-shadow:0 1px 18px rgba(5,30,49,.5)}
+@media(max-width:900px){.contact::before{background:linear-gradient(to bottom,#051E3199 0%,#051E3166 55%,#051E3133 100%)}}
