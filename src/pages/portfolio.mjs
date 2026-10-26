@@ -1,8 +1,16 @@
 import { readFileSync } from 'node:fs';
 import { SITE } from '../site.mjs';
+import { dbPhotos, localMap, siteUrl, bestPhoto } from '../data.mjs';
 import { esc, img, header, contactSection, footer, ARROW, ARROW16 } from '../layout.mjs';
 
-const PHOTOS = JSON.parse(readFileSync(new URL('../portfolio.json', import.meta.url)));
+const STATIC = JSON.parse(readFileSync(new URL('../portfolio.json', import.meta.url))).map((p) => ({ ...p, cats: [p.cat], full: `/img/portfolio/${p.slug}.jpg`, file: `portfolio/${p.slug}-s.jpg`, thumbOpt: false }));
+// Foto's uit de database (portfolio aan, alt-tekst aanwezig): Top eerst, daarna de vaste selectie, daarna de rest op datum.
+const dateOf = (x) => String(x.taken_on || x.created_at || '');
+const sizeOf = (x) => { const r = (x.width || 3) / (x.height || 2); return r < 0.9 ? 't' : r > 1.7 ? 'w' : 's'; };
+const DB = dbPhotos.filter((x) => x.portfolio && (x.alt || '').trim() && localMap[x.url] && (x.categories || []).length)
+  .map((x) => ({ slug: x.id, cat: x.categories[0], cats: x.categories, size: sizeOf(x), pos: x.crop || '50% 50%', name: x.event || x.caption || 'Event photography', alt: x.alt, top: x.top, date: dateOf(x), full: siteUrl(x.url), file: x.url, thumbOpt: true, db: x }));
+DB.sort((a, b) => b.date.localeCompare(a.date));
+const PHOTOS = [...DB.filter((x) => x.top), ...STATIC, ...DB.filter((x) => !x.top)].map((p, i) => ({ ...p, rank: `No. ${String(i + 1).padStart(2, '0')}` }));
 const CATS = Object.fromEntries(SITE.categories.map((c) => [c.slug, c.name]));
 const HERO = { file: 'portfolio/mysteryland-sunset-stone-hand-stage.jpg', alt: 'Mysteryland main stage at sunset, a giant stone hand holding the DJ booth, red smoke and light beams over the crowd' };
 
@@ -65,7 +73,7 @@ const SPECS = [
   ['Super fast delivery', 'Fully edited images during the event, the rest of the set within 24 hours.', 'portfolio/f1-podium-driver-waving-trophies.jpg', '30% 40%', 'Formula 1 driver on the podium at the Las Vegas Grand Prix'],
 ];
 
-const tile = (p, i) => `<a class="tile ${p.size}" href="/img/portfolio/${p.slug}.jpg" data-cat="${p.cat}" data-name="${esc(p.name)}" data-rank="${esc(p.rank)}" data-catname="${esc(CATS[p.cat])}" data-alt="${esc(p.alt)}" aria-label="Open photo: ${esc(p.alt)}">${img(`portfolio/${p.slug}-s.jpg`, p.alt, { style: `object-position:${p.pos}` })}<span class="fade"></span><span class="cap"><span class="nm">${esc(p.name)}</span><span class="ce">${esc(p.rank)}</span></span><span class="rb">${ARROW}</span></a>`;
+const tile = (p, i) => `<a class="tile ${p.size}" href="${p.full}" data-cat="${p.cats.join(' ')}" data-name="${esc(p.name)}" data-rank="${esc(p.rank)}" data-catname="${esc(CATS[p.cat])}" data-alt="${esc(p.alt)}" aria-label="Open photo: ${esc(p.alt)}">${img(p.file, p.alt, { style: `object-position:${p.pos}`, thumb: p.thumbOpt })}<span class="fade"></span><span class="cap"><span class="nm">${esc(p.name)}</span><span class="ce">${esc(p.rank)}</span></span><span class="rb">${ARROW}</span></a>`;
 
 const lightbox = `
   <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
@@ -80,7 +88,7 @@ const gallerySchema = (list, url, name) => ({
   '@context': 'https://schema.org',
   '@type': 'ImageGallery', '@id': url + '#gallery', url, name, inLanguage: 'en',
   author: { '@id': `${SITE.url}/#martin` }, creator: { '@id': `${SITE.url}/#martin` },
-  image: list.map((p) => ({ '@type': 'ImageObject', contentUrl: `${SITE.url}/img/portfolio/${p.slug}.jpg`, thumbnailUrl: `${SITE.url}/img/portfolio/${p.slug}-s.jpg`, caption: p.alt, name: `${p.name}, ${CATS[p.cat]}`, creator: { '@id': `${SITE.url}/#martin` }, creditText: 'Martin Hols', copyrightNotice: '© Martin Hols' })),
+  image: list.map((p) => ({ '@type': 'ImageObject', contentUrl: SITE.url + p.full, thumbnailUrl: SITE.url + (p.db ? (localMap[p.file] || {}).thumb || p.full : `/img/portfolio/${p.slug}-s.jpg`), caption: p.alt, name: `${p.name}, ${CATS[p.cat]}`, creator: { '@id': `${SITE.url}/#martin` }, creditText: 'Martin Hols', copyrightNotice: '© Martin Hols' })),
 });
 
 const specs = `
@@ -104,11 +112,12 @@ function build(slug) {
   const isAll = !slug;
   const c = isAll ? null : CAT[slug];
   const name = isAll ? 'Portfolio' : CATS[slug];
-  const list = isAll ? PHOTOS : PHOTOS.filter((p) => p.cat === slug);
+  const list = isAll ? PHOTOS : PHOTOS.filter((p) => p.cats.includes(slug));
   const path = isAll ? '/portfolio' : `/portfolio/${slug}`;
   const url = SITE.url + path;
-  const hero = isAll ? { file: HERO.file, alt: HERO.alt, pos: '50% 45%' } : { file: c.hero, alt: c.alt, pos: c.pos };
-  const pills = [['all', 'All', PHOTOS.length, '/portfolio']].concat(SITE.categories.map((k) => [k.slug, k.name, PHOTOS.filter((p) => p.cat === k.slug).length, `/portfolio/${k.slug}`]));
+  const best = isAll ? null : bestPhoto(slug);
+  const hero = isAll ? { file: HERO.file, alt: HERO.alt, pos: '50% 45%' } : best || { file: c.hero, alt: c.alt, pos: c.pos };
+  const pills = [['all', 'All', PHOTOS.length, '/portfolio']].concat(SITE.categories.map((k) => [k.slug, k.name, PHOTOS.filter((p) => p.cats.includes(k.slug)).length, `/portfolio/${k.slug}`]));
   return {
     path,
     title: isAll ? 'Portfolio: event & festival photography | Martin Hols' : `${name} photography portfolio | Martin Hols`,

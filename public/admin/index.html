@@ -184,6 +184,7 @@ async function uploadFiles(files,toProject){
   const base=slug([toProject?S.proj.slug:'',cleanN(f.name)].filter(Boolean).join('-'))||'photo';let file=base+'.jpg';
   const path=`${toProject?S.proj.slug:'single'}/${Date.now()}-${file}`;
   const up=await sb.storage.from('photos').upload(path,b,{contentType:'image/jpeg'});if(up.error)throw up.error;
+  const th=await resize(f,800);await sb.storage.from('photos').upload(path.replace(/\.jpg$/,'-s.jpg'),th.b,{contentType:'image/jpeg'});
   const url=sb.storage.from('photos').getPublicUrl(path).data.publicUrl,P=S.proj;
   const row={file,url,width:w,height:h,bytes:b.size};
   if(toProject){row.project_id=P.id;row.event=P.event_name||null;row.year=P.event_date?+P.event_date.slice(0,4):null;row.city=P.location||null;row.categories=P.categories||[];row.taken_on=P.event_date||null}

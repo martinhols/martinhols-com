@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { SITE } from '../site.mjs';
-import { dbProjects, dbPhotos } from '../data.mjs';
+import { dbProjects, dbPhotos, siteUrl } from '../data.mjs';
 const altOf = Object.fromEntries(dbPhotos.filter((x) => x.alt).map((x) => [x.url, x.alt]));
 import { esc, img, header, contactSection, footer, ARROW, ARROW16 } from '../layout.mjs';
 
@@ -10,7 +10,7 @@ const dbSlugs = new Set(fromDb.map((p) => p.slug));
 export const PROJECTS = [...fromDb, ...STATIC.filter((p) => !dbSlugs.has(p.slug))];
 export const CATS = Object.fromEntries(SITE.categories.map((c) => [c.slug, c.name]));
 
-const card = (p, cls = 'prc') => `<a class="${cls}" data-c="${p.cat}" href="${p.href}"><span class="im">${img(p.file, p.alt, { style: `object-position:${p.pos}` })}</span><span class="tx"><span class="tt"><span class="ce">${CATS[p.cat]}</span><span class="nm">${esc(p.title)}</span></span><span class="rb">${ARROW}</span></span></a>`;
+const card = (p, cls = 'prc') => `<a class="${cls}" data-c="${p.cat}" href="${p.href}"><span class="im">${img(p.file, p.alt, { style: `object-position:${p.pos}`, thumb: true })}</span><span class="tx"><span class="tt"><span class="ce">${CATS[p.cat]}</span><span class="nm">${esc(p.title)}</span></span><span class="rb">${ARROW}</span></span></a>`;
 
 const phero = (file, alt, pos, eyebrow, h1, lead) => `
   <header class="panel phero phero-s" id="main">
@@ -146,7 +146,7 @@ const dbDetail = (p) => {
   return {
     path: `/projects/${d.slug}`, title: `${d.event_name || d.title} event photography${d.client ? ` for ${d.client}` : ''} | Martin Hols`, description: sum.slice(0, 200), ogImage: d.hero_url,
     jsonld: [
-      { '@context': 'https://schema.org', '@type': 'CreativeWork', name: `${d.title} event photography`, url: `${SITE.url}/projects/${d.slug}`, inLanguage: 'en', creator: { '@id': `${SITE.url}/#martin` }, about: { '@type': 'Event', name: d.event_name || d.title, ...(d.location ? { location: d.location } : {}), ...(d.event_date ? { startDate: d.event_date } : {}) }, image: [d.hero_url, ...gal] },
+      { '@context': 'https://schema.org', '@type': 'CreativeWork', name: `${d.title} event photography`, url: `${SITE.url}/projects/${d.slug}`, inLanguage: 'en', creator: { '@id': `${SITE.url}/#martin` }, about: { '@type': 'Event', name: d.event_name || d.title, ...(d.location ? { location: d.location } : {}), ...(d.event_date ? { startDate: d.event_date } : {}) }, image: [d.hero_url, ...gal].map((u) => (u.startsWith('/') ? SITE.url + u : /^https?:/.test(siteUrl(u)) ? siteUrl(u) : SITE.url + siteUrl(u))) },
       ...(faq.length ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }] : []),
       { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [['Home', '/'], ['Projects', '/projects'], [d.title, `/projects/${d.slug}`]].map(([n, u], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: SITE.url + u })) },
     ],

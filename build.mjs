@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { layout } from './src/layout.mjs';
 import { SITE } from './src/site.mjs';
+import { prepareData } from './src/data.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(root, 'dist');
@@ -20,6 +21,8 @@ fs.copyFileSync(path.join(root, 'src/js/site.js'), path.join(dist, 'assets/site.
 fs.cpSync(path.join(root, 'src/img'), path.join(dist, 'img'), { recursive: true });
 fs.rmSync(path.join(dist, 'img/sizes.json'), { force: true });
 if (fs.existsSync(path.join(root, 'public'))) fs.cpSync(path.join(root, 'public'), dist, { recursive: true });
+
+await prepareData(dist);
 
 // pagina's: elke src/pages/*.mjs exporteert `page`
 const pages = [];

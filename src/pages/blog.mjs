@@ -69,7 +69,7 @@ const mins = (p) => Math.max(2, Math.round(words(p) / 200));
 const url = (p) => `/blog/${p.slug}`;
 const count = (k) => (k === 'all' ? POSTS.length : POSTS.filter((p) => p.type === k).length);
 
-const card = (p) => `<a class="bc" data-c="${p.type}" href="${url(p)}"><span class="im">${img(p.card, p.cardAlt)}<span class="tg">${p.tag}</span></span><span class="tx"><span><span class="nm">${esc(p.title)}</span><span class="dt">${mins(p)} min read</span></span><span class="rb">${ARROW}</span></span></a>`;
+const card = (p) => `<a class="bc" data-c="${p.type}" href="${url(p)}"><span class="im">${img(p.card, p.cardAlt, { thumb: true })}<span class="tg">${p.tag}</span></span><span class="tx"><span><span class="nm">${esc(p.title)}</span><span class="dt">${mins(p)} min read</span></span><span class="rb">${ARROW}</span></span></a>`;
 const crumbs = (items) => ({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items.map(([n, u], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: SITE.url + u })) });
 
 const list = {

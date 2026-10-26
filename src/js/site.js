@@ -56,7 +56,7 @@
       var a = e.target.closest('a[data-filter]'); if (!a) return;
       e.preventDefault();
       var k = a.getAttribute('data-filter');
-      tiles.forEach(function (t) { t.hidden = !(k === 'all' || t.getAttribute('data-cat') === k); });
+      tiles.forEach(function (t) { t.hidden = !(k === 'all' || (' ' + t.getAttribute('data-cat') + ' ').indexOf(' ' + k + ' ') > -1); });
       fp.querySelectorAll('a').forEach(function (x) { x.classList.toggle('on', x === a); if (x === a) x.setAttribute('aria-current', 'true'); else x.removeAttribute('aria-current'); });
     });
     var show = function (i) {

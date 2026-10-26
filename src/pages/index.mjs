@@ -1,5 +1,6 @@
 import { SITE } from '../site.mjs';
 import { PROJECTS, CATS } from './projects.mjs';
+import { bestPhoto } from '../data.mjs';
 import { img, header, contactSection, footer, ARROW, ARROW16, ICONS } from '../layout.mjs';
 
 const slides = [
@@ -13,12 +14,13 @@ const slides = [
 
 const projects = PROJECTS.slice(0, 3).map((p) => ({ cat: CATS[p.cat], title: p.title, file: p.file, pos: p.pos, alt: p.alt, href: p.href }));
 
-const cats = [
+const cats0 = [
   { n: '01', name: 'Festivals', slug: 'festivals', file: 'tomorrowland-mainstage-fireworks.jpg', pos: '50% 40%', alt: 'Festivals' },
   { n: '02', name: 'Corporate', slug: 'corporate', file: 'corporate-event-auditorium.jpg', pos: '50% 45%', alt: 'Corporate event in a circular auditorium' },
   { n: '03', name: 'Sport', slug: 'sport', file: 'handball-match-arena.jpg', pos: '54% 55%', alt: 'Handball match in a packed arena' },
   { n: '04', name: 'Shows / Music', slug: 'shows-music', file: 'singer-blue-light-show.jpg', pos: '64% 40%', alt: 'Singer on stage under blue light' },
 ];
+const cats = cats0.map((c) => { const b = bestPhoto(c.slug); return b ? { ...c, file: b.file, pos: b.pos, alt: b.alt } : c; });
 
 const logos = [
   ['logo-albert-heijn.png', 'Albert Heijn', 'width:159px;height:64px'],

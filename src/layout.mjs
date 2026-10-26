@@ -1,3 +1,4 @@
+import { localMap } from './data.mjs';
 import { SITE } from './site.mjs';
 import fs from 'node:fs';
 
@@ -15,9 +16,9 @@ export const ICONS = { ARROW, MAIL, PHONE, MENU, CLOSE, STAR };
 
 /** <img> met afmetingen uit sizes.json. opts: lazy (standaard true), cls, style, sizes, priority */
 export function img(file, alt, opts = {}) {
-  const remote = /^https?:/.test(file);
-  const [w, h] = (!remote && sizes[file]) || [];
-  const a = [`src="${remote ? file : '/img/' + file}"`, `alt="${esc(alt)}"`];
+  const remote = /^https?:/.test(file), L = remote && localMap[file];
+  const [w, h] = (L ? [L.w, L.h] : !remote && sizes[file]) || [];
+  const a = [`src="${L ? (opts.thumb ? L.thumb : L.src) : remote ? file : '/img/' + file}"`, `alt="${esc(alt)}"`];
   if (w) a.push(`width="${w}"`, `height="${h}"`);
   if (opts.cls) a.push(`class="${opts.cls}"`);
   if (opts.style) a.push(`style="${opts.style}"`);
@@ -106,7 +107,7 @@ export function footer() {
 export function layout(page) {
   const url = SITE.url + (page.path === '/' ? '/' : page.path);
   const oi = page.ogImage || 'tomorrowland-mainstage-fireworks.jpg';
-  const og = /^https?:/.test(oi) ? oi : SITE.url + '/img/' + oi;
+  const og = /^https?:/.test(oi) ? (localMap[oi] ? SITE.url + localMap[oi].src : oi) : SITE.url + '/img/' + oi;
   const ld = (page.jsonld || []).map((o) => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n');
   return `<!doctype html>
 <html lang="en">
