@@ -7,6 +7,7 @@ export const SITE = {
   person: 'Martin Hols',
   email: 'martin@thearrows.nl',
   phone: '+31641148479',
+  instagram: 'https://www.instagram.com/martin.hols',
   phoneText: '+31 6 4114 84 79',
   // Bedrijfsgegevens: vul in als ze bekend zijn; lege velden worden niet getoond.
   company: { kvk: '[KVK-nummer invullen]', vat: '[BTW-nummer invullen]', address: '[Adres invullen]' },

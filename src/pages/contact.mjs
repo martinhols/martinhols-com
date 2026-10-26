@@ -30,6 +30,7 @@ export const page = {
         <div class="ct-list">
           <a class="ct" href="mailto:${SITE.email}"><span><span class="t-eyebrow dim" style="display:block">Email</span><span class="v">${SITE.email}</span></span><span class="rb">${ARROW}</span></a>
           <a class="ct" href="tel:${SITE.phone}"><span><span class="t-eyebrow dim" style="display:block">Phone</span><span class="v">${SITE.phoneText}</span></span><span class="rb">${ARROW}</span></a>
+          <a class="ct" href="${SITE.instagram}" target="_blank" rel="noopener"><span><span class="t-eyebrow dim" style="display:block">Instagram</span><span class="v">@martin.hols</span></span><span class="rb">${ARROW}</span></a>
         </div>
         <div class="next"><p class="t-eyebrow dim">What happens next</p><ol>
           <li><span>01</span><p><b>I reply the same day.</b> With a first answer and any questions about the event.</p></li>

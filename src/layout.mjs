@@ -9,6 +9,8 @@ export const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
 export const ARROW = '<svg class="arrow" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"></path></svg>';
 export const ARROW16 = ARROW.replace(/width="20" height="20"/, 'width="16" height="16"');
 const MAIL = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>';
+const IG = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"></circle></svg>';
+const igA = (extra = '') => `<a class="rb acc-b" href="${SITE.instagram}" target="_blank" rel="noopener" aria-label="Instagram @martin.hols" title="Instagram"${extra}>${IG}</a>`;
 const PHONE = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"></path></svg>';
 const MENU = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"></path></svg>';
 const CLOSE = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>';
@@ -39,11 +41,13 @@ export function header(active = '') {
     <div class="notch n-tr">
       <div class="nt-desk">
         <a class="rb acc-b" href="mailto:${SITE.email}" aria-label="Email ${SITE.email}" title="${SITE.email}">${MAIL}</a>
-        <a class="rb acc-b" href="tel:${SITE.phone}" aria-label="Call ${SITE.phoneText}" title="${SITE.phoneText}" style="margin-right:8px">${PHONE}</a>
+        <a class="rb acc-b" href="tel:${SITE.phone}" aria-label="Call ${SITE.phoneText}" title="${SITE.phoneText}">${PHONE}</a>
+        ${igA(' style="margin-right:8px"')}
         <a class="btn btn-p" href="/contact">Request a quote <span class="ic">${ARROW16}</span></a>
       </div>
       <div class="nt-mob">
         <a class="rb acc-b" href="tel:${SITE.phone}" aria-label="Call ${SITE.phoneText}">${PHONE}</a>
+        ${igA()}
         <button type="button" class="rb menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mmenu" data-menu-open>${MENU}</button>
       </div>
     </div>`;
@@ -60,12 +64,13 @@ export function mobileMenu() {
   <div class="in">
     <div class="top">
       <a class="logo" href="/">${img('martin-hols-portrait.jpg', '')}${SITE.name}</a>
-      <div style="display:flex;gap:8px"><a class="rb acc-b" href="tel:${SITE.phone}" aria-label="Call ${SITE.phoneText}" style="background:var(--accent);color:var(--on-accent)">${PHONE}</a><button type="button" class="rb menu-btn" aria-label="Close menu" data-menu-close>${CLOSE}</button></div>
+      <div style="display:flex;gap:8px"><a class="rb acc-b" href="tel:${SITE.phone}" aria-label="Call ${SITE.phoneText}" style="background:var(--accent);color:var(--on-accent)">${PHONE}</a>${igA(' style="background:var(--accent);color:var(--on-accent)"')}<button type="button" class="rb menu-btn" aria-label="Close menu" data-menu-close>${CLOSE}</button></div>
     </div>
     <ol>${items}</ol>
     <div class="bot">
       <a class="l" href="mailto:${SITE.email}">${SITE.email}</a>
       <a class="l" href="tel:${SITE.phone}">${SITE.phoneText}</a>
+      <a class="l" href="${SITE.instagram}" target="_blank" rel="noopener">Instagram @martin.hols</a>
       <a class="m-btn p" href="/contact">Request a quote <span class="ic">${ARROW16}</span></a>
       <p class="t-caption dim" style="margin:8px 0 0">Part of The Arrows</p>
     </div>
@@ -85,6 +90,7 @@ export function contactSection(photo = 'tomorrowland-mainstage-fireworks.jpg') {
     <div class="cbox glass">
       <a class="cr" href="mailto:${SITE.email}"><span><span class="t-eyebrow dim" style="display:block">Email</span><span class="v">${SITE.email}</span></span><span class="rb">${ARROW}</span></a>
       <a class="cr" href="tel:${SITE.phone}"><span><span class="t-eyebrow dim" style="display:block">Phone</span><span class="v">${SITE.phoneText}</span></span><span class="rb">${ARROW}</span></a>
+      <a class="cr" href="${SITE.instagram}" target="_blank" rel="noopener"><span><span class="t-eyebrow dim" style="display:block">Instagram</span><span class="v">@martin.hols</span></span><span class="rb">${ARROW}</span></a>
     </div>
   </section>`;
 }
@@ -98,7 +104,7 @@ export function footer() {
       <div class="cols">
         <div><p class="t-eyebrow dim">Portfolio</p><div class="fl">${cats}</div></div>
         <div><p class="t-eyebrow dim">Pages</p><div class="fl"><a href="/projects">Projects</a><a href="/about">About</a><a href="/blog">Blog</a></div></div>
-        <div><p class="t-eyebrow dim">Contact</p><div class="fl"><a href="mailto:${SITE.email}">${SITE.email}</a><a href="tel:${SITE.phone}">${SITE.phoneText}</a></div></div>
+        <div><p class="t-eyebrow dim">Contact</p><div class="fl"><a href="mailto:${SITE.email}">${SITE.email}</a><a href="tel:${SITE.phone}">${SITE.phoneText}</a><a href="${SITE.instagram}" target="_blank" rel="noopener">Instagram</a></div></div>
         <div><p class="t-eyebrow dim">Legal</p><div class="fl"><a href="/privacy">Privacy policy</a><a href="/terms">Terms &amp; conditions</a></div></div>
       </div>
     </div>

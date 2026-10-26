@@ -56,6 +56,7 @@ export const page = {
         },
         {
           '@type': 'ProfessionalService', '@id': `${SITE.url}/#business`, name: SITE.name, url: SITE.url + '/',
+          sameAs: [SITE.instagram],
           description: 'Event and festival photography in the Netherlands and worldwide.',
           image: `${SITE.url}/img/tomorrowland-mainstage-fireworks.jpg`,
           email: SITE.email, telephone: SITE.phone,
