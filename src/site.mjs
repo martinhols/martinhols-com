@@ -1,4 +1,6 @@
 // Vaste gegevens van de site. Eén plek, zodat cijfers en namen overal gelijk zijn (GEO).
+export const SUPABASE = { url: 'https://rpspddxsnedszscudfke.supabase.co', key: 'sb_publishable__p3yyQ_mtRIaa-MDEWG_CQ_vn0cEPVB' };
+
 export const SITE = {
   url: 'https://martinhols.com',
   name: 'MartinHols.com',

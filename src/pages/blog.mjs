@@ -1,10 +1,11 @@
 import { SITE } from '../site.mjs';
+import { dbPosts, textToHtml } from '../data.mjs';
 import { esc, img, header, contactSection, footer, ARROW, ARROW16 } from '../layout.mjs';
 
 const CHECK = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>';
 const AUTHOR = 'Martin Hols is an event photographer from the Netherlands. He has shot 2,132 events in more than ten years and won the European Event Photography Award.';
 
-const POSTS = [
+const STATIC_POSTS = [
   {
     slug: 'how-to-brief-a-festival-photographer', type: 'guide', tag: 'Guide',
     title: 'How to brief a festival photographer.',
@@ -55,6 +56,14 @@ const POSTS = [
     faq: [['How do you photograph pyro at a festival?', 'By knowing the cue times from the show plan, choosing a spot before the doors open, exposing for the flames and shooting wide first, then tight when the cue returns.']],
   },
 ];
+const dbp = dbPosts.filter((d) => d.hero_url).map((d) => ({
+  slug: d.slug, type: d.type, tag: d.type === 'story' ? 'Story' : 'Guide', title: d.title.endsWith('.') ? d.title : d.title + '.',
+  desc: d.description || d.short_answer || d.title, teaser: d.short_answer || d.description || '', short: d.short_answer || d.description || '',
+  file: d.hero_url, pos: '50% 50%', alt: d.title, cap: d.title, card: d.hero_url, cardAlt: d.title,
+  body: textToHtml(d.body || ''), faq: (d.faq || []).filter((f) => f.q && f.a).map((f) => [f.q, f.a]), date: d.published_at,
+}));
+const dbSlugs = new Set(dbp.map((p) => p.slug));
+const POSTS = [...dbp, ...STATIC_POSTS.filter((p) => !dbSlugs.has(p.slug))];
 const words = (p) => p.body.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
 const mins = (p) => Math.max(2, Math.round(words(p) / 200));
 const url = (p) => `/blog/${p.slug}`;
@@ -103,8 +112,8 @@ const post = (p) => {
     description: p.desc,
     ogImage: p.file,
     jsonld: [
-      { '@context': 'https://schema.org', '@type': 'Article', '@id': `${SITE.url}${url(p)}#article`, headline: p.title.replace(/\.$/, ''), description: p.desc, url: SITE.url + url(p), inLanguage: 'en', image: `${SITE.url}/img/${p.file}`, wordCount: words(p), author: { '@id': `${SITE.url}/#martin` }, publisher: { '@id': `${SITE.url}/#martin` }, isPartOf: { '@id': `${SITE.url}/blog#blog` }, mainEntityOfPage: SITE.url + url(p) },
-      { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: p.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+      { '@context': 'https://schema.org', '@type': 'Article', '@id': `${SITE.url}${url(p)}#article`, headline: p.title.replace(/\.$/, ''), description: p.desc, url: SITE.url + url(p), inLanguage: 'en', image: `${SITE.url}/img/${p.file}`, wordCount: words(p), ...(p.date ? { datePublished: p.date } : {}), author: { '@id': `${SITE.url}/#martin` }, publisher: { '@id': `${SITE.url}/#martin` }, isPartOf: { '@id': `${SITE.url}/blog#blog` }, mainEntityOfPage: SITE.url + url(p) },
+      ...(p.faq.length ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: p.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }] : []),
       crumbs([['Home', '/'], ['Blog', '/blog'], [p.title.replace(/\.$/, ''), url(p)]]),
     ],
     body: `

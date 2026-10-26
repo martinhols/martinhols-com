@@ -1,8 +1,12 @@
 import { readFileSync } from 'node:fs';
 import { SITE } from '../site.mjs';
+import { dbProjects } from '../data.mjs';
 import { esc, img, header, contactSection, footer, ARROW, ARROW16 } from '../layout.mjs';
 
-const PROJECTS = JSON.parse(readFileSync(new URL('../projects.json', import.meta.url)));
+const STATIC = JSON.parse(readFileSync(new URL('../projects.json', import.meta.url)));
+const fromDb = dbProjects.filter((d) => d.hero_url).map((d) => ({ slug: d.slug, cat: d.category, title: d.title, file: d.hero_url, pos: '50% 50%', alt: `${d.title}, event photography by Martin Hols`, href: `/projects/${d.slug}`, db: d }));
+const dbSlugs = new Set(fromDb.map((p) => p.slug));
+const PROJECTS = [...fromDb, ...STATIC.filter((p) => !dbSlugs.has(p.slug))];
 const CATS = Object.fromEntries(SITE.categories.map((c) => [c.slug, c.name]));
 
 const card = (p, cls = 'prc') => `<a class="${cls}" data-c="${p.cat}" href="${p.href}"><span class="im">${img(p.file, p.alt, { style: `object-position:${p.pos}` })}</span><span class="tx"><span class="tt"><span class="ce">${CATS[p.cat]}</span><span class="nm">${esc(p.title)}</span></span><span class="rb">${ARROW}</span></span></a>`;
@@ -131,4 +135,28 @@ const detailPage = {
   ${footer()}`,
 };
 
-export const pages = [listPage, detailPage];
+
+// Detailpagina's uit de database (Supabase)
+const dbDetail = (p) => {
+  const d = p.db, gal = Array.isArray(d.gallery) ? d.gallery : [], faq = (Array.isArray(d.faq) ? d.faq : []).filter((f) => f.q && f.a);
+  const rows = []; if (gal.length) { rows.push([gal[0]]); for (let i = 1; i < gal.length; i += 2) rows.push(gal.slice(i, i + 2)); }
+  const fx = [['Client', d.client], ['Event', d.event_name || d.title], ['Location', d.location], ['Date', d.event_date && new Date(d.event_date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })], ['Category', CATS[d.category]]].filter(([, v]) => v);
+  const sum = d.summary || `Martin Hols was the event photographer at ${d.event_name || d.title}${d.client ? `, commissioned by ${d.client}` : ''}.`;
+  return {
+    path: `/projects/${d.slug}`, title: `${d.event_name || d.title} event photography${d.client ? ` for ${d.client}` : ''} | Martin Hols`, description: sum.slice(0, 200), ogImage: d.hero_url,
+    jsonld: [
+      { '@context': 'https://schema.org', '@type': 'CreativeWork', name: `${d.title} event photography`, url: `${SITE.url}/projects/${d.slug}`, inLanguage: 'en', creator: { '@id': `${SITE.url}/#martin` }, about: { '@type': 'Event', name: d.event_name || d.title, ...(d.location ? { location: d.location } : {}), ...(d.event_date ? { startDate: d.event_date } : {}) }, image: [d.hero_url, ...gal] },
+      ...(faq.length ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }] : []),
+      { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [['Home', '/'], ['Projects', '/projects'], [d.title, `/projects/${d.slug}`]].map(([n, u], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: SITE.url + u })) },
+    ],
+    body: `
+  ${phero(d.hero_url, p.alt, '50% 50%', `<div class="eyebrows"><p class="t-eyebrow acc">Project</p><i></i><p class="t-eyebrow dim">${CATS[d.category]}</p></div>`, `${esc(d.title)}.`, '')}
+  <section class="cream psum" id="detail" data-theme="cream"><div class="ps-l"><p class="t-eyebrow acc">Project summary</p><p class="sum">${esc(sum)}</p></div>
+    <dl class="fxg" style="grid-template-columns:repeat(${Math.min(fx.length, 4)},minmax(0,1fr))">${fx.map(([k, v]) => `<div class="fx"><dt class="t-eyebrow dim">${k}</dt><dd class="v">${esc(v)}</dd></div>`).join('')}</dl></section>
+  ${rows.length ? `<section class="panel pgal" aria-label="Photos">${rows.map((r) => `<div class="pr pr${r.length}">${r.map((u) => `<div class="pi">${img(u, `${d.title} event photography`)}</div>`).join('')}</div>`).join('')}</section>` : ''}
+  ${faq.length ? `<section class="cream pfaq" data-theme="cream"><p class="t-eyebrow dim">Questions about this project</p><div class="pqg">${faq.map((f) => `<div class="qa"><h3>${esc(f.q)}</h3><p>${esc(f.a)}</p></div>`).join('')}</div></section>` : ''}
+  ${contactSection('tomorrowland-stage-night.jpg')}
+  ${footer()}`,
+  };
+};
+export const pages = [listPage, detailPage, ...fromDb.filter((p) => p.slug !== M.slug).map(dbDetail)];

@@ -15,8 +15,9 @@ export const ICONS = { ARROW, MAIL, PHONE, MENU, CLOSE, STAR };
 
 /** <img> met afmetingen uit sizes.json. opts: lazy (standaard true), cls, style, sizes, priority */
 export function img(file, alt, opts = {}) {
-  const [w, h] = sizes[file] || [];
-  const a = [`src="/img/${file}"`, `alt="${esc(alt)}"`];
+  const remote = /^https?:/.test(file);
+  const [w, h] = (!remote && sizes[file]) || [];
+  const a = [`src="${remote ? file : '/img/' + file}"`, `alt="${esc(alt)}"`];
   if (w) a.push(`width="${w}"`, `height="${h}"`);
   if (opts.cls) a.push(`class="${opts.cls}"`);
   if (opts.style) a.push(`style="${opts.style}"`);
@@ -104,7 +105,8 @@ export function footer() {
 /** Hele pagina. page: {path,title,description,ogImage,jsonld[],active,body,bodyClass} */
 export function layout(page) {
   const url = SITE.url + (page.path === '/' ? '/' : page.path);
-  const og = SITE.url + '/img/' + (page.ogImage || 'tomorrowland-mainstage-fireworks.jpg');
+  const oi = page.ogImage || 'tomorrowland-mainstage-fireworks.jpg';
+  const og = /^https?:/.test(oi) ? oi : SITE.url + '/img/' + oi;
   const ld = (page.jsonld || []).map((o) => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n');
   return `<!doctype html>
 <html lang="en">
