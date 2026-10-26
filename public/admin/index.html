@@ -269,7 +269,7 @@ function vSingle(){const L=S.singles,p=L[S.ss]||L[0],need=L.filter(x=>!(x.alt||'
  const ck=p?[[(p.alt||'').trim(),'Alt text','Describes what is visible'],[p.file&&p.file===slug(cleanN(p.file))+'.jpg','File name','Descriptive and lowercase'],[p.event&&p.year,'Event and year',[p.event,p.year].filter(Boolean).join(' · ')||'Still empty'],[p.city,'City and country',p.city||'Still empty'],[(p.categories||[]).length,'Categories',(p.categories||[]).map(k=>CN[k]).join(', ')||'Still empty']]:[];
  app.innerHTML=head('Add photos.',`<button class="btn o" data-act="draft">Save draft</button>${btnPub('Publish','site')}`)+`
 <div class="sgrid"><aside><button class="drop" data-drop="single"><span class="ic">${I.up}</span><b>Drop photos here</b><span>One or many. Each gets its own details.</span></button>
-<button class="btn o" data-act="impmeta" style="margin-top:12px;width:100%">Import descriptions (${Object.keys(getMeta()).length} ready)</button><input type="file" id="metaIn" accept=".json,application/json" hidden>
+<button class="btn o" data-act="impmeta" style="margin-top:12px;width:100%">Import descriptions (${Object.keys(getMeta()).length} ready)</button><input type="file" id="metaIn" accept=".json,application/json" multiple hidden>
 <div class="row" style="margin:24px 0 8px"><span class="lb">${L.length} photos</span><span class="cnt warn">${need} need alt text</span></div>
 <div class="plist">${L.map((x,i)=>`<button class="lr ${x===p?'on':''}" data-ss="${i}"><span class="t"><img class="imgc" src="${esc(x.url)}" alt=""></span><span><span class="n">${esc(x.file)}</span><span class="m"><span class="st ${(x.alt||'').trim()?'ok':'no'}"></span>${(x.alt||'').trim()?'Ready':'Needs alt text'}</span></span></button>`).join('')}</div>
 ${p?`<div class="where" style="margin-top:24px"><p class="eyebrow" style="color:var(--accent-text)">Checks · photo ${L.indexOf(p)+1}</p><h3 style="font:400 30px/38px var(--font-display);margin:8px 0">${ck.filter(x=>x[0]).length} of 5 done</h3><ul class="ck">${ck.map(([y,t,s])=>`<li><span class="o ${y?'y':''}">${I.chk}</span><span>${t}<small>${esc(s)}</small></span></li>`).join('')}</ul></div>`:''}</aside>
@@ -334,7 +334,7 @@ function bind(){
   else if(a==='delphoto'){const p=S.singles[S.ss];if(!confirm('Delete this photo?'))return;await sb.from('photos').delete().eq('id',p.id);await loadAll();S.ss=0;show()}
  }catch(x){say(x.message||String(x),1)}});
 }
-document.addEventListener('change',async e=>{if(e.target.id!=='metaIn')return;try{const f=e.target.files[0];if(!f)return;const n=importMeta(await f.text());say(n+' descriptions loaded. Now drop the matching photos.');show()}catch(x){say('Import failed: '+x.message,1)}});
+document.addEventListener('change',async e=>{if(e.target.id!=='metaIn')return;try{let n=0;for(const f of e.target.files)n+=importMeta(await f.text());e.target.value='';if(!n)return;say(n+' descriptions loaded. Now drop the matching photos.');show()}catch(x){say('Import failed: '+x.message,1)}});
 $('#fileIn').onchange=e=>{uploadFiles(e.target.files,e.target.dataset.t==='project');e.target.value=''};
 init();
 </script>
