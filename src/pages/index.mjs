@@ -95,7 +95,7 @@ export const page = {
     <div class="portrait-d">
       ${img('martin-hols-portrait.jpg', 'Portrait of Martin Hols, smiling, in a black shirt against a warm orange backdrop', { priority: true })}
       <div class="award"><div class="ai">${ICONS.STAR}</div><div><p class="t-eyebrow">Award winner</p><p class="t-caption">European Event<br>Photography Award</p></div></div>
-      <div class="namecard"><p class="nm">Martin Hols</p><hr><p class="t-eyebrow dim" style="font-size:12px;line-height:16px;letter-spacing:.22em">Event photographer</p></div>
+      <div class="namecard"><p class="t-eyebrow acc" style="font-size:12px;line-height:16px;letter-spacing:.22em">Event photographer</p><p class="nm">Martin Hols</p></div>
     </div>
 
     <div class="portrait-m">

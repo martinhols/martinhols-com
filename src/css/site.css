@@ -44,9 +44,8 @@ img{max-width:100%}
 .award .ai{width:44px;height:44px;border-radius:8px;background:var(--on-accent);color:var(--accent);display:grid;place-items:center;flex:none}
 .award .t-eyebrow{font-size:12px;line-height:16px;letter-spacing:.2em}
 .award .t-caption{margin-top:5px;font-weight:600;line-height:20px}
-.namecard{position:absolute;left:16px;right:16px;bottom:16px;padding:22px 24px 24px;background:var(--scrim);backdrop-filter:blur(18px);border:1px solid var(--glass-line);border-radius:var(--radius-md)}
-.namecard .nm{font:400 30px/36px var(--font-display)}
-.namecard hr{width:40px;height:2px;border:0;background:var(--accent);margin:14px 0 12px}
+.namecard{position:absolute;left:16px;right:16px;bottom:16px;padding:14px 20px 16px;background:var(--scrim);backdrop-filter:blur(18px);border:1px solid var(--glass-line);border-radius:var(--radius-md)}
+.namecard .nm{font:400 30px/36px var(--font-display);margin-top:4px}
 .portrait-m,.hero .btn-q{display:none}
 
 /* slider */
