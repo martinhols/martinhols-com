@@ -1,0 +1,78 @@
+/* MartinHols.com design system, vertaald naar CSS-variabelen (bron: tokens.json van het design system) */
+:root, [data-theme="dark"] {
+  --bg: #051E31; --page: #F4EFE6; --on-page: #051E31;
+  --glass: #F4EFE61F; --glass-line: #F4EFE633;
+  --surface: #092B41; --surface-raised: #0F3550;
+  --petrol: #1F4E69; --on-petrol: #F4EFE6;
+  --line: #17405A; --line-strong: #5F8299;
+  --ink: #F4EFE6; --ink-muted: #A9BCC8;
+  --accent: #FF8A1F; --accent-text: #FF8A1F; --on-accent: #051E31;
+  --accent-hot: #F2481F; --on-hot: #051E31;
+  --focus: #FFB35C; --scrim: #051E31B8;
+  --font-display: "Ubuntu", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Rokkitt", Georgia, "Times New Roman", serif;
+  --radius-sm: 8px; --radius-md: 16px; --radius-lg: 24px;
+}
+[data-theme="cream"] {
+  --bg: #F4EFE6; --surface: #EAE3D6; --surface-raised: #FBF8F2;
+  --line: #D6CCBA; --line-strong: #7B6F5C;
+  --ink: #051E31; --ink-muted: #47586A;
+  --accent-text: #A83F00; --accent-hot: #B7310C; --on-hot: #FFFFFF; --focus: #051E31;
+}
+body { margin: 0; }
+p, h1, h2, h3, h4 { margin: 0; }
+
+/* typografie */
+.t-display { font: 300 88px/92px var(--font-display); letter-spacing: -0.02em; }
+.t-h1 { font: 300 60px/66px var(--font-display); letter-spacing: -0.015em; }
+.t-h2 { font: 300 44px/52px var(--font-display); letter-spacing: -0.01em; }
+.t-h3 { font: 400 30px/38px var(--font-display); }
+.t-h4 { font: 500 22px/30px var(--font-display); }
+.t-eyebrow { font: 500 13px/16px var(--font-display); letter-spacing: 0.18em; text-transform: uppercase; }
+.t-nav { font: 500 14px/20px var(--font-display); letter-spacing: 0.08em; text-transform: uppercase; }
+.t-stat { font: 300 96px/96px var(--font-display); letter-spacing: -0.03em; }
+.t-stat-sm { font: 300 48px/52px var(--font-display); letter-spacing: -0.02em; }
+.t-lead { font: 400 28px/40px var(--font-body); }
+.t-bodylg { font: 400 23px/36px var(--font-body); }
+.t-body { font: 400 20px/32px var(--font-body); }
+.t-bodysm { font: 400 17px/26px var(--font-body); }
+.t-caption { font: 500 15px/22px var(--font-body); letter-spacing: 0.02em; }
+
+/* knoppen */
+.btn { display: inline-flex; align-items: center; gap: 12px; padding: 8px 8px 8px 24px; border-radius: var(--radius-sm); border: 1px solid transparent; font: 500 15px/20px var(--font-display); letter-spacing: 0.06em; text-decoration: none; }
+.btn.plain { padding: 14px 24px; }
+.btn .ic { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; flex: none; }
+.btn-p { background: var(--accent); color: var(--on-accent); }
+.btn-p .ic { background: var(--on-accent); color: var(--accent); }
+.btn-l { background: var(--page); color: var(--on-page); }
+.btn-l .ic { background: var(--on-page); color: var(--page); }
+.btn-o { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+.rb { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--on-page); color: var(--page); flex: none; text-decoration: none; }
+
+/* hover: pijlknoppen worden oranje en draaien 45° naar rechts */
+.rb, .btn .ic { transition: background .25s ease, color .25s ease; }
+path[d^="M7 17L17 7"] { transition: transform .3s cubic-bezier(.2, .8, .2, 1); transform-box: fill-box; transform-origin: center; }
+.rb:hover, .btn-l:hover .ic, .btn-o:hover .ic { background: var(--accent) !important; color: var(--on-accent) !important; }
+.rb:hover path[d^="M7 17L17 7"], .btn:hover path[d^="M7 17L17 7"] { transform: rotate(45deg); }
+@media (prefers-reduced-motion: reduce) { .rb, .btn .ic, path[d^="M7 17L17 7"] { transition: none; } }
+
+/* navigatie-pill op een foto */
+.pill { display: flex; gap: 4px; padding: 8px; background: var(--glass); border: 1px solid var(--glass-line); border-radius: var(--radius-md); backdrop-filter: blur(16px); }
+.tab { padding: 8px 16px; border-radius: var(--radius-sm); font: 500 14px/20px var(--font-display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+.tab.on { background: var(--accent); color: var(--on-accent); }
+
+/* notches: page-kleur, met afronding waar ze het panel raken */
+.notch { position: absolute; background: var(--page); color: var(--on-page); }
+.notch::before, .notch::after { content: ""; position: absolute; width: var(--radius-lg); height: var(--radius-lg); }
+.n-tc { top: 0; left: 50%; transform: translateX(-50%); border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+.n-tc::before { top: 0; right: 100%; background: radial-gradient(circle at 0 100%, transparent var(--radius-lg), var(--page) calc(var(--radius-lg) + 0.5px)); }
+.n-tc::after { top: 0; left: 100%; background: radial-gradient(circle at 100% 100%, transparent var(--radius-lg), var(--page) calc(var(--radius-lg) + 0.5px)); }
+.n-br { right: 0; bottom: 0; border-radius: var(--radius-lg) 0 0 0; }
+.n-br::before { right: 0; bottom: 100%; background: radial-gradient(circle at 0 0, transparent var(--radius-lg), var(--page) calc(var(--radius-lg) + 0.5px)); }
+.n-br::after { bottom: 0; right: 100%; background: radial-gradient(circle at 0 0, transparent var(--radius-lg), var(--page) calc(var(--radius-lg) + 0.5px)); }
+.n-bl { left: 0; bottom: 0; border-radius: 0 var(--radius-lg) 0 0; }
+.n-bl::before { left: 0; bottom: 100%; background: radial-gradient(circle at 100% 0, transparent var(--radius-lg), var(--page) calc(var(--radius-lg) + 0.5px)); }
+.n-bl::after { bottom: 0; left: 100%; background: radial-gradient(circle at 100% 0, transparent var(--radius-lg), var(--page) calc(var(--radius-lg) + 0.5px)); }
+.n-tr { top: 0; right: 0; border-radius: 0 0 0 var(--radius-lg); }
+.n-tr::before { top: 0; right: 100%; background: radial-gradient(circle at 0 100%, transparent var(--radius-lg), var(--page) calc(var(--radius-lg) + 0.5px)); }
+.n-tr::after { top: 100%; right: 0; background: radial-gradient(circle at 0 100%, transparent var(--radius-lg), var(--page) calc(var(--radius-lg) + 0.5px)); }
