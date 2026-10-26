@@ -117,8 +117,8 @@ function build(slug) {
   const list = isAll ? PHOTOS : PHOTOS.filter((p) => p.cats.includes(slug));
   const path = isAll ? '/portfolio' : `/portfolio/${slug}`;
   const url = SITE.url + path;
-  const best = isAll ? null : bestPhoto(slug);
-  const hero = isAll ? { file: HERO.file, alt: HERO.alt, pos: '50% 45%' } : best || { file: c.hero, alt: c.alt, pos: c.pos };
+  const best = bestPhoto(isAll ? 'all' : slug);
+  const hero = isAll ? best || { file: HERO.file, alt: HERO.alt, pos: '50% 45%' } : best || { file: c.hero, alt: c.alt, pos: c.pos };
   const pills = [['all', 'All', PHOTOS.length, '/portfolio']].concat(SITE.categories.map((k) => [k.slug, k.name, PHOTOS.filter((p) => p.cats.includes(k.slug)).length, `/portfolio/${k.slug}`]));
   return {
     path,
@@ -141,8 +141,8 @@ function build(slug) {
       <p class="lead">${isAll ? 'The best frames from 2,132 events. Pick a category and the strongest shots rise to the top.' : c.lead}</p>
     </div>
     <div class="notch n-br ph-n">
-      <div><p class="t-eyebrow" style="font-size:11px;line-height:14px;opacity:.7">${isAll ? 'No. 01' : 'Scroll'}</p><p class="t-h4" style="margin-top:4px">${isAll ? 'Mysteryland' : 'Portfolio'}</p></div>
-      <a class="rb" href="#gallery" aria-label="Scroll to the photos" style="width:56px;height:56px">${ARROW}</a>
+      <div><p class="t-eyebrow" style="font-size:11px;line-height:14px;opacity:.7">Work with me</p><p class="t-h4" style="margin-top:4px">Contact</p></div>
+      <a class="rb" href="/contact" aria-label="Contact Martin Hols" style="width:56px;height:56px">${ARROW}</a>
     </div>
   </header>
 
