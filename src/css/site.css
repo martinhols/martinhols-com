@@ -73,6 +73,14 @@ img{max-width:100%}
 .logos div:first-child{border-left:0}
 .logos img{display:block;object-fit:contain;max-width:80%}
 
+/* 24-logo grid (about) */
+.lgrid{min-height:0}
+.logos24{grid-template-columns:repeat(6,minmax(0,1fr));height:auto;border-bottom:1px solid var(--line)}
+.logos24 div{height:132px;border-left:1px solid var(--line);border-top:1px solid var(--line)}
+.logos24 div:nth-child(-n+6){border-top:0}
+.logos24 div:nth-child(6n+1){border-left:0}
+.logos24 img{max-width:70%;max-height:64px;width:auto!important;height:auto!important}
+
 /* portfolio-categorieën */
 .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:0 24px;min-height:140px}
 .sec-head h2{font:300 60px/66px var(--font-display);letter-spacing:-.015em;margin-top:12px}
@@ -192,6 +200,10 @@ body.menu-open{overflow:hidden}
   .logos div:nth-child(4),.logos div:nth-child(5){width:50%}
   .logos div:nth-child(2),.logos div:nth-child(3),.logos div:nth-child(5){border-left:1px solid var(--line)}
   .logos img{max-width:92px;max-height:36px;width:auto!important;height:auto!important}
+  .logos24{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line)}
+  .logos24 div,.logos24 div:nth-child(n){width:auto;height:72px;border-top:0;border-bottom:1px solid var(--line);border-left:1px solid var(--line)}
+  .logos24 div:nth-child(3n+1){border-left:0}
+  .logos24 img{max-width:92px;max-height:36px}
   .sec-head{display:block;padding:20px 8px 0;min-height:0}
   .sec-head h2{font:300 32px/38px var(--font-display);margin-top:8px}
   .sec-head .btn{margin-top:16px}

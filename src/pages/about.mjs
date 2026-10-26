@@ -107,10 +107,9 @@ export const page = {
     </div>
   </header>
 
-  <section class="cream trusted" data-theme="cream" aria-labelledby="trusted-h">
-    <p class="t-eyebrow dim" id="trusted-h">Trusted by the brands behind the biggest events</p>
-    <div class="logos">${logos.map(([f, a, s]) => `<div>${img(f, a, { style: s })}</div>`).join('')}</div>
-    <p class="t-bodysm dim">Clients include Albert Heijn, Tomorrowland, MOJO, Gall &amp; Gall and Formula 1.</p>
+  <section class="cream trusted lgrid" data-theme="cream" aria-labelledby="lg-h">
+    <p class="t-eyebrow dim" id="lg-h">Events and brands I’ve worked for</p>
+    <div class="logos logos24">${Array.from({ length: 24 }, (_, i) => logos[i] ? `<div>${img(logos[i][0], logos[i][1], { style: logos[i][2] })}</div>` : '<div class="empty" aria-hidden="true"></div>').join('')}</div>
   </section>
 
   <section class="intro cream" data-theme="cream" aria-labelledby="intro-h">
