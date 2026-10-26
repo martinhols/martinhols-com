@@ -117,7 +117,13 @@
     cap.textContent = slides[i].getAttribute('data-name');
     bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = '';
   }
-  function play() { stop(); if (!reduce) timer = setTimeout(function () { show(i + 1); play(); }, 4000); }
+  // Overige slides pas ná het laden van de pagina ophalen (geen concurrentie met de eerste foto),
+  // en pas doorschuiven als de volgende foto er ook echt is.
+  function ready(k) { var im = slides[(k + n) % n].querySelector('img'); return !im || im.complete; }
+  function warm() { slides.forEach(function (el) { var im = el.querySelector('img'); if (im && im.loading === 'lazy') im.loading = 'eager'; }); }
+  if (document.readyState === 'complete') warm(); else window.addEventListener('load', warm);
+  function tick() { if (ready(i + 1)) { show(i + 1); play(); } else { timer = setTimeout(tick, 300); } }
+  function play() { stop(); if (!reduce) timer = setTimeout(tick, 4000); }
   function stop() { if (timer) { clearTimeout(timer); timer = null; } }
   s.addEventListener('mouseenter', function () { s.classList.add('paused'); stop(); });
   s.addEventListener('mouseleave', function () { s.classList.remove('paused'); show(i); play(); });

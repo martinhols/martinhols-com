@@ -301,7 +301,7 @@ ${S.all.some(x=>needsTidy(x.file))?`<button class="btn o" data-act="tidy" style=
 ${p?`<div class="where" style="margin-top:24px"><p class="eyebrow" style="color:var(--accent-text)">Checks · selected photo</p><h3 style="font:400 30px/38px var(--font-display);margin:8px 0">${ck.filter(x=>x[0]).length} of 5 done</h3><ul class="ck">${ck.map(([y,t,s])=>`<li><span class="o ${y?'y':''}">${I.chk}</span><span>${t}<small>${esc(s)}</small></span></li>`).join('')}</ul></div>`:''}</aside>
 ${p?`<section class="panel">${editor(p,'Photo '+(L.indexOf(p)+1)+' of '+L.length,false)}</section>`:`<section class="panel"><p class="hint">No single photos yet. Drop some on the left.</p></section>`}</div>`}
 
-const MAXH=6;
+const MAXH=12;
 function fpos(x,box){const w=box.clientWidth,h=box.clientHeight,nw=x.width||3,nh=x.height||2,s=Math.max(w/nw,h/nh),dw=nw*s,dh=nh*s;return{w,h,dw,dh,ox:(dw-w)/2,oy:(dh-h)/2}}
 function placeDot(box){const x=S.all.find(p=>p.id===box.dataset.focus);if(!x)return;const d=box.querySelector('.fdot'),c=box.querySelector('.fclr'),has=x.focus_x!=null&&x.focus_y!=null;d.style.display=c.style.display=has?'block':'none';if(!has)return;const f=fpos(x,box);d.style.left=(x.focus_x/100*f.dw-f.ox)+'px';d.style.top=(x.focus_y/100*f.dh-f.oy)+'px'}
 const wide=x=>!x.width||!x.height||x.width>=x.height*1.2;

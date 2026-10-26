@@ -77,7 +77,7 @@ export const page = {
 
       <div class="slider" data-slider role="group" aria-roledescription="carousel" aria-label="Selected festival photos">
         <div class="track">
-          ${slides.map((s, i) => `<div class="slide${i === 0 ? ' on' : ''}" data-name="${s.name}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${slides.length}">${img(s.file, s.alt, { style: `object-position:${s.pos}`, priority: i === 0 })}</div>`).join('')}
+          ${slides.map((s, i) => `<div class="slide${i === 0 ? ' on' : ''}" data-name="${s.name}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${slides.length}">${img(s.file, s.alt, { style: `object-position:${s.pos}`, priority: i === 0, sizes: '(min-width:1100px) 72vw, 100vw' })}</div>`).join('')}
         </div>
         <a class="s-cap glass" href="/portfolio/festivals" data-cap>${slides[0].name}</a>
         <div class="s-count glass" aria-hidden="true"><span data-num>01</span><span class="bar"><i></i></span><span class="of">${String(slides.length).padStart(2, '0')}</span></div>
