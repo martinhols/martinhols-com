@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { SITE } from '../site.mjs';
 import { dbPhotos, localMap, siteUrl, bestPhoto } from '../data.mjs';
+import { PROJECTS } from './projects.mjs';
 import { esc, img, header, contactSection, footer, ARROW, ARROW16 } from '../layout.mjs';
 
 const STATIC = JSON.parse(readFileSync(new URL('../portfolio.json', import.meta.url))).map((p) => ({ ...p, cats: [p.cat], full: `/img/portfolio/${p.slug}.jpg`, file: `portfolio/${p.slug}-s.jpg`, thumbOpt: false }));
@@ -99,6 +100,24 @@ const specs = `
     <div class="spg">${SPECS.map(([t, d, f, pos, alt], i) => `<div class="sp"><span class="im">${img(f, alt, { style: `object-position:${pos}` })}</span><span class="tx"><span class="n">${String(i + 1).padStart(2, '0')}</span><span class="t">${t}</span><span class="d">${d}</span></span></div>`).join('')}</div>
   </section>`;
 
+const projSec = (slug, name) => {
+  const list = PROJECTS.filter((p) => p.cat === slug).slice(0, 3);
+  if (!list.length) return '';
+  const card = (p, aria = false) => `<a class="pj" href="${p.href}"${aria ? ' aria-hidden="true" tabindex="-1"' : ''}>${img(p.file, aria ? '' : p.alt, { style: `object-position:${p.pos}` })}<p class="t-eyebrow acc k">${CATS[p.cat]}</p><p class="tt">${esc(p.title)}</p></a>`;
+  return `
+  <section class="panel projects" aria-labelledby="projects-h">
+    <div class="hd">
+      <div><p class="t-eyebrow acc">Projects</p><h2 id="projects-h">Latest ${name.toLowerCase()} projects</h2></div>
+      <a class="btn btn-p" href="/projects">All projects <span class="ic">${ARROW16}</span></a>
+    </div>
+    <div class="pgrid">
+      ${list.map((p) => `<a class="pc" href="${p.href}">${img(p.file, p.alt, { style: `object-position:${p.pos}` })}<p class="t-eyebrow acc k">${CATS[p.cat]}</p><p class="tt">${esc(p.title)}</p></a>`).join('')}
+    </div>
+    <div class="car"><div class="cartrack">${list.map((p) => card(p)).join('')}${list.map((p) => card(p, true)).join('')}</div></div>
+    <a class="m-btn p btn-m" href="/projects" style="margin-top:20px">All projects <span class="ic">${ARROW16}</span></a>
+  </section>`;
+};
+
 const faqSec = (c, name) => `
   <section class="cream faqs" data-theme="cream" aria-labelledby="faq-h">
     <div class="fq-l">
@@ -160,6 +179,7 @@ function build(slug) {
   ${lightbox}
   ${specs}
   ${isAll ? '' : faqSec(c, name)}
+  ${isAll ? '' : projSec(slug, name)}
   ${contactSection('portfolio/mysteryland-stage-sunset-fireworks.jpg')}
   ${footer()}`,
   };
