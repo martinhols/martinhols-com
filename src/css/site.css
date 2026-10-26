@@ -418,12 +418,13 @@ body.menu-open{overflow:hidden}
 .ah-btns{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap}
 .ah-stats{margin-top:auto;max-width:680px}
 .ah-lg{margin:40px 0 32px}
-.ah-lgh{margin:0 0 20px;font:300 26px/34px var(--font-display);letter-spacing:-.01em;color:var(--ink);max-width:none;text-wrap:balance}
+.ah-lgh{margin:0 0 20px;font:400 17px/24px var(--font-display);letter-spacing:0;color:var(--ink-muted);max-width:none;text-wrap:balance}
 .ah-logos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
 .ah-logos>div{height:92px;display:grid;place-items:center;border-radius:14px;background:rgba(244,239,230,.04);border:1px solid rgba(244,239,230,.1);transition:border-color .25s,background .25s,transform .25s}
-.ah-logos>div:hover{border-color:var(--accent,#FF8A1F);background:rgba(255,138,31,.08);transform:translateY(-2px)}
+.ah-logos>div:hover{border-color:var(--page);background:var(--page)}
 .ah-logos .lg{display:block;background:var(--page);opacity:.88;transition:opacity .25s;-webkit-mask:var(--u) center/contain no-repeat;mask:var(--u) center/contain no-repeat}
-.ah-logos>div:hover .lg{opacity:1}
+.ah-logos>div:hover .lg{opacity:1;background:#051E31}
+@media (hover:none){.ah-logos>div:hover{background:rgba(244,239,230,.04);border-color:rgba(244,239,230,.1)}.ah-logos>div:hover .lg{background:var(--page)}}
 .ah .m-btns,.ah .ah-pm{display:none}
 .stats .stat{font:300 48px/52px var(--font-display);letter-spacing:-.02em;margin:0}
 .intro{display:flex;gap:80px;padding:64px;border-radius:24px;background:var(--surface);color:var(--ink);min-height:760px}
@@ -500,7 +501,7 @@ body.menu-open{overflow:hidden}
   .ah .lead{margin-top:16px;font:400 19px/28px var(--font-body)}
   .ah .d-btns,.ah .ah-stats{display:none}
   .ah-lg{margin:24px 0 0}
-  .ah-lgh{font-size:19px;line-height:26px;margin-bottom:14px}
+  .ah-lgh{font-size:15px;line-height:22px;margin-bottom:12px}
   .ah-logos{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
   .ah-logos>div{height:60px;border-radius:10px}
   .ah-logos .lg{zoom:.5}
