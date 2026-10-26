@@ -185,13 +185,14 @@ function dHash(im){const st=(i,w,h)=>{const c=document.createElement('canvas');c
 const hamm=(a,c)=>{let v=BigInt('0x'+a)^BigInt('0x'+c),n=0;while(v){n+=Number(v&1n);v>>=1n}return n};
 function findMeta(f,im){const m=getMeta(),k=metaKey(f.name);if(m[k])return m[k];let h;try{h=dHash(im)}catch(e){return null}let best=null,bd=65;Object.keys(m).forEach(q=>{if(q[0]!=='#')return;const d=hamm(h,q.slice(1));if(d<bd){bd=d;best=m[q]}});return best}
 function importMeta(txt){const a=JSON.parse(txt);if(!Array.isArray(a))throw new Error('Expected a list');const m=getMeta();a.forEach(x=>{if(x.hash)m['#'+x.hash]=x;if(x.original)m[metaKey(x.original)]=x});try{localStorage.setItem('photoMeta',JSON.stringify(m))}catch(e){}return a.length}
+const autoName=n=>{let t=cleanN(n).replace(/_/g,' '),y=(t.match(/(?:^|[^0-9])(20[12]\d)(?=[^0-9]|$)/)||t.match(/(?:TML|ML|DQ)(2[0-9])(?=[^0-9]|\s)/i)||[])[1];if(y&&y.length===2)y='20'+y;t=t.replace(/\b\d?TML\d*/gi,' tomorrowland ').replace(/\b(CR3|HQ|byMartinHols|MartinHols\d*|Martin[- ]?Hols\d*|TheArrows|The[- ]Arrows|Festivalphotographer|Photography|Photographer|Fotografie|6I4A\d+|MHR?\d*|\d{1,}|Festival|Photo|Portfolio)\b/gi,' ');let r=slug(t);if(y&&r&&!r.includes(y))r+='-'+y;return r||'photo'};
 async function uploadFiles(files,toProject){
  files=[...files].filter(f=>f.type.startsWith('image/'));if(!files.length)return;
  if(toProject){if(!S.proj?.id){const ok=await saveProject(true);if(!ok)return}if(S.photos.length+files.length>24)return say('Up to 24 photos per project.',1)}
  const N=files.length,fails=[];let n=0;
  for(const f of files){n++;const at=(k,t)=>progress(((n-1)+k)/N*100,`Photo ${n} of ${N} · ${t}`);
   try{at(0,'reading '+f.name);const im=await loadImg(f);at(.1,'making the large version');const {b,w,h}=await enc(im,2400);
-   const MT=toProject?null:findMeta(f,im);const base=(MT&&MT.file&&slug(cleanN(MT.file)))||slug([toProject?S.proj.slug:'',cleanN(f.name)].filter(Boolean).join('-'))||'photo';const file=base+'.jpg';
+   const MT=toProject?null:findMeta(f,im);const base=(MT&&MT.file&&slug(cleanN(MT.file)))||slug([toProject?S.proj.slug:'',autoName(f.name)].filter(Boolean).join('-'))||'photo';const file=base+'.jpg';
    const path=`${toProject?S.proj.slug:'single'}/${Date.now()}-${file}`;
    const put=async(p,blob,type)=>{const r=await sb.storage.from('photos').upload(p,blob,{contentType:type});if(r.error)throw r.error};
    at(.25,'making smaller versions');
