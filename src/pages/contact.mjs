@@ -31,6 +31,11 @@ export const page = {
           <a class="ct" href="mailto:${SITE.email}"><span><span class="t-eyebrow dim" style="display:block">Email</span><span class="v">${SITE.email}</span></span><span class="rb">${ARROW}</span></a>
           <a class="ct" href="tel:${SITE.phone}"><span><span class="t-eyebrow dim" style="display:block">Phone</span><span class="v">${SITE.phoneText}</span></span><span class="rb">${ARROW}</span></a>
         </div>
+        <div class="next"><p class="t-eyebrow dim">What happens next</p><ol>
+          <li><span>01</span><p><b>I reply the same day.</b> With a first answer and any questions about the event.</p></li>
+          <li><span>02</span><p><b>You get a clear quote.</b> Date, hours, location, deliverables and price.</p></li>
+          <li><span>03</span><p><b>We confirm in writing.</b> Then I prepare with your callsheet.</p></li>
+        </ol></div>
         <div class="company"><p class="t-eyebrow dim">Company details</p><p class="d">${details}</p></div>
       </div>
       <div class="who">${img('martin-hols-portrait.jpg', 'Martin Hols')}<div><p class="nm">Martin Hols</p><p class="t-eyebrow dim" style="margin-top:4px;font-size:12px;line-height:16px;letter-spacing:.2em">Event photographer</p></div></div>

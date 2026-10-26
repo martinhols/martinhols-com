@@ -5,6 +5,12 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, 
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'method' });
+  // Zonder JavaScript post het formulier direct: stuur dan terug naar de pagina in plaats van JSON te tonen.
+  const isForm = String(req.headers['content-type'] || '').includes('application/x-www-form-urlencoded');
+  if (isForm) {
+    const real = res;
+    res = { status: (c) => ({ json: (o) => { real.setHeader('Location', '/contact/?' + (o.ok ? 'sent=1' : 'error=1') + '#quote-form'); real.status(303).end(); } }) };
+  }
   const b = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {};
   if (clean(b.website)) return res.status(200).json({ ok: true }); // honeypot: doe alsof het gelukt is
 

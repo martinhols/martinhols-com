@@ -23,6 +23,8 @@
     var st = document.getElementById('form-status');
     var btn = f.querySelector('button[type=submit]');
     var say = function (msg, cls) { st.textContent = msg; st.className = 'status ' + cls; st.hidden = false; };
+    if (/[?&]sent=1/.test(location.search)) say('Thank you. I received your request and usually reply the same day.', 'ok');
+    if (/[?&]error=1/.test(location.search)) say('Sorry, sending failed. Please email me directly at martin@thearrows.nl.', 'err');
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       var bad = false;
