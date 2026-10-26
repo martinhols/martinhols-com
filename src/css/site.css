@@ -10,7 +10,10 @@ img{max-width:100%}
 .skip:focus{top:12px}
 
 /* pagina-frame */
-.page{max-width:1440px;margin:0 auto;padding:24px;display:flex;flex-direction:column;gap:24px}
+.page{padding:24px;display:flex;flex-direction:column;gap:24px}
+/* Alles blijft max. 1440 px breed; alleen de hero schaalt mee op grotere schermen (zoom via --hz, gezet in <head> en in site.js). */
+.page>*{width:100%;max-width:1392px;align-self:center}
+.page>.hero{max-width:2512px;zoom:var(--hz,1)}
 .panel{position:relative;border-radius:var(--radius-lg);background:var(--bg);color:var(--ink);overflow:hidden}
 .cream{background:transparent;color:var(--ink)}
 .dim{color:var(--ink-muted)}

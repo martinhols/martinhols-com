@@ -127,6 +127,7 @@ export function layout(page) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@100..900&family=Ubuntu:wght@300;400;500;700&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
+<script>(function(){var w=innerWidth;var k=w>=1440?Math.max(1,Math.min((Math.min(w,2560)-48)/1392,(innerHeight-48)/852)):1;document.documentElement.style.setProperty("--hz",k)})()</script>
 ${ld}
 </head>
 <body>
