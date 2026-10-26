@@ -522,7 +522,8 @@ body.menu-open{overflow:hidden}
   .ah-pm>div{position:absolute;left:12px;right:12px;bottom:12px;padding:16px 18px;background:var(--scrim);backdrop-filter:blur(18px);border:1px solid var(--glass-line);border-radius:12px}
   .ah-pm .nm{font:400 24px/30px var(--font-display)}
   .intro{display:block;padding:20px;border-radius:20px;min-height:0}
-  .intro .ph{display:none}
+  .intro .ph{display:block;width:auto;height:440px;margin:0 0 20px}
+  .intro .ph .award{left:12px;top:12px}
   .intro h2{font:300 32px/38px var(--font-display);margin-top:12px}
   .intro p.lead{margin-top:16px;font:400 18px/28px var(--font-body)}
   .intro .intro-ft{display:none}
