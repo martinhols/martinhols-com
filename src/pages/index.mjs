@@ -1,9 +1,9 @@
 import { SITE } from '../site.mjs';
 import { PROJECTS, CATS } from './projects.mjs';
-import { bestPhoto } from '../data.mjs';
+import { bestPhoto, heroPhotos } from '../data.mjs';
 import { img, header, contactSection, footer, ARROW, ARROW16, ICONS } from '../layout.mjs';
 
-const slides = [
+const slides0 = [
   { file: 'tomorrowland-mainstage-fireworks.jpg', name: 'Tomorrowland', pos: '50% 38%', alt: 'Festival mainstage with fireworks fanning out above a packed crowd at night' },
   { file: 'tomorrowland-stage-night.jpg', name: 'Tomorrowland', pos: '50% 50%', alt: 'Tomorrowland stage at night with the crowd in front' },
   { file: 'defqon1-main-stage.jpg', name: 'Defqon.1', pos: '50% 50%', alt: 'Defqon.1 main stage in daylight' },
@@ -11,6 +11,9 @@ const slides = [
   { file: 'f1-las-vegas-grand-prix.jpg', name: 'F1 Las Vegas Grand Prix', pos: '50% 50%', alt: 'Formula 1 Las Vegas Grand Prix' },
   { file: 'defqon1-pyro-show.jpg', name: 'Defqon.1', pos: '50% 50%', alt: 'Pyro show on the Defqon.1 stage' },
 ];
+
+const chosen = heroPhotos();
+const slides = chosen.length ? chosen : slides0;
 
 const projects = PROJECTS.slice(0, 3).map((p) => ({ cat: CATS[p.cat], title: p.title, file: p.file, pos: p.pos, alt: p.alt, href: p.href }));
 
