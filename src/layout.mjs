@@ -2,6 +2,7 @@ import { localMap } from './data.mjs';
 import { SITE } from './site.mjs';
 import fs from 'node:fs';
 
+const webpBases = new Set(fs.readdirSync(new URL('./img', import.meta.url), { recursive: true }).filter((f) => /-\d+\.webp$/.test(f)).map((f) => f.replace(/-\d+\.webp$/, '')));
 const sizes = JSON.parse(fs.readFileSync(new URL('./img/sizes.json', import.meta.url)));
 export const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -20,6 +21,7 @@ export function img(file, alt, opts = {}) {
   const [w, h] = (L ? [L.w, L.h] : !remote && sizes[file]) || [];
   const a = [`src="${L ? (opts.thumb ? L.thumb : L.src) : remote ? file : '/img/' + file}"`, `alt="${esc(alt)}"`];
   if (w) a.push(`width="${w}"`, `height="${h}"`);
+  if (!remote) { const b = file.replace(/(-s)?\.jpg$/, ''); if (webpBases.has(b)) { const set = [640, 1280, 2400].filter((w) => fs.existsSync(new URL(`./img/${b}-${w}.webp`, import.meta.url))); if (set.length) { a.push(`srcset="${set.map((w) => `/img/${b}-${w}.webp ${w}w`).join(', ')}"`, `sizes="${opts.sizes || (opts.priority ? '100vw' : /-s\.jpg$/.test(file) || opts.thumb ? '(min-width:1100px) 25vw, 50vw' : '(min-width:1100px) 50vw, 100vw')}"`); } } }
   if (L && L.srcset) a.push(`srcset="${L.srcset}"`, `sizes="${opts.sizes || (opts.priority ? '100vw' : opts.thumb ? '(min-width:1100px) 25vw, 50vw' : '(min-width:1100px) 50vw, 100vw')}"`);
   if (opts.cls) a.push(`class="${opts.cls}"`);
   if (opts.style) a.push(`style="${opts.style}"`);
