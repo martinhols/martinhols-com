@@ -361,8 +361,8 @@ body.menu-open{overflow:hidden}
 .sec{display:grid;grid-template-columns:96px minmax(0,1fr);padding:40px 0;border-top:1px solid var(--line);scroll-margin-top:24px}
 .sec .num{font:500 13px/16px var(--font-display);letter-spacing:.18em;color:var(--accent-text);padding-top:14px}
 .sec h2{font:400 30px/38px var(--font-display);margin:0}
-.sec p{font:400 20px/32px var(--font-body);margin:16px 0 0;max-width:760px}
-.sec ul{list-style:none;margin:12px 0 0;padding:0;max-width:760px}
+.sec p{font:400 20px/32px var(--font-body);margin:16px 0 0;max-width:none;text-wrap:balance}
+.sec ul{list-style:none;margin:12px 0 0;padding:0;max-width:none;text-wrap:balance}
 .sec li{position:relative;padding:6px 0 6px 24px;font:400 20px/32px var(--font-body)}
 .sec li::before{content:"";position:absolute;left:2px;top:19px;width:8px;height:8px;border-radius:50%;background:var(--accent-text)}
 .sec .lk{display:inline-flex;margin-top:20px}
@@ -417,9 +417,13 @@ body.menu-open{overflow:hidden}
 .ah .lead{margin-top:28px;max-width:560px;font:400 23px/36px var(--font-body);color:var(--ink-muted)}
 .ah-btns{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap}
 .ah-stats{margin-top:auto;max-width:680px}
-.ah-logos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin:36px 0 32px;border-top:1px solid var(--glass-line);border-left:1px solid var(--glass-line)}
-.ah-logos>div{height:84px;display:grid;place-items:center;border-right:1px solid var(--glass-line);border-bottom:1px solid var(--glass-line)}
-.ah-logos .lg{display:block;background:var(--page);-webkit-mask:var(--u) center/contain no-repeat;mask:var(--u) center/contain no-repeat}
+.ah-lg{margin:40px 0 32px}
+.ah-lgh{margin:0 0 20px;font:300 26px/34px var(--font-display);letter-spacing:-.01em;color:var(--ink);max-width:none;text-wrap:balance}
+.ah-logos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.ah-logos>div{height:92px;display:grid;place-items:center;border-radius:14px;background:rgba(244,239,230,.04);border:1px solid rgba(244,239,230,.1);transition:border-color .25s,background .25s,transform .25s}
+.ah-logos>div:hover{border-color:var(--accent,#FF8A1F);background:rgba(255,138,31,.08);transform:translateY(-2px)}
+.ah-logos .lg{display:block;background:var(--page);opacity:.88;transition:opacity .25s;-webkit-mask:var(--u) center/contain no-repeat;mask:var(--u) center/contain no-repeat}
+.ah-logos>div:hover .lg{opacity:1}
 .ah .m-btns,.ah .ah-pm{display:none}
 .stats .stat{font:300 48px/52px var(--font-display);letter-spacing:-.02em;margin:0}
 .intro{display:flex;gap:80px;padding:64px;border-radius:24px;background:var(--surface);color:var(--ink);min-height:760px}
@@ -495,8 +499,10 @@ body.menu-open{overflow:hidden}
   .ah h1{font:300 40px/44px var(--font-display);margin-top:16px}
   .ah .lead{margin-top:16px;font:400 19px/28px var(--font-body)}
   .ah .d-btns,.ah .ah-stats{display:none}
-  .ah-logos{grid-template-columns:repeat(4,minmax(0,1fr));margin:24px 0 0}
-  .ah-logos>div{height:60px}
+  .ah-lg{margin:24px 0 0}
+  .ah-lgh{font-size:19px;line-height:26px;margin-bottom:14px}
+  .ah-logos{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  .ah-logos>div{height:60px;border-radius:10px}
   .ah-logos .lg{zoom:.5}
   .ah .ah-pm{display:flex;margin-top:24px;min-height:0;height:auto;padding:0;background:none;border:0;border-radius:14px;position:relative}
   .ah .m-btns{display:block}
