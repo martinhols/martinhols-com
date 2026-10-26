@@ -7,6 +7,12 @@ const logos = [
   ['logo-mojo.png', 'MOJO', 'width:190px;height:46px'],
   ['logo-gall-and-gall.png', 'Gall & Gall', 'width:188px;height:64px'],
   ['logo-formula-1.png', 'Formula 1', 'width:147px;height:64px'],
+  ['logo-q-dance.png', 'Q-dance', ''],
+  ['logo-klm.png', 'KLM Royal Dutch Airlines', ''],
+  ['logo-etos.png', 'Etos', ''],
+  ['logo-hema.png', 'HEMA', ''],
+  ['logo-bynder.png', 'Bynder', ''],
+  ['logo-as-watson.png', 'AS Watson', ''],
 ];
 
 const facts = [
