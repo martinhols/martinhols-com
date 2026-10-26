@@ -15,13 +15,13 @@ export default async function handler(req, res) {
   const b = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {};
   if (clean(b.website)) return res.status(200).json({ ok: true }); // honeypot: doe alsof het gelukt is
 
-  const name = clean(b.name, 200), email = clean(b.email, 200), message = clean(b.message);
-  if (!name || !/^\S+@\S+\.\S+$/.test(email) || !message) return res.status(400).json({ ok: false, error: 'invalid' });
+  const company = clean(b.company, 200), name = clean(b.name, 200), email = clean(b.email, 200), message = clean(b.message);
+  if (!name || !company || !/^\S+@\S+\.\S+$/.test(email) || !message) return res.status(400).json({ ok: false, error: 'invalid' });
 
   const key = process.env.RESEND_API_KEY, to = process.env.CONTACT_TO, from = process.env.CONTACT_FROM;
   if (!key || !to || !from) return res.status(503).json({ ok: false, error: 'not-configured' });
 
-  const { html, text, subject } = buildMail({ name, email, date: clean(b.date, 100), location: clean(b.location, 200), type: clean(b.type, 100), message });
+  const { html, text, subject } = buildMail({ name, company, email, date: clean(b.date, 100), location: clean(b.location, 200), type: clean(b.type, 100), message });
 
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',

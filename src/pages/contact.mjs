@@ -47,6 +47,7 @@ export const page = {
         <label class="fld"><span>Name</span><input type="text" name="name" placeholder="Your name" autocomplete="name" required></label>
         <label class="fld"><span>Email</span><input type="email" name="email" placeholder="you@company.com" autocomplete="email" required></label>
       </div>
+      <label class="fld"><span>Company or event</span><input type="text" name="company" placeholder="e.g. Albert Heijn, Defqon.1" autocomplete="organization" required></label>
       <div class="frow">
         <label class="fld"><span>Event date</span><input type="text" name="date" placeholder="dd / mm / yyyy" inputmode="numeric"></label>
         <label class="fld"><span>Location</span><input type="text" name="location" placeholder="City, venue"></label>

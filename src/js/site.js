@@ -28,11 +28,11 @@
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       var bad = false;
-      ['name', 'email', 'message'].forEach(function (n) {
+      ['name', 'email', 'company', 'message'].forEach(function (n) {
         var el = f.elements[n]; var ok = el.value.trim() && (n !== 'email' || /^\S+@\S+\.\S+$/.test(el.value.trim()));
         el.setAttribute('aria-invalid', ok ? 'false' : 'true'); if (!ok) { bad = true; if (bad === true && !f.__first) { f.__first = el; } }
       });
-      if (bad) { say('Please fill in your name, a valid email and a short message.', 'err'); var first = f.querySelector('[aria-invalid="true"]'); if (first) first.focus(); f.__first = null; return; }
+      if (bad) { say('Please fill in your name, a valid email, your company or event and a short message.', 'err'); var first = f.querySelector('[aria-invalid="true"]'); if (first) first.focus(); f.__first = null; return; }
       var data = {}; new FormData(f).forEach(function (v, k) { data[k] = v; });
       btn.disabled = true;
       fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
