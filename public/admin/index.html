@@ -267,7 +267,9 @@ function altRow(p){const l=(SLOTS.find(s=>s[0]===p.slot)||[,'Portfolio'])[1],a=p
 <div class="chips" style="margin-top:8px;align-items:center"><button class="sg" data-sug="${p.id}">${I.sp}${a?'Suggest another':'Suggest alt text'}</button>${a.trim()?'<span class="hint"><span class="st ok"></span> Alt text is good</span>':'<span class="hint warn">Missing. Photos in the portfolio need alt text.</span>'}</div></div></div>`}
 function suggest(p){const P=S.proj||{},ev=[p.event||P.event_name,p.year||(P.event_date||'').slice(0,4)].filter(Boolean).join(' '),w={hero:'wide view of the main stage',card:'crowd in front of the stage',wide:'wide shot of the stage and the crowd','tall-a':'detail of the stage and lights','tall-b':'moment from the show'}[p.slot]||'moment from the event';return `${ev?ev+': ':''}${w}${p.city||P.location?' in '+(p.city||P.location).split(',')[0]:''}`.slice(0,125)}
 
-const phChecks=p=>[(p.alt||'').trim(),p.file&&p.file===slug(cleanN(p.file))+'.jpg'&&!/(martinhols|cr3|6i4a)/i.test(p.file),p.event&&p.year,p.city,(p.categories||[]).length];
+const phChecks=p=>[(p.alt||'').trim(),p.file&&p.file===slug(cleanN(p.file))+'.jpg'&&!/(cr3|6i4a|^\d{6})/i.test(p.file),p.event&&p.year,p.city,(p.categories||[]).length];
+const needsTidy=f=>/(martinhols|cr3|6i4a|festivalphotographer|photography|fotografie|^\d{4}-?\d{2})/i.test(f||'');
+async function tidyNames(){const used=new Set(S.all.map(x=>x.file));let n=0;for(const x of S.all){if(!needsTidy(x.file))continue;let b=autoName(x.file);if(!b||b==='photo')continue;let f=b+'.jpg',k=2;while(used.has(f)&&f!==x.file)f=b+'-'+(k++)+'.jpg';if(f===x.file)continue;used.add(f);await dbPhoto(x.id,{file:f});n++}return n}
 const isDone=p=>phChecks(p).every(Boolean);
 const miss=p=>{const c=phChecks(p),n=['alt text','file name','event and year','city','category'];return n.filter((_,i)=>!c[i])};
 const cur=()=>S.tab==='portfolio'&&S.pe?S.all.find(x=>x.id===S.pe):S.singles[S.ss];
@@ -289,7 +291,7 @@ function vSingle(){const L=S.singles;let p=L[S.ss];const td0=L.filter(x=>!isDone
  const open=L.filter(x=>!isDone(x)).length;
  app.innerHTML=head('Add photos.',`<button class="btn o" data-act="draft">Save draft</button>${btnPub('Publish','site')}`)+`
 <div class="sgrid"><aside><button class="drop" data-drop="single"><span class="ic">${I.up}</span><b>Drop photos here</b><span>One or many. Each gets its own details.</span></button>
-<button class="btn o" data-act="impmeta" style="margin-top:12px;width:100%">Import descriptions (${Object.keys(getMeta()).length} ready)</button><input type="file" id="metaIn" accept=".json,application/json" multiple hidden>
+${S.all.some(x=>needsTidy(x.file))?`<button class="btn o" data-act="tidy" style="margin-top:12px;width:100%">Tidy file names (${S.all.filter(x=>needsTidy(x.file)).length})</button>`:''}<button class="btn o" data-act="impmeta" style="margin-top:12px;width:100%">Import descriptions (${Object.keys(getMeta()).length} ready)</button><input type="file" id="metaIn" accept=".json,application/json" multiple hidden>
 <div class="row" style="margin:24px 0 8px"><span class="lb">To finish · ${open}</span><span class="cnt ${open?'warn':''}">${L.length-open} complete</span></div>
 <div class="plist">${todo.map(x=>`<button class="lr ${x===p?'on':''}" data-ss="${L.indexOf(x)}"><span class="t"><img class="imgc" src="${esc(x.url)}" alt=""></span><span><span class="n">${esc(x.file)}</span><span class="m"><span class="st ${isDone(x)?'ok':'no'}"></span>${isDone(x)?'Complete':'Missing: '+miss(x).join(', ')}</span></span></button>`).join('')||'<p class="hint" style="padding:8px 4px">All photos are complete. Edit any photo from the Portfolio tab.</p>'}</div>
 ${p?`<div class="where" style="margin-top:24px"><p class="eyebrow" style="color:var(--accent-text)">Checks · selected photo</p><h3 style="font:400 30px/38px var(--font-display);margin:8px 0">${ck.filter(x=>x[0]).length} of 5 done</h3><ul class="ck">${ck.map(([y,t,s])=>`<li><span class="o ${y?'y':''}">${I.chk}</span><span>${t}<small>${esc(s)}</small></span></li>`).join('')}</ul></div>`:''}</aside>
@@ -340,6 +342,7 @@ function bind(){
   else if(a==='sugall'){for(const p of S.photos.filter(x=>(x.slot||x.portfolio)&&!(x.alt||'').trim()))await dbPhoto(p.id,{alt:suggest(p)});show()}
   else if(a==='savephoto'||a==='savenext'){const p=cur(),o=readSingle();await dbPhoto(p.id,o);say('Photo saved.');if(S.tab!=='portfolio'){const L=S.singles,n=L.length;let nx=-1;if(a==='savenext')for(let k=1;k<=n;k++){const j=(S.ss+k)%n;if(!isDone(L[j])){nx=j;break}}S.keep=nx<0;if(nx>=0)S.ss=nx}show()}
   else if(a==='impmeta'){$('#metaIn').click()}
+  else if(a==='tidy'){const n=await tidyNames();say(n+' file names tidied. Publish the site to use them.');show()}
   else if(a==='delphoto'){const p=cur();if(!confirm('Delete this photo?'))return;await sb.from('photos').delete().eq('id',p.id);await loadAll();S.ss=0;S.pe=null;show()}
  }catch(x){say(x.message||String(x),1)}});
 }

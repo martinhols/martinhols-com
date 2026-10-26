@@ -28,7 +28,7 @@ async function download(url, file) {
 }
 
 // Kopieert alle gebruikte foto's naar dist/img/db en vult localMap.
-async function localize(dist, urls, dims) {
+async function localize(dist, urls, dims, names = {}) {
   const dir = path.join(dist, 'img/db');
   fs.mkdirSync(dir, { recursive: true });
   const queue = [...new Set(urls.filter((u) => /^https?:/.test(u) && !u.includes('martinhols-com.vercel.app')))];
@@ -37,6 +37,7 @@ async function localize(dist, urls, dims) {
     while (queue.length) {
       const url = queue.shift();
       let base = decodeURIComponent(url.split('/').pop().replace(/\.[^.]+$/, '')).replace(/^\d{10,}-/, '').toLowerCase().replace(/[^a-z0-9-]+/g, '-');
+      if (names[url]) base = names[url].replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || base;
       while (used.has(base)) base += '-x';
       used.add(base);
       try {
@@ -64,7 +65,8 @@ export async function prepareData(dist) {
   dbPhotos = dbPhotos.filter((x) => x.portfolio || (x.project_id && pub.has(x.project_id)));
   const dims = Object.fromEntries(dbPhotos.map((x) => [x.url, [x.width, x.height]]));
   const urls = [...dbPhotos.map((x) => x.url), ...dbProjects.flatMap((p) => [p.hero_url, ...(p.gallery || [])]), ...dbPosts.map((p) => p.hero_url)].filter(Boolean);
-  await localize(dist, urls, dims);
+  const names = Object.fromEntries(dbPhotos.filter((x) => x.file).map((x) => [x.url, x.file]));
+  await localize(dist, urls, dims, names);
 }
 
 export const siteUrl = (u, thumb) => { const m = localMap[u]; return m ? (thumb ? m.thumb : m.src) : u; };
