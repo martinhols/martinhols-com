@@ -160,4 +160,4 @@ const dbDetail = (p) => {
   ${footer()}`,
   };
 };
-export const pages = [listPage, detailPage, ...fromDb.filter((p) => p.slug !== M.slug).map(dbDetail)];
+export const pages = [listPage, ...fromDb.filter((p) => p.slug !== M.slug).map(dbDetail)];
