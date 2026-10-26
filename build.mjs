@@ -13,6 +13,7 @@ fs.mkdirSync(path.join(dist, 'assets'), { recursive: true });
 // css + js
 const css = fs.readFileSync(path.join(root, 'src/css/tokens.css'), 'utf8') + '\n' + fs.readFileSync(path.join(root, 'src/css/site.css'), 'utf8');
 fs.writeFileSync(path.join(dist, 'assets/site.css'), css);
+fs.writeFileSync(path.join(dist, 'assets/tokens.css'), fs.readFileSync(path.join(root, 'src/css/tokens.css'), 'utf8'));
 fs.copyFileSync(path.join(root, 'src/js/site.js'), path.join(dist, 'assets/site.js'));
 
 // afbeeldingen

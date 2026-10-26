@@ -1,10 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { SITE } from '../site.mjs';
-import { dbProjects } from '../data.mjs';
+import { dbProjects, dbPhotos } from '../data.mjs';
+const altOf = Object.fromEntries(dbPhotos.filter((x) => x.alt).map((x) => [x.url, x.alt]));
 import { esc, img, header, contactSection, footer, ARROW, ARROW16 } from '../layout.mjs';
 
 const STATIC = JSON.parse(readFileSync(new URL('../projects.json', import.meta.url)));
-const fromDb = dbProjects.filter((d) => d.hero_url).map((d) => ({ slug: d.slug, cat: d.category, title: d.title, file: d.hero_url, pos: '50% 50%', alt: `${d.title}, event photography by Martin Hols`, href: `/projects/${d.slug}`, db: d }));
+const fromDb = dbProjects.filter((d) => d.hero_url).map((d) => ({ slug: d.slug, cat: d.category, title: d.title, file: d.hero_url, pos: '50% 50%', alt: altOf[d.hero_url] || `${d.title}, event photography by Martin Hols`, href: `/projects/${d.slug}`, db: d }));
 const dbSlugs = new Set(fromDb.map((p) => p.slug));
 export const PROJECTS = [...fromDb, ...STATIC.filter((p) => !dbSlugs.has(p.slug))];
 export const CATS = Object.fromEntries(SITE.categories.map((c) => [c.slug, c.name]));
@@ -153,7 +154,7 @@ const dbDetail = (p) => {
   ${phero(d.hero_url, p.alt, '50% 50%', `<div class="eyebrows"><p class="t-eyebrow acc">Project</p><i></i><p class="t-eyebrow dim">${CATS[d.category]}</p></div>`, `${esc(d.title)}.`, '')}
   <section class="cream psum" id="detail" data-theme="cream"><div class="ps-l"><p class="t-eyebrow acc">Project summary</p><p class="sum">${esc(sum)}</p></div>
     <dl class="fxg" style="grid-template-columns:repeat(${Math.min(fx.length, 4)},minmax(0,1fr))">${fx.map(([k, v]) => `<div class="fx"><dt class="t-eyebrow dim">${k}</dt><dd class="v">${esc(v)}</dd></div>`).join('')}</dl></section>
-  ${rows.length ? `<section class="panel pgal" aria-label="Photos">${rows.map((r) => `<div class="pr pr${r.length}">${r.map((u) => `<div class="pi">${img(u, `${d.title} event photography`)}</div>`).join('')}</div>`).join('')}</section>` : ''}
+  ${rows.length ? `<section class="panel pgal" aria-label="Photos">${rows.map((r) => `<div class="pr pr${r.length}">${r.map((u) => `<div class="pi">${img(u, altOf[u] || `${d.title} event photography`)}</div>`).join('')}</div>`).join('')}</section>` : ''}
   ${faq.length ? `<section class="cream pfaq" data-theme="cream"><p class="t-eyebrow dim">Questions about this project</p><div class="pqg">${faq.map((f) => `<div class="qa"><h3>${esc(f.q)}</h3><p>${esc(f.a)}</p></div>`).join('')}</div></section>` : ''}
   ${contactSection('tomorrowland-stage-night.jpg')}
   ${footer()}`,

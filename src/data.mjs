@@ -2,10 +2,10 @@
 // Lukt dat niet (geen netwerk, lege database), dan bouwt de site gewoon zonder.
 import { SUPABASE } from './site.mjs';
 
-async function get(table, order) {
+async function get(table, order, onlyPublished = true) {
   try {
     if (process.env.DATA_FIXTURE) { const fx = JSON.parse((await import('node:fs')).readFileSync(process.env.DATA_FIXTURE, 'utf8')); return fx[table] || []; }
-    const r = await fetch(`${SUPABASE.url}/rest/v1/${table}?select=*&published=eq.true&order=${order}`, {
+    const r = await fetch(`${SUPABASE.url}/rest/v1/${table}?select=*${onlyPublished ? '&published=eq.true' : ''}&order=${order}`, {
       headers: { apikey: SUPABASE.key, Authorization: `Bearer ${SUPABASE.key}` },
       signal: AbortSignal.timeout(8000),
     });
@@ -17,6 +17,7 @@ async function get(table, order) {
   }
 }
 export const dbProjects = await get('projects', 'event_date.desc.nullslast,created_at.desc');
+export const dbPhotos = await get('photos', 'created_at.asc', false);
 export const dbPosts = await get('posts', 'published_at.desc.nullslast,created_at.desc');
 
 // Eenvoudige tekst → HTML: lege regel = alinea, "## " = kop, "- " = lijst.

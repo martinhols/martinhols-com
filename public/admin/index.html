@@ -1,119 +1,321 @@
 <!doctype html>
-<html lang="nl">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Admin | MartinHols.com</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@300;400;500&family=Ubuntu:wght@300;400;500&display=swap">
+<title>Photo intake | MartinHols.com</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@100..900&family=Ubuntu:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="/assets/tokens.css">
 <style>
-:root{--bg:#051E31;--card:#0B2A42;--line:#ffffff26;--ink:#F4EFE6;--mut:#a9b8c4;--acc:#FF8A1F;--on:#051E31;--cream:#F4EFE6}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 18px/1.5 Rokkitt,serif}
-h1,h2,h3,label,button,.tab,.badge{font-family:Ubuntu,sans-serif}
-.wrap{max-width:980px;margin:0 auto;padding:24px 16px 96px}
-header.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:24px}
-header.top h1{font:500 22px/1 Ubuntu,sans-serif;margin:0}
-.btn{font:500 15px/1 Ubuntu,sans-serif;border:0;border-radius:10px;padding:14px 18px;cursor:pointer;background:var(--acc);color:var(--on)}
-.btn.o{background:none;color:var(--ink);border:1px solid var(--line)}.btn.d{background:#b42318;color:#fff}
-.btn:disabled{opacity:.5;cursor:wait}
-.tabs{display:flex;gap:8px;margin-bottom:20px}.tab{padding:12px 18px;border-radius:10px;border:1px solid var(--line);background:none;color:var(--ink);cursor:pointer;font-size:15px}
-.tab.on{background:var(--acc);border-color:var(--acc);color:var(--on)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
-.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-top:1px solid var(--line);cursor:pointer}
-.row:first-child{border-top:0}.row b{font:500 17px Ubuntu,sans-serif}.row small{color:var(--mut);display:block}
-.badge{font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}.badge.on{background:#1b7a3d;color:#fff;border-color:#1b7a3d}
-label{display:block;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin:18px 0 6px}
-input[type=text],input[type=email],input[type=password],input[type=date],select,textarea{width:100%;background:#041726;border:1px solid var(--line);border-radius:10px;padding:13px 14px;color:var(--ink);font:400 18px Rokkitt,serif}
-textarea{min-height:120px;resize:vertical}textarea.big{min-height:360px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:700px){.grid2{grid-template-columns:1fr}}
-.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}.th{position:relative;width:110px;height:84px;border-radius:10px;overflow:hidden;background:#000}
-.th img{width:100%;height:100%;object-fit:cover}.th button{position:absolute;top:4px;right:4px;border:0;border-radius:50%;width:24px;height:24px;background:#000b;color:#fff;cursor:pointer}
-.faq{display:grid;gap:8px;margin-top:8px;padding:12px;border:1px solid var(--line);border-radius:10px}
-.msg{margin:14px 0;padding:12px 14px;border-radius:10px;background:#0f3a59;font:400 15px Ubuntu,sans-serif}.msg.err{background:#5b1a14}
-.bar{position:sticky;bottom:0;display:flex;gap:10px;flex-wrap:wrap;padding:14px 0;background:linear-gradient(transparent,var(--bg) 30%);margin-top:20px}
-.hint{color:var(--mut);font:400 14px Ubuntu,sans-serif;margin-top:6px}
-.chk{display:flex;gap:10px;align-items:center;text-transform:none;letter-spacing:0;font-size:16px;color:var(--ink)}
-.chk input{width:22px;height:22px}
+*{box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{background:var(--page);color:var(--on-page);font:400 18px/28px var(--font-body)}
+a{color:inherit}button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1440px;margin:0 auto;padding:24px;display:flex;flex-direction:column;gap:24px}
+.panel{padding:40px;border-radius:24px;background:var(--bg);color:var(--ink)}
+.top{position:relative;border-radius:24px;background:var(--bg);color:var(--ink);padding:136px 40px 40px;min-height:324px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.brand{position:absolute;left:40px;top:24px;display:flex;align-items:center;gap:14px;text-decoration:none}
+.brand img{width:48px;height:48px;border-radius:16px;object-fit:cover;object-position:50% 22%}
+.brand b{font:500 22px/28px var(--font-display)}
+.badge{padding:8px 16px;border:1px solid var(--line-strong);border-radius:8px;font:500 12px/16px var(--font-display);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);margin-left:8px}
+.notch.n-tr{display:flex;gap:12px;align-items:center;padding:20px 28px 28px 36px;z-index:2}
+.btn{display:inline-flex;align-items:center;gap:12px;height:50px;padding:0 20px;border-radius:8px;border:1px solid transparent;font:500 15px/20px var(--font-display);letter-spacing:.02em;background:var(--accent);color:var(--on-accent)}
+.btn.o{background:transparent;color:var(--on-page);border-color:var(--line-strong)}
+.btn.dk{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+.btn .ic{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--bg);color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.tabs{display:flex;gap:4px;padding:6px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.tabs button{border:0;background:none;color:var(--ink);padding:0 16px;height:44px;border-radius:8px;font:500 14px/20px var(--font-display);letter-spacing:.08em;text-transform:uppercase}
+.tabs button.on{background:var(--accent);color:var(--on-accent)}
+h1{font:300 88px/92px var(--font-display);letter-spacing:-.02em;margin:12px 0 0}
+.eyebrow{font:500 13px/16px var(--font-display);letter-spacing:.18em;text-transform:uppercase;color:var(--accent-text)}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:24px;align-items:start}
+.stack{display:flex;flex-direction:column;gap:24px}
+.step{font:500 13px/16px var(--font-display);letter-spacing:.18em;text-transform:uppercase;color:var(--accent-text)}
+.panel h2{font:400 30px/38px var(--font-display);margin:8px 0 0}
+.lb{display:block;font:500 12px/16px var(--font-display);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);margin:0}
+.fd{display:flex;flex-direction:column;gap:8px;min-width:0}
+.fd input,.fd textarea,.fd select{width:100%;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:0 14px;font:400 18px/28px var(--font-body);outline:none;transition:border-color .2s}
+.fd input,.fd select{height:48px}.fd textarea{padding:10px 14px;resize:vertical;min-height:84px}
+.fd input::placeholder,.fd textarea::placeholder{color:var(--ink-muted);opacity:.7}
+.fd input:hover,.fd textarea:hover{border-color:var(--line-strong)}
+.fd input:focus,.fd textarea:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--focus)}
+.hint{font:500 14px/20px var(--font-body);color:var(--ink-muted)}.warn{color:var(--accent-text)}
+.row{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.cnt{font:500 12px/16px var(--font-display);letter-spacing:.08em;color:var(--ink-muted)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px 24px;margin-top:24px}.full{grid-column:1/-1}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:8px;border:1px solid var(--line-strong);font:500 12px/16px var(--font-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:transparent}
+.chip.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.chip.tag{text-transform:none;letter-spacing:.02em;font:500 14px/20px var(--font-display);background:var(--surface)}
+.chip.add{border-style:dashed;color:var(--ink-muted)}
+.sw{display:inline-flex;align-items:center;gap:10px;font:500 13px/16px var(--font-display);letter-spacing:.08em;text-transform:uppercase;background:none;border:0;color:var(--ink);padding:0}
+.sw i{position:relative;display:inline-block;width:44px;height:26px;border-radius:13px;border:1px solid var(--line-strong);flex:none}
+.sw i::after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:var(--ink-muted)}
+.sw.on i{background:var(--accent);border-color:var(--accent)}.sw.on i::after{left:21px;background:var(--on-accent)}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:100%;padding:28px 16px;border:2px dashed var(--line-strong);border-radius:12px;color:var(--ink-muted);text-align:center;font:500 16px/22px var(--font-body);background:none;cursor:pointer}
+.drop.over{border-color:var(--accent);background:var(--surface)}
+.drop b{font:500 15px/20px var(--font-display);letter-spacing:.06em;color:var(--ink)}
+.drop .ic{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--accent);color:var(--on-accent)}
+.st{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none}.st.ok{background:#5BC98F}.st.no{background:var(--accent)}
+.up{display:flex;align-items:center;gap:8px;margin-top:14px;font:500 15px/20px var(--font-body);color:var(--ink-muted)}
+.slots{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:20px}
+.slm{display:flex;flex-direction:column;gap:8px}
+.slm .t{position:relative;height:110px;border-radius:10px;overflow:hidden;background:var(--surface-raised)}
+.slm .t.e{border:2px dashed var(--line-strong);background:transparent;display:grid;place-items:center;color:var(--ink-muted);font:500 13px/16px var(--font-display)}
+.slm .n{display:flex;align-items:center;gap:8px;font:500 12px/16px var(--font-display);letter-spacing:.12em;text-transform:uppercase}
+.slm .n b{display:grid;place-items:center;width:22px;height:22px;border-radius:6px;background:var(--accent);color:var(--on-accent)}
+.slm .u{font:500 14px/20px var(--font-body);color:var(--ink-muted)}
+.imgc{width:100%;height:100%;object-fit:cover;display:block}
+.share{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:20px;padding:16px 20px;border-radius:12px;background:var(--surface);font:400 17px/24px var(--font-body)}
+.share b{font-weight:500}
+.tgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:12px}
+.tl2{position:relative;border-radius:12px;overflow:hidden;height:150px;background:var(--surface-raised);outline:2px solid transparent;outline-offset:2px;cursor:pointer;border:0;padding:0}
+.tl2.sel{outline-color:var(--accent)}.tl2.off img{opacity:.35}
+.tl2 .lbl{position:absolute;left:8px;bottom:8px;display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:6px;background:var(--accent);color:var(--on-accent);font:500 11px/14px var(--font-display);letter-spacing:.12em;text-transform:uppercase}
+.tl2 .hf{position:absolute;right:8px;top:8px;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--scrim);backdrop-filter:blur(16px);color:var(--ink)}
+.tl2 .hf.on{background:var(--accent);color:var(--on-accent)}
+.tl2 .st{position:absolute;right:10px;bottom:10px;box-shadow:0 0 0 2px var(--scrim)}
+.tp{position:absolute;left:8px;top:8px;display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 9px;border-radius:6px;background:var(--ink);color:var(--bg);font:500 10px/12px var(--font-display);letter-spacing:.14em;text-transform:uppercase}
+.tp svg{color:var(--accent)}
+.selbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:20px;padding:16px;border-radius:12px;background:var(--surface-raised);border:1px solid var(--line)}
+.selbar .t{width:56px;height:56px;border-radius:8px;overflow:hidden;background:var(--surface)}
+.selbar .nm{font:500 15px/20px var(--font-display);word-break:break-all}.selbar .m{font:500 14px/20px var(--font-body);color:var(--ink-muted)}
+.ar{display:flex;gap:20px;align-items:flex-start;padding:18px 0;border-top:1px solid var(--line)}
+.ar:first-of-type{border-top:0}
+.ar .t{width:96px;height:96px;border-radius:10px;overflow:hidden;flex:none;background:var(--surface-raised)}
+.sg{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:8px;background:var(--surface-raised);border:1px solid var(--line-strong);font:500 12px/16px var(--font-display);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.side{position:sticky;top:24px;color:var(--on-page)}
+.side h3{font:400 30px/38px var(--font-display);margin:8px 0 12px}
+.bar{height:4px;border-radius:2px;background:var(--line-strong)}.bar i{display:block;height:100%;background:var(--accent);border-radius:2px}
+.ck{list-style:none;margin:8px 0 0;padding:0}
+.ck li{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-top:1px solid var(--line-strong);font:400 18px/24px var(--font-body);border-top-color:#05304d33}
+.ck li:first-child{border-top:0}
+.ck .o{flex:none;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line-strong);color:transparent;margin-top:1px}
+.ck .o.y{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.ck small{display:block;margin-top:2px;font:500 14px/20px var(--font-body);color:var(--ink-muted)}
+.side .btn{width:100%;justify-content:space-between;margin-top:12px}
+.side .btn.c{justify-content:center}
+.where{margin-top:20px;padding-top:16px;border-top:1px solid #05304d33}
+.where p{margin:4px 0}
+.msg{padding:12px 16px;border-radius:10px;background:var(--surface-raised);color:var(--ink);font:500 15px/22px var(--font-body)}.msg.err{background:#5b1a14}
+.plist{display:flex;flex-direction:column;gap:2px}
+.lr{display:flex;gap:14px;align-items:center;padding:10px;border-radius:12px;border:1px solid transparent;background:none;text-align:left;width:100%;color:var(--on-page)}
+.lr.on{background:var(--bg);color:var(--ink);border-color:var(--line-strong)}
+.lr .t{width:64px;height:64px;border-radius:8px;overflow:hidden;flex:none;background:var(--surface-raised)}
+.lr .n{font:500 15px/20px var(--font-display);word-break:break-all}
+.lr .m{display:flex;align-items:center;gap:8px;margin-top:4px;font:500 13px/16px var(--font-body);color:var(--ink-muted)}
+.sgrid{display:grid;grid-template-columns:360px minmax(0,1fr);gap:24px;align-items:start}
+.sedit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px}
+.sedit .pv{width:100%;aspect-ratio:3/2;border-radius:12px;overflow:hidden;background:var(--surface-raised)}
+.serp{margin-top:20px;padding:20px;border-radius:12px;background:var(--surface)}
+.serp .a{font:500 20px/28px var(--font-display);margin-top:10px}.serp .u{color:var(--ink-muted);font:400 16px/24px var(--font-body)}
+.serp .b{margin-top:8px;font:400 18px/28px var(--font-body)}
+.fdc{display:flex;flex-direction:column;gap:20px}
+.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px 16px;margin-top:24px}
+.pt{display:flex;flex-direction:column;gap:10px}
+.pt .im{position:relative;height:190px;border-radius:12px;overflow:hidden;background:var(--surface-raised)}
+.pt.off .im img{opacity:.35}
+.pt .row2{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pt .nm{font:500 15px/20px var(--font-display)}.pt .ev{font:500 13px/18px var(--font-body);color:var(--ink-muted);display:flex;align-items:center;gap:6px}
+.pt .cat{position:absolute;right:8px;top:8px;padding:5px 9px;border-radius:6px;background:var(--scrim);backdrop-filter:blur(16px);font:500 10px/12px var(--font-display);letter-spacing:.14em;text-transform:uppercase}
+.pt .tp{left:8px}
+.limit{width:340px}.limit .big{font:300 36px/44px var(--font-display);display:flex;justify-content:space-between;align-items:baseline}.limit .big small{font:500 12px/16px var(--font-display);letter-spacing:.08em;color:var(--ink-muted)}
+.foot2{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:0 24px 24px}
+.foot2 p:last-child{font:400 20px/32px var(--font-body);margin-top:8px}
+.side,.sgrid>aside,.foot2{--ink-muted:#47586A;--line-strong:#7B6F5C}
+.sgrid>aside .drop b{color:var(--on-page)}
+.sgrid>aside .lr.on{--ink-muted:#A9BCC8}
+.side .eyebrow,.sgrid>aside .eyebrow,.foot2 .eyebrow{color:#A83F00}
+.login{max-width:440px;margin:12vh auto 0}
+.login .fd{margin-top:16px}
+@media (max-width:1099px){
+ .wrap{padding:12px}.panel{padding:20px}.top{padding:110px 20px 20px;min-height:0}h1{font-size:44px;line-height:48px}
+ .cols,.sgrid,.sedit,.foot2{grid-template-columns:1fr}.side{position:static}
+ .g2{grid-template-columns:1fr}.slots{grid-template-columns:repeat(2,1fr)}.tgrid{grid-template-columns:repeat(3,1fr)}
+ .pgrid{grid-template-columns:repeat(2,1fr)}.limit{width:100%}.badge{display:none}.row{flex-wrap:wrap}.chips{min-width:0}.notch.n-tr{padding:12px 12px 16px 16px;gap:8px}.btn{padding:0 14px}
+}
 </style>
 </head>
 <body>
 <div class="wrap" id="app"></div>
+<input type="file" id="fileIn" accept="image/*" multiple hidden>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 const SB_URL='https://rpspddxsnedszscudfke.supabase.co',SB_KEY='sb_publishable__p3yyQ_mtRIaa-MDEWG_CQ_vn0cEPVB';
 const sb=supabase.createClient(SB_URL,SB_KEY);
 const $=(s,r=document)=>r.querySelector(s),app=$('#app');
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const slugify=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const slug=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const CATS=[['festivals','Festivals'],['corporate','Corporate'],['sport','Sport'],['shows-music','Shows / Music']];
-let tab='projects',cur=null,msg='',err=false;
+const CN=Object.fromEntries(CATS);
+const SLOTS=[['hero','Hero','Project page header'],['card','Card','Overview, Home, Next project'],['wide','Wide','First wide gallery photo'],['tall-a','Tall A','Gallery pair, left'],['tall-b','Tall B','Gallery pair, right']];
+const MAXP=100,MAXT=20;
+const I={up:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V5M7 10l5-5 5 5M5 19h14"/></svg>',
+star:'<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg>',
+chk:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+ar:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg>',
+sp:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5 13.8 11.3 12 16l-1.8-4.7L5.5 9.5l4.7-1.8zM19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>'};
+let S={tab:'project',proj:null,photos:[],sel:null,projects:[],singles:[],ss:0,all:[],pf:{f:'all',c:null,n:20},msg:'',err:false,busy:''};
+const cleanN=s=>s.replace(/\.[^.]+$/,'');
 const hook=()=>{try{return localStorage.getItem('deployHook')||''}catch(e){return''}};
+const say=(m,e)=>{S.msg=m;S.err=!!e;const x=$('#msg');if(x){x.textContent=m;x.className='msg'+(e?' err':'');x.style.display=m?'block':'none'}};
 
-async function init(){const{data}=await sb.auth.getSession();data.session?list():login()}
-function login(m=''){app.innerHTML=`<div class="card" style="max-width:420px;margin:12vh auto 0"><h1 style="font:500 24px Ubuntu">Admin</h1>
-<form id="f"><label>E-mail</label><input type="email" id="e" autocomplete="username" required><label>Wachtwoord</label><input type="password" id="p" autocomplete="current-password" required>
-${m?`<div class="msg err">${esc(m)}</div>`:''}<div style="margin-top:20px"><button class="btn" style="width:100%">Inloggen</button></div></form></div>`;
-$('#f').onsubmit=async e=>{e.preventDefault();const{error}=await sb.auth.signInWithPassword({email:$('#e').value,password:$('#p').value});error?login('Inloggen mislukt: '+error.message):list()}}
+/* ---------- start & login ---------- */
+async function init(){const{data}=await sb.auth.getSession();data.session?(await loadAll(),show()):login()}
+function login(m=''){app.innerHTML=`<div class="panel login"><p class="eyebrow">Admin · not public</p><h2 style="font:300 40px/46px var(--font-display);margin:8px 0 0">Sign in</h2><form id="lf"><div class="fd"><label class="lb">Email</label><input type="email" id="e" autocomplete="username" required></div><div class="fd"><label class="lb">Password</label><input type="password" id="p" autocomplete="current-password" required></div>${m?`<p class="hint warn" style="margin-top:12px">${esc(m)}</p>`:''}<button class="btn" style="margin-top:20px;width:100%;justify-content:center">Sign in</button></form></div>`;
+$('#lf').onsubmit=async e=>{e.preventDefault();const{error}=await sb.auth.signInWithPassword({email:$('#e').value,password:$('#p').value});error?login('Sign in failed: '+error.message):init()}}
 
-async function list(){cur=null;
-const{data,error}=await sb.from(tab).select('*').order('created_at',{ascending:false});
-app.innerHTML=`<header class="top"><h1>MartinHols.com admin</h1><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn o" id="pub">Site publiceren</button><button class="btn o" id="out">Uitloggen</button></div></header>
-<div class="tabs"><button class="tab ${tab==='projects'?'on':''}" data-t="projects">Projecten</button><button class="tab ${tab==='posts'?'on':''}" data-t="posts">Blog</button></div>
-${msg?`<div class="msg ${err?'err':''}">${esc(msg)}</div>`:''}
-<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><h2 style="margin:0;font:500 20px Ubuntu">${tab==='projects'?'Projecten':'Blogartikelen'}</h2><button class="btn" id="new">+ Nieuw</button></div>
-${error?`<div class="msg err">${esc(error.message)}</div>`:''}
-${(data||[]).map(r=>`<div class="row" data-id="${r.id}"><div><b>${esc(r.title)}</b><small>/${tab==='projects'?'projects':'blog'}/${esc(r.slug)}</small></div><span class="badge ${r.published?'on':''}">${r.published?'Online':'Concept'}</span></div>`).join('')||'<p style="color:var(--mut)">Nog niets. Klik op “Nieuw”.</p>'}</div>`;
-msg='';err=false;window._rows=data||[];
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{tab=b.dataset.t;list()});
-$('#new').onclick=()=>edit({});document.querySelectorAll('.row').forEach(r=>r.onclick=()=>edit(window._rows.find(x=>x.id===r.dataset.id)));
-$('#out').onclick=async()=>{await sb.auth.signOut();login()};$('#pub').onclick=publish}
+/* ---------- data ---------- */
+async function loadAll(){const [p,ph]=await Promise.all([sb.from('projects').select('*').order('created_at',{ascending:false}),sb.from('photos').select('*').order('created_at',{ascending:true})]);
+S.projects=p.data||[];S.all=ph.data||[];if(p.error||ph.error)S.msg=(p.error||ph.error).message,S.err=true;
+if(ph.error&&/photos/.test(ph.error.message))S.msg='De fototabel bestaat nog niet. Voer eerst "schema-2.sql" uit in Supabase.';
+S.singles=S.all.filter(x=>!x.project_id);if(S.proj){S.proj=S.projects.find(x=>x.id===S.proj.id)||S.proj;S.photos=S.all.filter(x=>x.project_id===S.proj.id)}}
+const cntP=()=>S.all.filter(x=>x.portfolio).length,cntT=()=>S.all.filter(x=>x.top).length;
+async function dbPhoto(id,patch){const{data,error}=await sb.from('photos').update(patch).eq('id',id).select().single();if(error)throw error;const i=S.all.findIndex(x=>x.id===id);S.all[i]=data;S.photos=S.proj?S.all.filter(x=>x.project_id===S.proj.id):[];S.singles=S.all.filter(x=>!x.project_id);return data}
 
-async function publish(){let h=hook();
-if(!h){h=prompt('Plak de Vercel Deploy Hook URL (eenmalig). Zie de uitleg in de chat.');if(!h)return;try{localStorage.setItem('deployHook',h.trim())}catch(e){}}
-try{const r=await fetch(h.trim(),{method:'POST'});msg=r.ok?'Site wordt opnieuw gebouwd. Binnen ±1 minuut staat je wijziging live.':'Publiceren mislukt ('+r.status+').';err=!r.ok}catch(e){msg='Publiceren mislukt: '+e.message;err=true}list()}
+/* ---------- uploads ---------- */
+function resize(file,max=2400){return new Promise((res,rej)=>{const i=new Image,u=URL.createObjectURL(file);i.onload=()=>{const k=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);c.toBlob(b=>b?res({b,w:c.width,h:c.height}):rej(new Error('resize')),'image/jpeg',.86);URL.revokeObjectURL(u)};i.onerror=()=>rej(new Error('Not a valid image'));i.src=u})}
+async function uploadFiles(files,toProject){
+ files=[...files].filter(f=>f.type.startsWith('image/'));if(!files.length)return;
+ if(toProject){if(!S.proj?.id){const ok=await saveProject(true);if(!ok)return}if(S.photos.length+files.length>24)return say('Up to 24 photos per project.',1)}
+ try{let n=0;for(const f of files){say(`Uploading ${++n} of ${files.length}…`);const {b,w,h}=await resize(f);
+  const base=slug([toProject?S.proj.slug:'',cleanN(f.name)].filter(Boolean).join('-'))||'photo';let file=base+'.jpg';
+  const path=`${toProject?S.proj.slug:'single'}/${Date.now()}-${file}`;
+  const up=await sb.storage.from('photos').upload(path,b,{contentType:'image/jpeg'});if(up.error)throw up.error;
+  const url=sb.storage.from('photos').getPublicUrl(path).data.publicUrl,P=S.proj;
+  const row={file,url,width:w,height:h,bytes:b.size};
+  if(toProject){row.project_id=P.id;row.event=P.event_name||null;row.year=P.event_date?+P.event_date.slice(0,4):null;row.city=P.location||null;row.categories=P.categories||[];row.taken_on=P.event_date||null}
+  const{data,error}=await sb.from('photos').insert(row).select().single();if(error)throw error;S.all.push(data)}
+  S.photos=S.proj?S.all.filter(x=>x.project_id===S.proj.id):[];S.singles=S.all.filter(x=>!x.project_id);
+  if(!S.sel&&S.photos[0])S.sel=S.photos[0].id;say('');show()}catch(e){say('Upload failed: '+(e.message||e),1)}}
 
-function resize(file,max=2400){return new Promise((res,rej)=>{const i=new Image,u=URL.createObjectURL(file);i.onload=()=>{const k=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);c.toBlob(b=>b?res(b):rej(new Error('resize')),'image/jpeg',.86);URL.revokeObjectURL(u)};i.onerror=()=>rej(new Error('Geen geldige afbeelding'));i.src=u})}
-async function upload(file,slug){const b=await resize(file),name=`${slug||'misc'}/${Date.now()}-${slugify(file.name.replace(/\.[^.]+$/,''))}.jpg`;
-const{error}=await sb.storage.from('photos').upload(name,b,{contentType:'image/jpeg',upsert:false});if(error)throw error;return sb.storage.from('photos').getPublicUrl(name).data.publicUrl}
+/* ---------- project ---------- */
+const val=id=>($('#'+id)||{}).value;
+function readForm(){if(!$('#f-title'))return;const P=S.proj||(S.proj={categories:[]});P.title=val('f-title');P.client=val('f-client');P.event_name=val('f-event');P.location=val('f-city');P.event_date=val('f-date')||null;P.summary=val('f-sum')}
+async function saveProject(silent){readForm();const P=S.proj;if(!P||!P.title){say('Fill in the project name first.',1);return false}
+ const row={title:P.title,slug:P.slug||slug(P.title),client:P.client||null,event_name:P.event_name||null,location:P.location||null,event_date:P.event_date||null,summary:P.summary||null,categories:P.categories||[],category:(P.categories&&P.categories[0])||'festivals',published:!!P.published};
+ const ph=S.photos,by=s=>ph.find(x=>x.slot===s);
+ row.hero_url=(by('hero')||{}).url||null;row.gallery=[by('wide'),by('tall-a'),by('tall-b'),...ph.filter(x=>!x.slot)].filter(Boolean).map(x=>x.url);
+ const q=P.id?sb.from('projects').update(row).eq('id',P.id):sb.from('projects').insert(row);const{data,error}=await q.select().single();
+ if(error){say('Save failed: '+error.message,1);return false}
+ S.proj=data;const i=S.projects.findIndex(x=>x.id===data.id);i<0?S.projects.unshift(data):S.projects[i]=data;if(!silent)say('Saved.');return true}
+function checks(){const P=S.proj||{},ph=S.photos,need=ph.filter(x=>(x.slot||x.portfolio)&&!(x.alt||'').trim()),placed=SLOTS.filter(([k])=>ph.some(x=>x.slot===k)).length,marked=ph.filter(x=>x.marked).length;
+ const det=!!(P.title&&P.event_name&&P.location&&P.event_date&&(P.categories||[]).length&&P.summary);
+ return [[det,'Project details','Name, client, event, place, date, categories'],[ph.length>0,'Photos uploaded',ph.length+' photos'],[ph.some(x=>x.slot==='hero'),'Hero chosen',(ph.find(x=>x.slot==='hero')||{}).alt||'Pick one in step 3'],[placed===5,'Gallery placements',`${placed} of 5.`+(placed<5?' Open slots are left.':'')],[ph.length>0&&!need.length,'Alt text',need.length?`${need.length} still need it.`:'All placed photos have alt text'],[marked>0,'Portfolio picks',`${marked} marked, ${ph.filter(x=>x.top).length} of them Top`]]}
+async function publishProject(){if(!(await saveProject(true)))return;const c=checks();if(!(c[0][0]&&c[1][0]&&c[2][0]&&c[4][0]))return say('Finish details, photos, hero and alt text first.',1);
+ const{error}=await sb.from('projects').update({published:true}).eq('id',S.proj.id);if(error)return say(error.message,1);S.proj.published=true;await publishSite('Project published. ')}
+async function publishSite(prefix=''){let h=hook();if(!h){h=prompt('Paste the Vercel Deploy Hook URL (once).');if(!h)return;try{localStorage.setItem('deployHook',h.trim())}catch(e){}}
+ try{const r=await fetch(h.trim(),{method:'POST'});say(r.ok?prefix+'Site is being rebuilt. Live in about a minute.':'Publish failed ('+r.status+').',!r.ok)}catch(e){say('Publish failed: '+e.message,1)}}
 
-function edit(r){cur={...r};const isP=tab==='projects';cur.gallery=cur.gallery||[];cur.faq=cur.faq||[];
-app.innerHTML=`<header class="top"><h1>${r.id?'Bewerken':'Nieuw'} · ${isP?'project':'artikel'}</h1><button class="btn o" id="back">← Terug</button></header>
-<div class="card"><div id="m"></div>
-<label>Titel</label><input type="text" id="title" value="${esc(cur.title)}">
-<label>URL-naam (slug)</label><input type="text" id="slug" value="${esc(cur.slug)}"><div class="hint">Wordt de link. Automatisch uit de titel; alleen aanpassen als je wilt.</div>
-${isP?`<div class="grid2"><div><label>Categorie</label><select id="category">${CATS.map(([v,l])=>`<option value="${v}" ${cur.category===v?'selected':''}>${l}</option>`).join('')}</select></div>
-<div><label>Datum event</label><input type="date" id="event_date" value="${esc(cur.event_date||'')}"></div>
-<div><label>Klant</label><input type="text" id="client" value="${esc(cur.client)}"></div><div><label>Plaats / locatie</label><input type="text" id="location" value="${esc(cur.location)}"></div></div>
-<label>Naam event</label><input type="text" id="event_name" value="${esc(cur.event_name)}">
-<label>Samenvatting</label><textarea id="summary">${esc(cur.summary)}</textarea><div class="hint">2–3 zinnen: wie, wat, waar en wat jij deed. Dit leest Google en AI.</div>`
-:`<div class="grid2"><div><label>Soort</label><select id="type"><option value="guide" ${cur.type==='guide'?'selected':''}>Gids</option><option value="story" ${cur.type==='story'?'selected':''}>Verhaal</option></select></div>
-<div><label>Publicatiedatum</label><input type="date" id="published_at" value="${esc(cur.published_at||'')}"></div></div>
-<label>Korte samenvatting (1–2 zinnen, bovenaan)</label><textarea id="short_answer">${esc(cur.short_answer)}</textarea>
-<label>Meta-omschrijving (Google, max ±155 tekens)</label><input type="text" id="description" value="${esc(cur.description)}">
-<label>Tekst</label><textarea id="body" class="big">${esc(cur.body)}</textarea><div class="hint">Lege regel = nieuwe alinea. "## Kop" = tussenkop. "- item" = lijst.</div>`}
-<label>Hoofdfoto</label><div class="thumbs" id="hero"></div><input type="file" id="heroF" accept="image/*" style="margin-top:10px">
-${isP?`<label>Galerij (meerdere tegelijk)</label><div class="thumbs" id="gal"></div><input type="file" id="galF" accept="image/*" multiple style="margin-top:10px">`:''}
-<label>Veelgestelde vragen (voor Google en AI)</label><div id="faq"></div><button class="btn o" id="addq" style="margin-top:8px">+ Vraag toevoegen</button>
-<label class="chk"><input type="checkbox" id="published" ${cur.published?'checked':''}> Online zetten (zichtbaar na “Site publiceren”)</label></div>
-<div class="bar"><button class="btn" id="save">Opslaan</button>${r.id?'<button class="btn d" id="del">Verwijderen</button>':''}</div>`;
-const draw=()=>{$('#hero').innerHTML=cur.hero_url?`<div class="th"><img src="${esc(cur.hero_url)}"><button data-h>×</button></div>`:'';const hb=$('[data-h]');if(hb)hb.onclick=()=>{cur.hero_url='';draw()};
-if(isP){$('#gal').innerHTML=cur.gallery.map((u,i)=>`<div class="th"><img src="${esc(u)}"><button data-g="${i}">×</button></div>`).join('');document.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{cur.gallery.splice(+b.dataset.g,1);draw()})}
-$('#faq').innerHTML=cur.faq.map((f,i)=>`<div class="faq"><input type="text" placeholder="Vraag" data-q="${i}" value="${esc(f.q)}"><textarea placeholder="Antwoord" data-a="${i}" style="min-height:70px">${esc(f.a)}</textarea><button class="btn o" data-x="${i}">Verwijder vraag</button></div>`).join('');
-document.querySelectorAll('[data-q]').forEach(x=>x.oninput=()=>cur.faq[+x.dataset.q].q=x.value);document.querySelectorAll('[data-a]').forEach(x=>x.oninput=()=>cur.faq[+x.dataset.a].a=x.value);document.querySelectorAll('[data-x]').forEach(x=>x.onclick=()=>{cur.faq.splice(+x.dataset.x,1);draw()})};draw();
-const say=(t,e)=>{$('#m').innerHTML=t?`<div class="msg ${e?'err':''}">${esc(t)}</div>`:''};
-let auto=!r.id;$('#title').oninput=e=>{if(auto)$('#slug').value=slugify(e.target.value)};$('#slug').oninput=()=>auto=false;
-$('#back').onclick=list;$('#addq').onclick=()=>{cur.faq.push({q:'',a:''});draw()};
-const slug=()=>$('#slug').value||slugify($('#title').value);
-$('#heroF').onchange=async e=>{try{say('Foto uploaden…');cur.hero_url=await upload(e.target.files[0],slug());say('');draw()}catch(x){say('Upload mislukt: '+x.message,1)}};
-if(isP)$('#galF').onchange=async e=>{try{for(const [i,f] of [...e.target.files].entries()){say(`Foto ${i+1} van ${e.target.files.length} uploaden…`);cur.gallery.push(await upload(f,slug()))}say('');draw()}catch(x){say('Upload mislukt: '+x.message,1)}};
-$('#save').onclick=async()=>{const g=id=>$('#'+id)?.value||null;
-const row=isP?{title:g('title'),slug:slug(),category:g('category'),event_date:g('event_date'),client:g('client'),location:g('location'),event_name:g('event_name'),summary:g('summary'),gallery:cur.gallery}
-:{title:g('title'),slug:slug(),type:g('type'),published_at:g('published_at'),short_answer:g('short_answer'),description:g('description'),body:g('body')};
-row.hero_url=cur.hero_url||null;row.faq=cur.faq.filter(f=>f.q&&f.a);row.published=$('#published').checked;
-if(!row.title)return say('Vul een titel in.',1);if(row.published&&!row.hero_url)return say('Voeg eerst een hoofdfoto toe om online te zetten.',1);
-$('#save').disabled=true;const q=r.id?sb.from(tab).update(row).eq('id',r.id):sb.from(tab).insert(row);const{error}=await q;
-if(error){$('#save').disabled=false;return say('Opslaan mislukt: '+error.message,1)}msg='Opgeslagen. Klik op “Site publiceren” om het live te zetten.';list()};
-if(r.id)$('#del').onclick=async()=>{if(!confirm('Echt verwijderen?'))return;const{error}=await sb.from(tab).delete().eq('id',r.id);if(error)return say(error.message,1);msg='Verwijderd.';list()}}
+/* ---------- views ---------- */
+function head(title,main){return `<header class="top"><a class="brand" href="/admin"><img src="/img/martin-hols-portrait.jpg" alt=""><b>MartinHols.com</b><span class="badge">Admin · not public</span></a>
+<div class="notch n-tr">${main}</div><div><p class="eyebrow">Photo intake</p><h1>${title}</h1></div>
+<div class="tabs">${[['project','New project'],['single','Single photos'],['portfolio','Portfolio']].map(([k,l])=>`<button data-tab="${k}" class="${S.tab===k?'on':''}">${l}</button>`).join('')}</div></header><div class="msg ${S.err?'err':''}" id="msg" style="display:${S.msg?'block':'none'}">${esc(S.msg)}</div>`}
+const btnPub=(l,act)=>`<button class="btn" data-act="${act}">${l}<span class="ic">${I.ar}</span></button>`;
+function show(){S.tab==='project'?vProject():S.tab==='single'?vSingle():vPortfolio();bind()}
+const fld=(id,l,v,ph='',extra='')=>`<div class="fd"><label class="lb" for="${id}">${l}</label><input id="${id}" value="${esc(v||'')}" placeholder="${esc(ph)}" ${extra}></div>`;
+
+function vProject(){const P=S.proj||{categories:[]},ph=S.photos,c=checks(),done=c.filter(x=>x[0]).length,sel=ph.find(x=>x.id===S.sel),slot=k=>ph.find(x=>x.slot===k);
+ const sum=P.summary||'';
+ app.innerHTML=head(P.id?'Edit project.':'Add a project.',`<button class="btn o" data-act="draft">Save draft</button>${btnPub('Publish','pub')}`)+`
+<div class="cols"><div class="stack">
+<section class="panel"><p class="step">Step 1 of 4</p><h2>Project details</h2>
+${S.projects.length?`<div class="fd" style="margin-top:16px"><label class="lb" for="f-open">Open existing project</label><select id="f-open"><option value="">New project</option>${S.projects.map(p=>`<option value="${p.id}" ${p.id===P.id?'selected':''}>${esc(p.title)}${p.published?'':' (draft)'}</option>`).join('')}</select></div>`:''}
+<div class="g2">${fld('f-title','Project name',P.title,'e.g. Mysteryland 2025')}${fld('f-client','Client',P.client,'[Client]')}${fld('f-event','Event',P.event_name,'e.g. Mysteryland')}${fld('f-city','City and country',P.location,'[City], the Netherlands')}
+<div class="fd"><label class="lb" for="f-date">Date</label><input type="date" id="f-date" value="${esc(P.event_date||'')}"></div>
+<div class="fd"><label class="lb">Categories · pick one or more</label><div class="chips">${CATS.map(([k,l])=>`<button type="button" class="chip ${(P.categories||[]).includes(k)?'on':''}" data-pcat="${k}">${l}</button>`).join('')}</div></div>
+<div class="fd full"><div class="row"><label class="lb" for="f-sum">Short answer for the project page</label><span class="cnt" id="f-cnt">${sum.length} / 200</span></div><textarea id="f-sum" maxlength="200" placeholder="Mysteryland 2025: main stage, crowd and pyro, with fully edited photos delivered during the event and the rest within 24 hours.">${esc(sum)}</textarea><p class="hint">One or two sentences. Answer first: what was this, and what did the client get?</p></div></div></section>
+<section class="panel"><p class="step">Step 2 of 4</p><h2>Upload the photos</h2><div style="margin-top:20px"><button class="drop" data-drop="project"><span class="ic">${I.up}</span><b>Drop all photos of the project here</b><span>Up to 24 photos. You choose the Hero and the portfolio photos next.</span></button></div>
+${ph.length?`<p class="up"><span class="st ok"></span>${ph.length} photos uploaded · file names cleaned automatically</p>`:''}</section>
+<section class="panel"><p class="step">Step 3 of 4</p><h2>Mark your photos</h2><p class="hint" style="margin-top:8px;font-size:18px">Click a photo and choose its place on the project page. The star puts it up for the portfolio.</p>
+<div class="slots">${SLOTS.map(([k,l,u],i)=>{const p=slot(k);return `<div class="slm"><div class="t ${p?'':'e'}">${p?`<img class="imgc" src="${esc(p.url)}" alt="">`:'Not chosen'}</div><div class="n"><b>${i+1}</b>${l}</div><div class="u">${u}</div></div>`}).join('')}</div>
+<div class="share"><span><b>Share image</b> for Google, LinkedIn and AI answers is made from the Hero, cropped to 1200 × 630.</span></div>
+<div class="row" style="margin-top:24px"><span class="lb">All photos · click one to mark it</span><span class="cnt">★ In portfolio · ${ph.filter(x=>x.marked).length} of ${ph.length} · Top · ${cntT()} of ${MAXT}</span></div>
+<div class="tgrid">${ph.map(p=>`<button class="tl2 ${p.id===S.sel?'sel':''}" data-sel="${p.id}"><img class="imgc" src="${esc(p.url)}" alt="">${p.top?`<span class="tp">${I.star}Top</span>`:''}<span class="hf ${p.marked?'on':''}" data-star="${p.id}">${I.star}</span>${p.slot?`<span class="lbl">${(SLOTS.find(s=>s[0]===p.slot)||[])[1]}</span>`:''}<span class="st ${(p.alt||'').trim()?'ok':'no'}"></span></button>`).join('')||'<p class="hint">No photos yet.</p>'}</div>
+${sel?`<div class="selbar"><div class="t"><img class="imgc" src="${esc(sel.url)}" alt=""></div><div style="flex:1;min-width:200px"><div class="nm">Selected: ${esc(sel.file)}</div><div class="m">Choose what this photo is used for.</div></div>
+<div class="chips">${SLOTS.map(([k,l])=>`<button class="chip ${sel.slot===k?'on':''}" data-slot="${k}">${l}</button>`).join('')}</div>
+<button class="sw ${sel.portfolio?'on':''}" data-pf="${sel.id}"><i></i>Portfolio</button><button class="sw ${sel.top?'on':''}" data-top="${sel.id}"><i></i>Top</button></div>`:''}</section>
+<section class="panel"><div class="row"><div><p class="step">Step 4 of 4</p><h2>Alt text</h2></div><button class="sg" data-act="sugall">${I.sp}Suggest for all missing</button></div><p class="hint" style="margin:8px 0 12px;font-size:18px">Only photos you placed or put in the portfolio need alt text.</p>
+${ph.filter(x=>x.slot||x.portfolio).map(altRow).join('')||'<p class="hint">Nothing to describe yet.</p>'}</section>
+</div><aside class="side"><p class="eyebrow">Ready to publish?</p><h3>${done} of 6 done</h3><div class="bar"><i style="width:${done/6*100}%"></i></div>
+<ul class="ck">${c.map(([y,t,s])=>`<li><span class="o ${y?'y':''}">${I.chk}</span><span>${t}<small>${esc(s)}</small></span></li>`).join('')}</ul>
+${btnPub('Publish project','pub')}<button class="btn o c" data-act="draft">Save draft</button>
+<div class="where"><p class="lb">Where this appears</p><p>Project page</p><p>Projects overview</p><p>Home · Latest projects</p></div></aside></div>`}
+function altRow(p){const l=(SLOTS.find(s=>s[0]===p.slot)||[,'Portfolio'])[1],a=p.alt||'';return `<div class="ar"><div class="t"><img class="imgc" src="${esc(p.url)}" alt=""></div><div style="flex:1;min-width:0"><div class="row"><span class="lb">${l} · alt text</span><span class="cnt">${a.length} / 125</span></div>
+<div class="fd" style="margin-top:8px"><textarea data-alt="${p.id}" maxlength="125" style="min-height:64px" placeholder="Describe what you see.">${esc(a)}</textarea></div>
+<div class="chips" style="margin-top:8px;align-items:center"><button class="sg" data-sug="${p.id}">${I.sp}${a?'Suggest another':'Suggest alt text'}</button>${a.trim()?'<span class="hint"><span class="st ok"></span> Alt text is good</span>':'<span class="hint warn">Missing. Photos in the portfolio need alt text.</span>'}</div></div></div>`}
+function suggest(p){const P=S.proj||{},ev=[p.event||P.event_name,p.year||(P.event_date||'').slice(0,4)].filter(Boolean).join(' '),w={hero:'wide view of the main stage',card:'crowd in front of the stage',wide:'wide shot of the stage and the crowd','tall-a':'detail of the stage and lights','tall-b':'moment from the show'}[p.slot]||'moment from the event';return `${ev?ev+': ':''}${w}${p.city||P.location?' in '+(p.city||P.location).split(',')[0]:''}`.slice(0,125)}
+
+function vSingle(){const L=S.singles,p=L[S.ss]||L[0],need=L.filter(x=>!(x.alt||'').trim()).length;
+ const ck=p?[[(p.alt||'').trim(),'Alt text','Describes what is visible'],[p.file&&p.file===slug(cleanN(p.file))+'.jpg','File name','Descriptive and lowercase'],[p.event&&p.year,'Event and year',[p.event,p.year].filter(Boolean).join(' · ')||'Still empty'],[p.city,'City and country',p.city||'Still empty'],[(p.categories||[]).length,'Categories',(p.categories||[]).map(k=>CN[k]).join(', ')||'Still empty']]:[];
+ app.innerHTML=head('Add photos.',`<button class="btn o" data-act="draft">Save draft</button>${btnPub('Publish','site')}`)+`
+<div class="sgrid"><aside><button class="drop" data-drop="single"><span class="ic">${I.up}</span><b>Drop photos here</b><span>One or many. Each gets its own details.</span></button>
+<div class="row" style="margin:24px 0 8px"><span class="lb">${L.length} photos</span><span class="cnt warn">${need} need alt text</span></div>
+<div class="plist">${L.map((x,i)=>`<button class="lr ${x===p?'on':''}" data-ss="${i}"><span class="t"><img class="imgc" src="${esc(x.url)}" alt=""></span><span><span class="n">${esc(x.file)}</span><span class="m"><span class="st ${(x.alt||'').trim()?'ok':'no'}"></span>${(x.alt||'').trim()?'Ready':'Needs alt text'}</span></span></button>`).join('')}</div>
+${p?`<div class="where" style="margin-top:24px"><p class="eyebrow" style="color:var(--accent-text)">Checks · photo ${L.indexOf(p)+1}</p><h3 style="font:400 30px/38px var(--font-display);margin:8px 0">${ck.filter(x=>x[0]).length} of 5 done</h3><ul class="ck">${ck.map(([y,t,s])=>`<li><span class="o ${y?'y':''}">${I.chk}</span><span>${t}<small>${esc(s)}</small></span></li>`).join('')}</ul></div>`:''}</aside>
+${p?`<section class="panel"><div class="sedit"><div><div class="pv"><img class="imgc" style="object-fit:contain" src="${esc(p.url)}" alt=""></div>
+<div class="row" style="margin-top:12px"><span class="hint">${p.width||'?'} × ${p.height||'?'} px · ${p.bytes?(p.bytes/1048576).toFixed(1)+' MB':''} · Photo ${L.indexOf(p)+1} of ${L.length}</span><button class="sw ${p.portfolio?'on':''}" data-pf="${p.id}"><i></i>Portfolio</button></div>
+<div class="serp"><p class="eyebrow">How it appears in search</p><p class="a">${esc(p.caption||[p.event,p.year].filter(Boolean).join(' ')||p.file)}</p><p class="u">martinhols.com › portfolio › ${esc(cleanN(p.file))}</p><p class="b">${esc(p.alt||'Add alt text so this photo can be found.')}</p><p class="hint" style="margin-top:8px">Photo data (creator, copyright, place, date) is added to the page automatically for search engines and AI.</p></div></div>
+<div class="fdc"><div class="fd"><div class="row"><label class="lb">File name</label></div><input data-s="file" value="${esc(p.file)}"><p class="hint">Lowercase, with event, year and subject.</p></div>
+<div class="fd"><div class="row"><label class="lb">Alt text</label><span class="cnt">${(p.alt||'').length} / 125</span></div><textarea data-s="alt" maxlength="125">${esc(p.alt||'')}</textarea><div class="chips" style="align-items:center"><button class="sg" data-sug="${p.id}">${I.sp}Suggest alt text</button><span class="hint">Describe what you see: who, what, where. Skip “photo of”.</span></div></div>
+<div class="fd"><label class="lb">Caption (shown under the photo)</label><input data-s="caption" value="${esc(p.caption||'')}"></div>
+<div class="g2" style="grid-template-columns:2fr 1fr;margin:0"><div class="fd"><label class="lb">Event</label><input data-s="event" value="${esc(p.event||'')}"></div><div class="fd"><label class="lb">Year</label><input data-s="year" inputmode="numeric" value="${esc(p.year||'')}"></div></div>
+<div class="fd"><label class="lb">City and country</label><input data-s="city" placeholder="City, country" value="${esc(p.city||'')}"></div>
+<div class="fd"><label class="lb">Categories · pick one or more</label><div class="chips">${CATS.map(([k,l])=>`<button class="chip ${(p.categories||[]).includes(k)?'on':''}" data-scat="${k}">${l}</button>`).join('')}</div></div>
+<div class="fd"><label class="lb">Subjects</label><div class="chips">${(p.subjects||[]).map((t,i)=>`<button class="chip tag" data-rmsub="${i}" title="Remove">${esc(t)} ×</button>`).join('')}<button class="chip tag add" data-addsub>+ add</button></div></div>
+<div class="fd"><label class="lb">Credit and copyright</label><input data-s="credit" value="${esc(p.credit||'')}"></div>
+<div class="fd"><label class="lb">Use in</label><div class="chips"><button class="chip ${p.portfolio?'on':''}" data-pf="${p.id}">Portfolio · ${cntP()} of ${MAXP}</button><button class="chip ${p.top?'on':''}" data-top="${p.id}">Top · ${cntT()} of ${MAXT}</button></div></div>
+<div class="chips"><button class="btn" data-act="savephoto">Save photo<span class="ic">${I.ar}</span></button><button class="btn dk" data-act="savenext">Save and next</button><button class="btn dk" data-act="delphoto">Delete</button></div></div></div></section>`:`<section class="panel"><p class="hint">No single photos yet. Drop some on the left.</p></section>`}</div>`}
+
+function vPortfolio(){const A=S.all.filter(x=>x.marked||x.portfolio),on=A.filter(x=>x.portfolio),off=A.filter(x=>!x.portfolio),F=S.pf;
+ let L=A.filter(x=>F.f==='all'||(F.f==='on'&&x.portfolio)||(F.f==='off'&&!x.portfolio)||(F.f==='top'&&x.top)||(F.f==='alt'&&!(x.alt||'').trim()));if(F.c)L=L.filter(x=>(x.categories||[]).includes(F.c));
+ L.sort((a,b)=>(b.top-a.top)||((b.taken_on||b.created_at)>(a.taken_on||a.created_at)?1:-1));const shown=L.slice(0,F.n),cc=k=>A.filter(x=>(x.categories||[]).includes(k)).length;
+ const fb=(k,l,n)=>`<button class="chip ${F.f===k?'on':''}" data-pff="${k}">${l} · ${n}</button>`;
+ app.innerHTML=head('Choose the portfolio.',btnPub('Publish site','site'))+`<section class="panel"><div class="row" style="align-items:flex-end;gap:48px;flex-wrap:wrap"><div style="flex:1;min-width:300px"><p class="eyebrow">Portfolio</p><h2 style="font:400 30px/38px var(--font-display);margin:8px 0">All photos marked for the portfolio</h2><p class="hint" style="font-size:18px">Every photo you starred in a project or as a single photo ends up here. Switch a photo on to show it in the portfolio, or off to keep it for later.</p></div>
+<div class="limit"><div class="big"><span>${on.length} of ${MAXP}</span><small>on in the portfolio</small></div><div class="bar" style="margin-top:8px"><i style="width:${on.length}%"></i></div><p class="hint" style="margin-top:8px">${Math.max(0,MAXP-on.length)} spots left. ${off.length} marked photos are off. Top: ${cntT()} of ${MAXT}.</p></div></div>
+<div class="row" style="margin-top:28px;flex-wrap:wrap"><div class="chips">${fb('all','All marked',A.length)}${fb('on','On',on.length)}${fb('off','Off',off.length)}${fb('top','Top',cntT())}${fb('alt','Alt text missing',A.filter(x=>!(x.alt||'').trim()).length)}</div><div class="chips">${CATS.map(([k,l])=>`<button class="chip ${F.c===k?'on':''}" data-pfc="${k}">${l} · ${cc(k)}</button>`).join('')}</div></div>
+<div class="pgrid">${shown.map(p=>`<div class="pt ${p.portfolio?'':'off'}"><div class="im"><img class="imgc" src="${esc(p.url)}" alt="" loading="lazy">${p.top?`<span class="tp">${I.star}Top</span>`:''}<span class="cat">${(p.categories||[]).map(k=>CN[k]).join(' · ')}</span></div>
+<div class="row2"><div><div class="nm">${esc(p.event||p.file)}</div><div class="ev">${p.year||''} · <span class="st ${(p.alt||'').trim()?'ok':'no'}"></span>${(p.alt||'').trim()?'alt ok':'alt missing'}</div></div><button class="sw ${p.portfolio?'on':''}" data-pf="${p.id}"><i></i>${p.portfolio?'On':'Off'}</button></div></div>`).join('')||'<p class="hint">Nothing here yet. Star photos in a project or as single photos.</p>'}</div>
+<div class="row" style="margin-top:28px;padding-top:20px;border-top:1px solid var(--line)"><span class="hint">Showing ${shown.length} of ${L.length} · Top first, then newest</span>${L.length>shown.length?'<button class="chip" data-more>Show more</button>':''}</div></section>
+<div class="foot2"><div><p class="eyebrow">How the limit works</p><p>The portfolio holds up to 100 photos. At 100, the next photo can only go on when you switch another one off. Up to 20 photos can be Top; they show first on the site. Switching a photo off also removes its Top.</p></div><div><p class="eyebrow">Photos without alt text</p><p>A photo without alt text can’t go on. It shows a small orange dot until it has one.</p></div></div>`}
+
+/* ---------- events ---------- */
+async function setPf(id,on){const p=S.all.find(x=>x.id===id);if(on&&!(p.alt||'').trim())return say('Add alt text first: a photo without alt text can’t go in the portfolio.',1);if(on&&cntP()>=MAXP)return say('The portfolio is full (100). Switch another photo off first.',1);
+ await dbPhoto(id,on?{portfolio:true,marked:true}:{portfolio:false,top:false});say('')}
+async function setTop(id,on){const p=S.all.find(x=>x.id===id);if(on&&!p.portfolio)return say('Put the photo in the portfolio first.',1);if(on&&cntT()>=MAXT)return say('Top is full (20). Remove another Top first.',1);await dbPhoto(id,{top:on});say('')}
+function readSingle(){const p=S.singles[S.ss];if(!p)return null;const o={};document.querySelectorAll('[data-s]').forEach(x=>o[x.dataset.s]=x.value);o.year=o.year?+o.year||null:null;o.file=slug(cleanN(o.file||p.file))+'.jpg';return o}
+function bind(){
+ document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=async()=>{if(S.tab==='project')readForm();S.tab=b.dataset.tab;S.msg='';await loadAll();show()});
+ document.querySelectorAll('[data-drop]').forEach(d=>{const t=d.dataset.drop;d.onclick=()=>{$('#fileIn').dataset.t=t;$('#fileIn').click()};d.ondragover=e=>{e.preventDefault();d.classList.add('over')};d.ondragleave=()=>d.classList.remove('over');d.ondrop=e=>{e.preventDefault();d.classList.remove('over');uploadFiles(e.dataTransfer.files,t==='project')}});
+ const sum=$('#f-sum');if(sum)sum.oninput=()=>$('#f-cnt').textContent=sum.value.length+' / 200';
+ const op=$('#f-open');if(op)op.onchange=async()=>{S.proj=S.projects.find(x=>x.id===op.value)||null;S.photos=S.proj?S.all.filter(x=>x.project_id===S.proj.id):[];S.sel=S.photos[0]?.id;show()};
+ document.querySelectorAll('[data-pcat]').forEach(b=>b.onclick=()=>{readForm();const P=S.proj,k=b.dataset.pcat;P.categories=(P.categories||[]).includes(k)?P.categories.filter(x=>x!==k):[...(P.categories||[]),k];show()});
+ document.querySelectorAll('[data-sel]').forEach(b=>b.onclick=e=>{if(e.target.closest('[data-star]'))return;readForm();S.sel=b.dataset.sel;show()});
+ document.querySelectorAll('[data-star]').forEach(b=>b.onclick=async e=>{e.stopPropagation();const p=S.all.find(x=>x.id===b.dataset.star);try{p.marked?await dbPhoto(p.id,{marked:false,portfolio:false,top:false}):await dbPhoto(p.id,{marked:true,...((p.alt||'').trim()&&cntP()<MAXP?{portfolio:true}:{})});show()}catch(x){say(x.message,1)}});
+ document.querySelectorAll('[data-slot]').forEach(b=>b.onclick=async()=>{try{const k=b.dataset.slot,cur=S.photos.find(x=>x.id===S.sel),old=S.photos.find(x=>x.slot===k&&x.id!==S.sel);if(old)await dbPhoto(old.id,{slot:null});await dbPhoto(S.sel,{slot:cur.slot===k?null:k});show()}catch(x){say(x.message,1)}});
+ document.querySelectorAll('[data-pf]').forEach(b=>b.onclick=async()=>{try{const p=S.all.find(x=>x.id===b.dataset.pf);await setPf(p.id,!p.portfolio);show()}catch(x){say(x.message,1)}});
+ document.querySelectorAll('[data-top]').forEach(b=>b.onclick=async()=>{try{const p=S.all.find(x=>x.id===b.dataset.top);await setTop(p.id,!p.top);show()}catch(x){say(x.message,1)}});
+ document.querySelectorAll('[data-alt]').forEach(t=>{t.onchange=async()=>{try{await dbPhoto(t.dataset.alt,{alt:t.value.trim()||null});show()}catch(x){say(x.message,1)}}});
+ document.querySelectorAll('[data-sug]').forEach(b=>b.onclick=async()=>{try{const p=S.all.find(x=>x.id===b.dataset.sug),t=$('[data-s="alt"]');if(t){t.value=suggest(p);t.focus()}else{await dbPhoto(p.id,{alt:suggest(p)});show()}}catch(x){say(x.message,1)}});
+ document.querySelectorAll('[data-ss]').forEach(b=>b.onclick=()=>{S.ss=+b.dataset.ss;show()});
+ document.querySelectorAll('[data-scat]').forEach(b=>b.onclick=async()=>{try{const p=S.singles[S.ss],k=b.dataset.scat,c=(p.categories||[]).includes(k)?p.categories.filter(x=>x!==k):[...(p.categories||[]),k];await dbPhoto(p.id,{...readSingle(),categories:c});show()}catch(x){say(x.message,1)}});
+ document.querySelectorAll('[data-rmsub]').forEach(b=>b.onclick=async()=>{try{const p=S.singles[S.ss];await dbPhoto(p.id,{subjects:p.subjects.filter((_,i)=>i!==+b.dataset.rmsub)});show()}catch(x){say(x.message,1)}});
+ const as=$('[data-addsub]');if(as)as.onclick=async()=>{const t=prompt('Subject (e.g. pyro, crowd)');if(!t)return;try{const p=S.singles[S.ss];await dbPhoto(p.id,{subjects:[...(p.subjects||[]),t.trim()]});show()}catch(x){say(x.message,1)}};
+ document.querySelectorAll('[data-pff]').forEach(b=>b.onclick=()=>{S.pf.f=b.dataset.pff;S.pf.n=20;show()});
+ document.querySelectorAll('[data-pfc]').forEach(b=>b.onclick=()=>{S.pf.c=S.pf.c===b.dataset.pfc?null:b.dataset.pfc;S.pf.n=20;show()});
+ const mo=$('[data-more]');if(mo)mo.onclick=()=>{S.pf.n+=20;show()};
+ document.querySelectorAll('[data-act]').forEach(b=>b.onclick=async()=>{const a=b.dataset.act;try{
+  if(a==='draft'){if(S.tab==='project'){await saveProject();show()}else say('Saved.')}
+  else if(a==='pub'){await publishProject();show()}
+  else if(a==='site')await publishSite();
+  else if(a==='sugall'){for(const p of S.photos.filter(x=>(x.slot||x.portfolio)&&!(x.alt||'').trim()))await dbPhoto(p.id,{alt:suggest(p)});show()}
+  else if(a==='savephoto'||a==='savenext'){const p=S.singles[S.ss],o=readSingle();await dbPhoto(p.id,o);say('Photo saved.');if(a==='savenext')S.ss=Math.min(S.ss+1,S.singles.length-1);show()}
+  else if(a==='delphoto'){const p=S.singles[S.ss];if(!confirm('Delete this photo?'))return;await sb.from('photos').delete().eq('id',p.id);await loadAll();S.ss=0;show()}
+ }catch(x){say(x.message||String(x),1)}});
+}
+$('#fileIn').onchange=e=>{uploadFiles(e.target.files,e.target.dataset.t==='project');e.target.value=''};
 init();
 </script>
 </body>
