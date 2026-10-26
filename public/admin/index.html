@@ -188,7 +188,7 @@ async function uploadFiles(files,toProject){
  const N=files.length,fails=[];let n=0;
  for(const f of files){n++;const at=(k,t)=>progress(((n-1)+k)/N*100,`Photo ${n} of ${N} · ${t}`);
   try{at(0,'reading '+f.name);const im=await loadImg(f);at(.1,'making the large version');const {b,w,h}=await enc(im,2400);
-   const MT=toProject?null:getMeta()[metaKey(f.name)];const base=(MT&&MT.file&&slug(cleanN(MT.file)))||slug([toProject?S.proj.slug:'',cleanN(f.name)].filter(Boolean).join('-'))||'photo';const file=base+'.jpg';
+   const MT=toProject?null:findMeta(f,im);const base=(MT&&MT.file&&slug(cleanN(MT.file)))||slug([toProject?S.proj.slug:'',cleanN(f.name)].filter(Boolean).join('-'))||'photo';const file=base+'.jpg';
    const path=`${toProject?S.proj.slug:'single'}/${Date.now()}-${file}`;
    const put=async(p,blob,type)=>{const r=await sb.storage.from('photos').upload(p,blob,{contentType:type});if(r.error)throw r.error};
    at(.25,'making smaller versions');
