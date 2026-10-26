@@ -23,6 +23,7 @@ const logos = [
   ['logo-google.png', 'Google', ''],
   ['logo-bakertilly.png', 'Baker Tilly', ''],
   ['logo-sport-vibes.png', 'Sport Vibes', ''],
+  ['logo-la-fuente.png', 'La Fuente', ''],
 ];
 
 const facts = [
