@@ -69,7 +69,7 @@ export const page = {
   body: `
   <header class="panel hero" id="main">
     ${header('')}
-    <div>
+    <div class="hero-main">
       <div class="eyebrows"><p class="t-eyebrow acc">Event &amp; festival photography</p><i></i><p class="t-eyebrow dim">Netherlands · Worldwide</p></div>
       <h1>Where the biggest stages get remembered.</h1>
 

@@ -1,7 +1,4 @@
 (function () {
-  // Hero schaalt mee op schermen breder dan 1440 px
-  function hz() { var w = window.innerWidth; var k = w >= 1440 ? Math.max(1, Math.min((Math.min(w, 2560) - 48) / 1392, (window.innerHeight - 48) / 852)) : 1; document.documentElement.style.setProperty('--hz', k); }
-  window.addEventListener('resize', hz); hz();
   // Mobiel menu
   var menu = document.getElementById('mmenu');
   var opener = document.querySelector('[data-menu-open]');
