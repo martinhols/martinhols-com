@@ -7,11 +7,13 @@ const STATIC = JSON.parse(readFileSync(new URL('../portfolio.json', import.meta.
 // Foto's uit de database (portfolio aan, alt-tekst aanwezig): Top eerst, daarna de vaste selectie, daarna de rest op datum.
 const dateOf = (x) => String(x.taken_on || x.created_at || '');
 const sizeOf = (x) => { const r = (x.width || 3) / (x.height || 2); return r < 0.9 ? 't' : r > 1.7 ? 'w' : 's'; };
-const DB = dbPhotos.filter((x) => x.portfolio && (x.alt || '').trim() && localMap[x.url] && (x.categories || []).length)
-  .map((x) => ({ slug: x.id, cat: x.categories[0], cats: x.categories, size: sizeOf(x), pos: x.crop || '50% 50%', name: x.event || x.caption || 'Event photography', alt: x.alt, top: x.top, date: dateOf(x), full: siteUrl(x.url), file: x.url, thumbOpt: true, db: x }));
+const CATS = Object.fromEntries(SITE.categories.map((c) => [c.slug, c.name]));
+// Ontbreekt de alt-tekst nog, dan maken we een nette terugval uit event, plaats en jaar.
+const altFor = (x) => (x.alt || '').trim() || [x.event || x.caption, x.city, x.year].filter(Boolean).join(', ') + (x.event || x.caption ? ' · ' : '') + `${CATS[(x.categories || [])[0]] || 'Event'} photography`;
+const DB = dbPhotos.filter((x) => x.portfolio && localMap[x.url] && (x.categories || []).length)
+  .map((x) => ({ slug: x.id, cat: x.categories[0], cats: x.categories, size: sizeOf(x), pos: x.crop || '50% 50%', name: x.event || x.caption || 'Event photography', alt: altFor(x), top: x.top, date: dateOf(x), full: siteUrl(x.url), file: x.url, thumbOpt: true, db: x }));
 DB.sort((a, b) => b.date.localeCompare(a.date));
 const PHOTOS = [...DB.filter((x) => x.top), ...STATIC, ...DB.filter((x) => !x.top)].map((p, i) => ({ ...p, rank: `No. ${String(i + 1).padStart(2, '0')}` }));
-const CATS = Object.fromEntries(SITE.categories.map((c) => [c.slug, c.name]));
 const HERO = { file: 'portfolio/mysteryland-sunset-stone-hand-stage.jpg', alt: 'Mysteryland main stage at sunset, a giant stone hand holding the DJ booth, red smoke and light beams over the crowd' };
 
 // Per categorie: hero, teksten, FAQ (GEO). Teksten voor corporate, sport en shows/music zijn voorstellen.

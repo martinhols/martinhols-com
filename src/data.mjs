@@ -83,7 +83,7 @@ export function textToHtml(t = '') {
 
 // Beste foto per categorie: nieuwste Top-foto in die categorie (of null).
 export function bestPhoto(cat) {
-  const t = dbPhotos.filter((x) => x.portfolio && x.top && (x.categories || []).includes(cat) && (x.alt || '').trim() && localMap[x.url]);
+  const t = dbPhotos.filter((x) => x.portfolio && x.top && (x.categories || []).includes(cat) && localMap[x.url]);
   t.sort((a, b) => String(b.taken_on || b.created_at).localeCompare(String(a.taken_on || a.created_at)));
-  return t[0] ? { file: t[0].url, alt: t[0].alt, pos: t[0].crop || '50% 50%' } : null;
+  return t[0] ? { file: t[0].url, alt: (t[0].alt || '').trim() || [t[0].event, t[0].city, t[0].year].filter(Boolean).join(', ') || 'Event photography', pos: t[0].crop || '50% 50%' } : null;
 }
