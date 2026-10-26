@@ -140,7 +140,7 @@ const detailPage = {
 const dbDetail = (p) => {
   const d = p.db, gal = Array.isArray(d.gallery) ? d.gallery : [], faq = (Array.isArray(d.faq) ? d.faq : []).filter((f) => f.q && f.a);
   const rows = []; if (gal.length) { rows.push([gal[0]]); for (let i = 1; i < gal.length; i += 2) rows.push(gal.slice(i, i + 2)); }
-  const fx = [['Client', d.client], ['Event', d.event_name || d.title], ['Location', d.location], ['Date', d.event_date && new Date(d.event_date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })], ['Category', CATS[d.category]]].filter(([, v]) => v);
+  const fx = [['Client', d.client], ['Event', d.event_name || d.title], ['Location', d.location], ['Date', d.event_date && new Date(d.event_date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })]].filter(([, v]) => v);
   const sum = d.summary || `Martin Hols was the event photographer at ${d.event_name || d.title}${d.client ? `, commissioned by ${d.client}` : ''}.`;
   return {
     path: `/projects/${d.slug}`, title: `${d.event_name || d.title} event photography${d.client ? ` for ${d.client}` : ''} | Martin Hols`, description: sum.slice(0, 200), ogImage: d.hero_url,
