@@ -81,17 +81,20 @@ export function textToHtml(t = '') {
   }).join('\n').replace(/^/, '<section>').concat('</section>').replace('<section></section>', '');
 }
 
+// Focuspunt (admin) -> object-position; anders 50% 50%.
+const posOf = (x) => (x.focus_x != null && x.focus_y != null ? `${x.focus_x}% ${x.focus_y}%` : x.crop || '50% 50%');
+
 // Beste foto per categorie: nieuwste Top-foto in die categorie (of null).
 export function bestPhoto(cat) {
   const h = dbPhotos.find((x) => x.cat_header === cat && localMap[x.url]);
-  if (h) return { file: h.url, alt: (h.alt || '').trim() || [h.event, h.city, h.year].filter(Boolean).join(', ') || 'Event photography', pos: h.crop || '50% 50%' };
+  if (h) return { file: h.url, alt: (h.alt || '').trim() || [h.event, h.city, h.year].filter(Boolean).join(', ') || 'Event photography', pos: posOf(h) };
   const t = dbPhotos.filter((x) => x.portfolio && x.top && (x.categories || []).includes(cat) && localMap[x.url]);
   t.sort((a, b) => String(b.taken_on || b.created_at).localeCompare(String(a.taken_on || a.created_at)));
-  return t[0] ? { file: t[0].url, alt: (t[0].alt || '').trim() || [t[0].event, t[0].city, t[0].year].filter(Boolean).join(', ') || 'Event photography', pos: t[0].crop || '50% 50%' } : null;
+  return t[0] ? { file: t[0].url, alt: (t[0].alt || '').trim() || [t[0].event, t[0].city, t[0].year].filter(Boolean).join(', ') || 'Event photography', pos: posOf(t[0]) } : null;
 }
 
 // De gekozen hero-foto's voor de homepage, op volgorde (leeg = vaste selectie).
 export function heroPhotos() {
   return dbPhotos.filter((x) => x.home_hero && localMap[x.url]).sort((a, b) => a.home_hero - b.home_hero)
-    .map((x) => ({ file: x.url, name: x.event || x.caption || 'Event photography', pos: x.crop || '50% 50%', alt: (x.alt || '').trim() || [x.event, x.city, x.year].filter(Boolean).join(', ') || 'Event photography' }));
+    .map((x) => ({ file: x.url, name: x.event || x.caption || 'Event photography', pos: posOf(x), alt: (x.alt || '').trim() || [x.event, x.city, x.year].filter(Boolean).join(', ') || 'Event photography' }));
 }
