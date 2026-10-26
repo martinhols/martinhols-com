@@ -16,6 +16,31 @@
     menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
   }
 
+
+  // Contactformulier
+  var f = document.getElementById('quote-form');
+  if (f) {
+    var st = document.getElementById('form-status');
+    var btn = f.querySelector('button[type=submit]');
+    var say = function (msg, cls) { st.textContent = msg; st.className = 'status ' + cls; st.hidden = false; };
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var bad = false;
+      ['name', 'email', 'message'].forEach(function (n) {
+        var el = f.elements[n]; var ok = el.value.trim() && (n !== 'email' || /^\S+@\S+\.\S+$/.test(el.value.trim()));
+        el.setAttribute('aria-invalid', ok ? 'false' : 'true'); if (!ok) { bad = true; if (bad === true && !f.__first) { f.__first = el; } }
+      });
+      if (bad) { say('Please fill in your name, a valid email and a short message.', 'err'); var first = f.querySelector('[aria-invalid="true"]'); if (first) first.focus(); f.__first = null; return; }
+      var data = {}; new FormData(f).forEach(function (v, k) { data[k] = v; });
+      btn.disabled = true;
+      fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+        .then(function (r) { if (!r.ok) throw new Error('send failed'); return r.json(); })
+        .then(function () { f.reset(); say('Thank you. I received your request and usually reply the same day.', 'ok'); })
+        .catch(function () { say('Sorry, sending failed. Please email me directly at martin@thearrows.nl.', 'err'); })
+        .then(function () { btn.disabled = false; });
+    });
+  }
+
   // Hero-slider
   var s = document.querySelector('[data-slider]');
   if (!s) return;

@@ -1,0 +1,280 @@
+{
+ "PRIVACY": {
+  "file": "Privacy",
+  "title": "Privacy policy",
+  "eyebrow": "Legal",
+  "sub": "How I handle your personal data, in plain language.",
+  "short": [
+   "I only collect what I need to answer you and do the job.",
+   "I never sell your data and I don’t use it for advertising.",
+   "People in my event photos can ask me to take a photo down, and I will.",
+   "You can always ask to see, correct or delete your data."
+  ],
+  "sections": [
+   [
+    "Who I am",
+    [
+     "MartinHols.com is run by Martin Hols as part of The Arrows, an event photography business in the Netherlands. I am the controller for the personal data described in this policy.",
+     [
+      "list",
+      [
+       "KVK: [KVK number]",
+       "VAT: [BTW number]",
+       "Address: [Business address]",
+       "Email: martin@thearrows.nl · Phone: +31 6 4114 84 79"
+      ]
+     ]
+    ]
+   ],
+   [
+    "What I collect, and why",
+    [
+     "I keep this list short on purpose. Here is everything I collect, why, and for how long.",
+     [
+      "table",
+      [
+       [
+        "Quote request",
+        "Name, email, event date, location, type of event, your message",
+        "To answer you and prepare a quote",
+        "Up to 2 years after the last contact"
+       ],
+       [
+        "Email, phone and messages",
+        "Your contact details and what you tell me",
+        "To reply and plan the job together",
+        "Up to 2 years after the last contact"
+       ],
+       [
+        "Agreements and invoices",
+        "Company and contact names, billing details",
+        "To do the job, invoice it and keep my books",
+        "7 years, as Dutch tax law requires"
+       ],
+       [
+        "Visitor statistics",
+        "Anonymous, aggregated page views, device type and country",
+        "To see which pages are useful and improve the site",
+        "Aggregated only, no personal profile"
+       ],
+       [
+        "Event photos",
+        "Images of visitors, performers and crew",
+        "To deliver the job and show my work",
+        "As agreed with the client; portfolio until removed"
+       ]
+      ]
+     ]
+    ]
+   ],
+   [
+    "Photos of people at events",
+    [
+     "Most of my work happens at festivals, shows, sports and corporate events where many people are photographed. The organiser tells visitors that photography takes place, usually through signs or the terms of entry, and I work to the organiser’s brief.",
+     "I mostly photograph atmosphere, crowds and performances rather than individuals. If you recognise yourself in a photo on this site and you would rather not be there, email me and I will take it down within 5 working days.",
+     "I don’t sell photos of identifiable people to third parties."
+    ]
+   ],
+   [
+    "The legal basis",
+    [
+     "Under the GDPR I need a reason to use your data. Mine are:",
+     [
+      "list",
+      [
+       "To take steps you ask for before an agreement, and to carry out that agreement.",
+       "To meet legal duties, such as tax and bookkeeping rules.",
+       "My legitimate interest in running a website, showing my work and keeping it secure, always weighed against your privacy.",
+       "Your consent, in the rare case I ask for it. You can withdraw it at any time."
+      ]
+     ]
+    ]
+   ],
+   [
+    "Who I share it with",
+    [
+     "Only where needed to do the job: my hosting provider, email and calendar provider, the platform I use to deliver photo galleries, and my accountant. These parties handle data on my behalf under agreements with me.",
+     "I don’t sell data. Where possible, data stays within the EU. If a provider is outside the European Economic Area, I rely on safeguards such as standard contractual clauses."
+    ]
+   ],
+   [
+    "Cookies and tracking",
+    [
+     "I don’t use advertising or tracking cookies, so there is no cookie banner. Basic visitor statistics are collected without cookies and without identifying you."
+    ]
+   ],
+   [
+    "How I protect your data",
+    [
+     "Access is limited to me and the people who help me on a job. Devices and accounts are protected with strong passwords and two-factor authentication, the site runs on HTTPS, and photo files are backed up."
+    ]
+   ],
+   [
+    "Your rights",
+    [
+     "You can ask me, at any time, to:",
+     [
+      "list",
+      [
+       "show you the data I have about you",
+       "correct data that is wrong",
+       "delete your data",
+       "limit how I use it, or object to it",
+       "give you your data in a format you can reuse"
+      ]
+     ],
+     "Email me and I will answer within one month."
+    ]
+   ],
+   [
+    "Complaints",
+    [
+     "I would like to solve any problem with you first. You can also file a complaint with the Dutch Data Protection Authority (Autoriteit Persoonsgegevens) at autoriteitpersoonsgegevens.nl."
+    ]
+   ],
+   [
+    "Changes to this policy",
+    [
+     "If I change something important, I will update this page and the date at the top."
+    ]
+   ]
+  ],
+  "qtitle": "Questions about your data?",
+  "qtext": "Email me and I will reply within a few working days."
+ },
+ "TERMS": {
+  "file": "Terms",
+  "title": "Terms & conditions",
+  "eyebrow": "Legal",
+  "sub": "The ground rules for working together, in plain language.",
+  "short": [
+   "You get high-quality, fully edited photos, delivered as agreed: highlights during the event, the rest within 24 hours.",
+   "I keep the copyright. You get a licence for the use we agreed.",
+   "Invoices are due within 14 days. Cancelling is free up to 30 days before the event.",
+   "If something is wrong, tell me within 7 days and I will make it right."
+  ],
+  "sections": [
+   [
+    "Who these terms apply to",
+    [
+     "These terms apply to every quote, agreement and service from MartinHols.com, part of The Arrows (“I”), with a client (“you”). Anything different only counts if we agree it in writing. Email is fine. Your own general terms don’t apply."
+    ]
+   ],
+   [
+    "Quotes and booking",
+    [
+     "A quote is valid for 30 days. The booking is confirmed when you accept the quote in writing, or when I confirm your request. The quote states the date, hours, location, deliverables and price.",
+     "If the plan changes, I will send an updated quote."
+    ]
+   ],
+   [
+    "The work and delivery",
+    [
+     "I work with professional equipment and backup gear, in the style you see in my portfolio. I follow your brief and shot list where I can. I can’t guarantee specific shots at live events, because things happen fast.",
+     "Delivery times are in the quote. At events with fast delivery, I deliver high-quality, fully edited photos during the event. This usually relies on a good connection or on partners at the event, which we agree beforehand. The rest of the edited photos follow within 24 hours after the event, unless we agree otherwise."
+    ]
+   ],
+   [
+    "Fees and payment",
+    [
+     "All prices are in euros and exclude VAT. Travel and extra costs are agreed in advance. Hours beyond the booking are charged at the agreed hourly rate.",
+     "Invoices are due within 14 days of the invoice date. For larger jobs I may ask for a deposit of 50% before the event. If a payment is late, the statutory commercial interest and reasonable collection costs apply."
+    ]
+   ],
+   [
+    "Cancelling and rescheduling",
+    [
+     "Life happens. This is how I handle it:",
+     [
+      "list",
+      [
+       "More than 30 days before the event: free of charge.",
+       "30 to 7 days before: 50% of the agreed fee.",
+       "Less than 7 days before: 100% of the agreed fee.",
+       "Moving the date: free if I’m available and you tell me more than 14 days before."
+      ]
+     ]
+    ]
+   ],
+   [
+    "What I need from you",
+    [
+     "To do my best work I need:",
+     [
+      "list",
+      [
+       "access and accreditation for the event, including backstage areas where agreed",
+       "the schedule, a contact person and your shot list or priorities",
+       "permission from the venue and organiser to photograph",
+       "a safe place to work"
+      ]
+     ]
+    ]
+   ],
+   [
+    "Copyright and licence",
+    [
+     "I keep the copyright in all photos, under the Dutch Copyright Act. You get a non-exclusive licence for the use stated in the quote, normally your own marketing, communication, press and social media. The licence has no time limit, can’t be transferred, and doesn’t cover resale or stock use.",
+     "Please credit “Photo: Martin Hols” where that is reasonable, for example in press and on social media. Light edits such as cropping and colour matching for a platform are fine. Edits that change the meaning of a photo are not.",
+     "Other use, such as advertising campaigns or merchandise, needs an extended licence agreed in advance. For use without a licence, I charge an extra fee of 100% on top of the normal licence fee."
+    ]
+   ],
+   [
+    "People and permissions",
+    [
+     "You are responsible for informing visitors that photography takes place and for the permissions needed at your venue. I am not liable for claims that come from restrictions I was not told about."
+    ]
+   ],
+   [
+    "Portfolio and promotion",
+    [
+     "I may use the photos in my portfolio, on my website and social media, in awards and in my own promotion. If an event is confidential, tell me before the job and we will agree this in writing."
+    ]
+   ],
+   [
+    "Raw files and archive",
+    [
+     "Raw files are not part of the delivery. I keep the edited photos for at least 2 years, but please keep your own copy."
+    ]
+   ],
+   [
+    "Complaints",
+    [
+     "If something is wrong with the delivery, tell me in writing within 7 days. I will fix it where I reasonably can, for example with a new edit."
+    ]
+   ],
+   [
+    "Liability",
+    [
+     "I am only liable for direct damage caused by my intent or gross negligence, up to the invoice amount excluding VAT. I am not liable for indirect damage, or for things outside my control such as a denied access, a cancelled act, weather, or equipment failure despite proper backup.",
+     "If I can’t make it, for example because of illness, I will arrange a replacement photographer of similar quality from my network. Nothing in these terms limits liability that the law does not allow me to limit."
+    ]
+   ],
+   [
+    "Force majeure",
+    [
+     "If an event is cancelled or can’t go ahead because of circumstances nobody can control, neither of us is in breach. We will look together for a fair solution, such as a new date."
+    ]
+   ],
+   [
+    "Privacy",
+    [
+     "How I handle personal data is in the privacy policy.",
+     [
+      "link",
+      "Read the privacy policy"
+     ]
+    ]
+   ],
+   [
+    "Governing law",
+    [
+     "Dutch law applies. We will first try to solve any dispute together. If that doesn’t work, it goes to the competent court in the Netherlands."
+    ]
+   ]
+  ],
+  "qtitle": "Questions about these terms?",
+  "qtext": "Email me. I would rather clear it up before the job than after."
+ },
+ "UPDATED": "26 October 2026"
+}

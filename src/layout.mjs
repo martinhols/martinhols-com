@@ -113,6 +113,7 @@ export function layout(page) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(page.title)}</title>
 <meta name="description" content="${esc(page.description)}">
+${page.noindex ? '<meta name="robots" content="noindex, follow">\n' : ''}
 <link rel="canonical" href="${url}">
 <meta name="theme-color" content="#F4EFE6">
 <meta property="og:type" content="website">

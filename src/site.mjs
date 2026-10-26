@@ -6,6 +6,8 @@ export const SITE = {
   email: 'martin@thearrows.nl',
   phone: '+31641148479',
   phoneText: '+31 6 4114 84 79',
+  // Bedrijfsgegevens: vul in als ze bekend zijn; lege velden worden niet getoond.
+  company: { kvk: null, vat: null, address: null },
   events: '2,132',
   years: '10+',
   award: 'European Event Photography Award',
