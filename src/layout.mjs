@@ -51,7 +51,6 @@ export function header(active = '') {
       </div>
       <div class="nt-mob">
         <a class="rb acc-b" href="tel:${SITE.phone}" aria-label="Call ${SITE.phoneText}">${PHONE}</a>
-        ${igA()}
         <button type="button" class="rb menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mmenu" data-menu-open>${MENU}</button>
       </div>
     </div>`;

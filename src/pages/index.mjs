@@ -74,7 +74,7 @@ export const page = {
     ${header('')}
     <div class="hero-main">
       <div class="eyebrows"><p class="t-eyebrow acc">Event &amp; festival photography</p><i></i><p class="t-eyebrow dim">Netherlands · Worldwide</p></div>
-      <h1>Where the biggest stages get remembered.</h1>
+      <h1>Where unforgettable moments become content that lives forever.</h1>
 
       <div class="slider" data-slider role="group" aria-roledescription="carousel" aria-label="Selected festival photos">
         <div class="track">
