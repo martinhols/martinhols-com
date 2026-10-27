@@ -34,7 +34,11 @@ export function img(file, alt, opts = {}) {
 }
 
 export function header(active = '') {
-  const nav = SITE.nav.map((n) => `<a href="${n.href}"${active === n.href ? ' aria-current="page"' : ''}>${n.label}</a>`).join('');
+  const nav = SITE.nav.map((n) => {
+    const a = `<a href="${n.href}"${active === n.href ? ' aria-current="page"' : ''}>${n.label}</a>`;
+    if (n.href !== '/portfolio') return a;
+    return `<div class="dd">${a.replace('</a>', '<svg class="chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></a>')}<div class="ddm"><a href="/portfolio">Hall of fame</a>${SITE.categories.map((c) => `<a href="/portfolio/${c.slug}">${c.name}</a>`).join('')}</div></div>`;
+  }).join('');
   return `
     <a class="site-logo" href="/" aria-label="${SITE.name} home">${img('martin-hols-portrait.jpg', '', { priority: true, style: 'object-position:50% 22%' })}<span>${SITE.name}</span></a>
     <nav class="site-nav" aria-label="Main">${nav}</nav>
@@ -56,7 +60,7 @@ export function header(active = '') {
 export function mobileMenu() {
   const items = SITE.nav.map((n, i) => {
     const sub = n.href === '/portfolio'
-      ? `<div class="sub">${SITE.categories.map((c) => `<a href="/portfolio/${c.slug}">${c.name}</a>`).join('')}</div>` : '';
+      ? `<div class="sub">${SITE.categories.map((c, j) => `<a href="/portfolio/${c.slug}"><small>0${i + 1} ${String.fromCharCode(65 + j)}</small>${c.name}</a>`).join('')}</div>` : '';
     return `<li><a href="${n.href}"><small>0${i + 1}</small>${n.label}${ARROW}</a>${sub}</li>`;
   }).join('');
   return `
