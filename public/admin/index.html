@@ -221,7 +221,7 @@ async function saveProject(silent){readForm();const P=S.proj;if(!P||!P.title){sa
  const row={title:P.title,slug:P.slug||slug(P.title),client:P.client||null,event_name:P.event_name||null,location:P.location||null,event_date:P.event_date||null,summary:P.summary||null,categories:P.categories||[],category:(P.categories&&P.categories[0])||'festivals',published:!!P.published};
  if(P.pinned!==undefined)row.pinned=!!P.pinned;
  const ph=S.photos,by=s=>ph.find(x=>x.slot===s);
- row.hero_url=(by('hero')||{}).url||null;row.gallery=[by('wide'),by('tall-a'),by('tall-b'),...ph.filter(x=>!x.slot)].filter(Boolean).map(x=>x.url);
+ row.hero_url=(by('hero')||{}).url||null;row.gallery=[...new Set([by('wide'),by('tall-a'),by('tall-b'),by('hero'),by('card'),...ph.filter(x=>!x.slot)].filter(Boolean).map(x=>x.url))];
  const q=P.id?sb.from('projects').update(row).eq('id',P.id):sb.from('projects').insert(row);const{data,error}=await q.select().single();
  if(error){say('Save failed: '+error.message,1);return false}
  S.proj=data;const i=S.projects.findIndex(x=>x.id===data.id);i<0?S.projects.unshift(data):S.projects[i]=data;if(!silent)say('Saved.');return true}

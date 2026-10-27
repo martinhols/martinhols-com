@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { SITE } from '../site.mjs';
-import { dbProjects, dbPhotos, siteUrl } from '../data.mjs';
+import { dbProjects, dbPhotos, siteUrl, localMap } from '../data.mjs';
 const altOf = Object.fromEntries(dbPhotos.filter((x) => x.alt).map((x) => [x.url, x.alt]));
 import { esc, img, header, contactSection, footer, ARROW, ARROW16 } from '../layout.mjs';
 
@@ -139,8 +139,25 @@ const detailPage = {
 
 // Detailpagina's uit de database (Supabase)
 const dbDetail = (p) => {
-  const d = p.db, gal = Array.isArray(d.gallery) ? d.gallery : [], faq = (Array.isArray(d.faq) ? d.faq : []).filter((f) => f.q && f.a);
-  const rows = []; if (gal.length) { rows.push([gal[0]]); for (let i = 1; i < gal.length; i += 2) rows.push(gal.slice(i, i + 2)); }
+  const d = p.db, faq = (Array.isArray(d.faq) ? d.faq : []).filter((f) => f.q && f.a);
+  // Alle foto's van het project in de galerij: eerst de volgorde uit de admin, daarna hero, card en de rest.
+  const mine = dbPhotos.filter((x) => x.project_id === d.id);
+  const gal = [...new Set([...(Array.isArray(d.gallery) ? d.gallery : []), ...mine.filter((x) => x.slot === 'hero' || x.slot === 'card').map((x) => x.url), d.hero_url, ...mine.map((x) => x.url)].filter(Boolean))];
+  const dims = new Map(mine.map((x) => [x.url, x.width && x.height ? x.width / x.height : 0]));
+  const ratio = (u) => { const m = localMap[u]; const r = (m && m.w && m.h ? m.w / m.h : 0) || dims.get(u) || 1.5; return Math.min(Math.max(r, 0.45), 2.6); };
+  // Rijen met gelijke hoogte: elke foto krijgt zijn eigen beeldverhouding, staande foto's blijven staand.
+  const rows = [];
+  for (let i = 0; i < gal.length;) {
+    const row = [], first = rows.length === 0;
+    let S = 0;
+    while (i < gal.length && row.length < 4) {
+      const r = ratio(gal[i]);
+      if (row.length && (first || S >= 2.4 || (S >= 1.9 && S + r > 3.4))) break;
+      row.push([gal[i], r]); S += r; i++;
+      if (first && r >= 1.4) break;
+    }
+    rows.push(row);
+  }
   const fx = [['Client', d.client], ['Event', d.event_name || d.title], ['Location', d.location], ['Date', d.event_date && new Date(d.event_date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })]].filter(([, v]) => v);
   const sum = d.summary || `Martin Hols was the event photographer at ${d.event_name || d.title}${d.client ? `, commissioned by ${d.client}` : ''}.`;
   return {
@@ -154,7 +171,7 @@ const dbDetail = (p) => {
   ${phero(d.hero_url, p.alt, '50% 50%', `<div class="eyebrows"><p class="t-eyebrow acc">Project</p><i></i><p class="t-eyebrow dim">${CATS[d.category]}</p></div>`, `${esc(d.title)}.`, '')}
   <section class="cream psum" id="detail" data-theme="cream"><div class="ps-l"><p class="t-eyebrow acc">Project summary</p><p class="sum">${esc(sum)}</p></div>
     <dl class="fxg" style="grid-template-columns:repeat(${Math.min(fx.length, 4)},minmax(0,1fr))">${fx.map(([k, v]) => `<div class="fx"><dt class="t-eyebrow dim">${k}</dt><dd class="v">${esc(v)}</dd></div>`).join('')}</dl></section>
-  ${rows.length ? `<section class="panel pgal" aria-label="Photos">${rows.map((r) => `<div class="pr pr${r.length}">${r.map((u) => `<div class="pi">${img(u, altOf[u] || `${d.title} event photography`)}</div>`).join('')}</div>`).join('')}</section>` : ''}
+  ${rows.length ? `<section class="panel pgal" aria-label="Photos">${rows.map((r) => { const S = r.reduce((a, [, x]) => a + x, 0); return `<div class="pr${r.length > 1 && r.every(([, x]) => x < 0.9) ? ' pv' : ''}" style="--s:${S.toFixed(3)};--n:${r.length}${r.length === 1 ? ';--rh:760px' : ''}">${r.map(([u, x]) => `<div class="pi" style="flex:${x.toFixed(3)} 1 0;aspect-ratio:${x.toFixed(3)}">${img(u, altOf[u] || `${d.title} event photography`)}</div>`).join('')}</div>`; }).join('')}</section>` : ''}
   ${faq.length ? `<section class="cream pfaq" data-theme="cream"><p class="t-eyebrow dim">Questions about this project</p><div class="pqg">${faq.map((f) => `<div class="qa"><h3>${esc(f.q)}</h3><p>${esc(f.a)}</p></div>`).join('')}</div></section>` : ''}
   ${contactSection('tomorrowland-stage-night.jpg')}
   ${footer()}`,
