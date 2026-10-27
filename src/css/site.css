@@ -909,7 +909,8 @@ body.lb-open{overflow:hidden}
 .cat:hover .fade,.cat:focus-visible .fade,.ft:hover .fade,.ft:focus-visible .fade{opacity:1}
 .cat :is(h3,p,span.nm,.nm,.tt),.ft :is(h3,p,.nm,.tt){text-shadow:0 1px 14px rgba(5,30,49,.55)}
 /* heroes / contact / next-project: much lighter shade so photo colours stay true */
-.phero .shade{background:linear-gradient(to top,#051E3173 0%,#051E3100 45%),linear-gradient(to bottom,#051E3166 0%,#051E3100 18%)}
+.phero .shade{background:linear-gradient(to top,#051E31F2 0%,#051E31C0 38%,#051E3100 78%),linear-gradient(to bottom,#051E3199 0%,#051E3100 22%)}
+@media(min-width:1100px){.phero{min-height:560px}.phero-s .ph-tx h1{font-size:128px}}
 .nxp .shade{background:linear-gradient(to right,#051E3199 0%,#051E3140 45%,#051E3100 100%)}
 .contact::before{background:linear-gradient(to right,#051E3199 0%,#051E3166 45%,#051E3100 100%)}
 .phero h1,.phero .lead,.nxp h2,.contact h2,.contact p{text-shadow:0 1px 18px rgba(5,30,49,.5)}
