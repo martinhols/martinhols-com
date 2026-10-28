@@ -2,6 +2,12 @@ import { localMap } from './data.mjs';
 import { SITE } from './site.mjs';
 import fs from 'node:fs';
 
+// Kritieke CSS inline: geen render-blokkerend verzoek meer (kleine minify: commentaar en witruimte eruit).
+const cssDir = new URL('./css/', import.meta.url);
+const CSS = (fs.readFileSync(new URL('tokens.css', cssDir), 'utf8') + '\n' + fs.readFileSync(new URL('site.css', cssDir), 'utf8'))
+  .replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};,>])\s*/g, '$1').replace(/;}/g, '}');
+import { fileURLToPath } from 'node:url';
+
 const webpBases = new Set(fs.readdirSync(new URL('./img', import.meta.url), { recursive: true }).filter((f) => /-\d+\.webp$/.test(f)).map((f) => f.replace(/-\d+\.webp$/, '')));
 const sizes = JSON.parse(fs.readFileSync(new URL('./img/sizes.json', import.meta.url)));
 export const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -141,8 +147,9 @@ ${page.noindex ? '<meta name="robots" content="noindex, follow">\n' : ''}
 <link rel="icon" href="/img/martin-hols-portrait.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@100..900&family=Ubuntu:wght@300;400;500;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@100..900&family=Ubuntu:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@100..900&family=Ubuntu:wght@300;400;500;700&display=swap"></noscript>
+<style>${CSS}</style>
 ${ld}
 </head>
 <body>
