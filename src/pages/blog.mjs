@@ -106,29 +106,43 @@ const STATIC_POSTS = [
   {
     slug: 'how-to-brief-a-festival-photographer', type: 'guide', tag: 'Guide',
     title: 'How to brief a festival photographer.',
-    desc: 'How to brief a festival photographer: send a written callsheet with the schedule, must-have moments, access, contacts and delivery. Practical guide by Martin Hols.',
-    teaser: 'Send a written callsheet with the schedule, the must-have moments, access and contacts. Here is what to put in it, and why it beats a meeting.',
-    short: 'Send a written callsheet: the schedule, the must-have moments, access and contacts, and when you need the images. One clear document beats any meeting.',
-    file: 'portfolio/mysteryland-sunset-stone-hand-stage.jpg', pos: '50% 45%', alt: 'Mysteryland main stage at sunset, a giant stone hand holding the DJ booth, red smoke and light beams over the crowd', cap: 'Mysteryland 2025 · main stage at sunset',
-    card: 'portfolio/mysteryland-stage-sunset-fireworks.jpg', cardAlt: 'Festival main stage at sunset with fireworks',
-    toc: [['callsheet', 'Start with a callsheet'], ['moments', 'Name the must-have moments'], ['access', 'Sort access before the day'], ['delivery', 'Agree on delivery up front']],
+    desc: 'How to brief an event or festival photographer: send one written document with the schedule, special moments like pyro and confetti, contacts, call time and delivery.',
+    teaser: 'The sooner the photographer knows what is going to happen, the sooner the experience kicks in. Here is what to put in the briefing.',
+    short: 'Send one written briefing: what the event is about, the schedule, the special moments (pyro, SFX, confetti), contacts, call time and when you need the photos.',
+    file: 'martin-at-work-1.jpg', pos: '50% 30%', alt: 'Martin Hols smiling behind his camera at an event, with an earpiece and a festival wristband', cap: 'On location · earpiece in, ready for the first cue',
+    card: 'martin-at-work-1.jpg', cardAlt: 'Martin Hols with his camera at an event',
+    toc: [['event', 'Tell what the event is about'], ['schedule', 'Share the schedule and special moments'], ['calltime', 'Set the call time'], ['contacts', 'List the key contacts'], ['musthave', 'Must-haves and nice-to-haves'], ['look', 'Describe the look and feel'], ['edit', 'Give the photographer a place to edit'], ['delivery', 'Agree on delivery']],
     body: `
-      <section id="callsheet"><h2>Start with a callsheet, not a meeting.</h2>
-        <p>A photographer works from what is written down. On the day, nobody remembers what was said in a video call three weeks earlier, but everyone can check the callsheet. Put everything in one document and send it at least a week before the event.</p>
-        <p>The best briefings are short. One page that answers who, what, where and when is worth more than a long deck. Below is what I ask every client to include.</p>
-        <div class="cks"><p class="t-eyebrow acc">Callsheet checklist</p><ul class="ck">${['Programme with times per stage or room', 'The must-have shots: sponsors, speakers, headliners, pyro moments', 'Access: wristbands, photo pit, backstage, rooftop or towers', 'One contact person on site, with a phone number', 'Delivery: how many images, in what format, and by when', 'Usage: social, press, sponsors, aftermovie or campaign'].map((t) => `<li>${CHECK}<span>${t}</span></li>`).join('')}</ul></div>
+      <section><h2>Why the briefing matters.</h2>
+        <p>The most important thing is that the photographer knows what is going to happen and what is expected of them. Once they know, experience kicks in and they can get to work. A good briefing is one written document, sent in advance, as a PDF or Word file. Everything below goes in it.</p>
       </section>
-      <section id="moments"><h2>Name the must-have moments.</h2>
-        <p>Every event has a handful of moments that matter most to you: the sponsor activation, the CEO on stage, the headliner’s first drop. List them with a time and a place, so I can be in the right spot before it happens instead of running after it.</p>
-        <figure class="af">${img('portfolio/defqon1-stage-wall-of-fire.jpg', 'Wall of fire on the Defqon.1 main stage', { style: 'object-position:50% 50%' })}<figcaption>Defqon.1 · a pyro cue on the main stage. Moments like this are only caught when the timing is in the briefing.</figcaption></figure>
+      <section id="event"><h2>Tell what the event is about.</h2>
+        <p>Explain what exactly is going to happen and what the event is about: who it is for, what the goal is and what the atmosphere should be. Information about the event helps the photographer form a picture before arriving, and make better choices on the day.</p>
       </section>
-      <section id="access"><h2>Sort access before the day.</h2>
-        <p>The best overview shots come from places guests can’t reach: a light tower, a stage wing, a rooftop. Arrange the wristbands and permissions in advance and put them in the callsheet. Ten minutes lost at a gate can mean missing the opening of the show.</p>
+      <section id="schedule"><h2>Share the schedule and the special moments.</h2>
+        <p>Give the full schedule with times, and mark the moments that matter: when SFX, fireworks or confetti are fired, when the headliner starts, when the speaker or the CEO takes the stage. If the photographer knows the time, they can be in the right place before it happens, instead of running after it.</p>
+        <figure class="af">${img('portfolio/defqon1-stage-fireworks-light-beams.jpg', 'Defqon.1 stage with fireworks and light beams over the crowd', { style: 'object-position:50% 50%' })}<figcaption>Defqon.1 · a pyro cue is over in seconds. The time has to be in the briefing.</figcaption></figure>
       </section>
-      <section id="delivery"><h2>Agree on delivery up front.</h2>
-        <p>Say when you need the first images and what for. Social teams often want a selection during the event; sponsors and press usually need the full set the next day. If it is in the briefing, the workflow on site is built around it.</p>
-      </section>`,
-    faq: [['What should a briefing for an event photographer include?', 'A written callsheet with the programme and times, the must-have moments, access and permissions, one contact on site, and the delivery and usage requirements.'], ['How far in advance should I send the briefing?', 'At least a week before the event, so access and wristbands can be arranged in time.']],
+      <section id="calltime"><h2>Set the call time.</h2>
+        <p>Tell the photographer what time to be there. As a rule of thumb: 30 minutes before the start for a corporate event, and about an hour before for music and festivals, so there is time for a walk-through of the site. For sports events and anything that needs accreditation, build the time for that into the planning, and mention it when you request the photographer.</p>
+      </section>
+      <section id="contacts"><h2>List the key contacts.</h2>
+        <p>Add the names and phone numbers of the important partners on the event: the production lead, the stage or area manager, the artist or speaker liaison, and the person who arranges access. One contact on site who can solve problems is worth a lot.</p>
+      </section>
+      <section id="musthave"><h2>Must-haves and nice-to-haves.</h2>
+        <p>Make two short lists. The must-haves are the shots you cannot do without: the sponsor activation, the headliner, the speaker. The nice-to-haves are everything you would be happy to get on top. The photographer knows then where to focus when time is short.</p>
+      </section>
+      <section id="look"><h2>Describe the look and feel.</h2>
+        <p>If you really want to help, describe the look and feel you want: dark and dramatic, bright and natural, close to the people or wide and big. A few example photos work even better than words.</p>
+      </section>
+      <section id="edit"><h2>Give the photographer a place to edit.</h2>
+        <p>Editing happens at quiet moments, or between sets, when nothing is happening. So the photographer needs a place for it: somewhere to sit, where their gear can be stored and is safe, and a power socket. Without that, fast delivery is not possible.</p>
+      </section>
+      <section id="delivery"><h2>Agree on delivery.</h2>
+        <p>Say when you want the photos. For most events the first photos are needed during the event, for social media. Put that in the briefing, together with who receives them, so the workflow on site is built around it. The full set follows later, within the agreed time.</p>
+      </section>
+      <section id="checklist"><div class="cks"><p class="t-eyebrow acc">Checklist · what goes in the briefing</p><ul class="ck">${['What the event is about, who it is for and what happens', 'The full schedule with times', 'Special moments: SFX, pyro, fireworks, confetti, headliners, speeches', 'Call time and the address, with accreditation arranged', 'Names and phone numbers of the key contacts on site', 'Must-have shots and nice-to-have shots', 'Look and feel, with example photos if you have them', 'A safe place to edit and store gear, with a power socket', 'When you need the first photos and the full set, and who gets them'].map((t) => `<li>${CHECK}<span>${t}</span></li>`).join('')}</ul></div></section>`,
+    faq: [['What should a briefing for an event photographer include?', 'What the event is about, the schedule, the special moments such as pyro, SFX and confetti, call time, key contacts, must-have and nice-to-have shots, look and feel, a place to edit, and when the photos are needed.'], ['How early should the photographer arrive?', 'About 30 minutes before the start of a corporate event and about an hour before a music event or festival. Sport events and events that need accreditation need extra time.'], ['In what format should I send the briefing?', 'One written document, as a PDF or Word file, sent well before the event.']],
   },
   {
     slug: 'shooting-pyro-at-defqon1', type: 'story', tag: 'Story',
