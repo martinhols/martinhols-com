@@ -18,7 +18,8 @@ export function audit(dist, seoList, siteUrl) {
     const add = (severity, code, message) => issues.push({ severity, code, message });
     const title = dec((html.match(/<title>([^<]*)<\/title>/) || [])[1]), desc = dec(attr((html.match(/<meta name="description"[^>]*>/) || [''])[0], 'content'));
     const h1 = (html.match(/<h1[\s>]/g) || []).length;
-    const imgs = html.match(/<img\b[^>]*>/g) || [];
+    const visible = html.replace(/<(a|div|span)\b[^>]*aria-hidden="true"[^>]*>[\s\S]*?<\/\1>/g, ''); // aria-hidden blokken (dubbele carrousel-kaarten) tellen niet mee
+    const imgs = visible.match(/<img\b[^>]*>/g) || [];
     const noAlt = imgs.filter((t) => attr(t, 'alt') === null).length;
     const emptyAlt = imgs.filter((t) => attr(t, 'alt') === '' && !/aria-hidden/.test(t)).length;
     const words = strip(html.split('<body')[1] || '').split(' ').length;
