@@ -1,7 +1,8 @@
 import { SITE } from '../site.mjs';
 import { arrowsLink, img, header, footer, ARROW, ARROW16 } from '../layout.mjs';
 
-const co = SITE.company;
+const real = (v) => (v && !String(v).startsWith('[') ? v : '');
+const co = { kvk: real(SITE.company.kvk), vat: real(SITE.company.vat), address: real(SITE.company.address) };
 const details = ['MartinHols.com is part of The Arrows', co.kvk && `KVK: ${co.kvk}`, co.vat && `VAT: ${co.vat}`, co.address].filter(Boolean).map(arrowsLink).join('<br>');
 const types = [['fest', 'Festivals'], ['corp', 'Corporate'], ['sport', 'Sport'], ['music', 'Shows / Music']];
 
