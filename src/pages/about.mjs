@@ -72,7 +72,7 @@ const how = [
 ];
 
 const specs = [
-  ['Overview photography', 'It’s the big picture that gets me: a full main stage, thousands of hands in the air, a whole production working together. I’ll climb a tower or find a roof to show an event the way its makers designed it.', 'defqon1-main-stage.jpg', '50% 40%', 'Defqon.1 main stage in daylight, seen from above the crowd'],
+  ['Overview photography', 'It’s the big picture that gets me: a full main stage, thousands of hands in the air, a whole production working together. I’ll climb a tower or find a roof to show an event the way its makers designed it.', 'pinkpop-overview-stage-sunset.jpg', '50% 45%', 'Pinkpop main stage and festival sign at sunset, seen from above the crowd'],
   ['SFX and pyro', 'Fire, fireworks, lasers, confetti. The moment it all goes off is the peak of the show, and it lasts a second. I learn the cues, take my spot early and wait for it. That second still gives me goosebumps.', 'mysteryland-festival-stage.jpg', '50% 50%', 'Fireworks shooting up behind a festival stage and crowd'],
   ['Superfast delivery', 'An event moves fast, and so does its story online. That’s why I deliver high-quality, fully edited images during the event itself, so your team can share them while everyone is still talking about the night. The rest follows within 24 hours.', 'f1-las-vegas-grand-prix.jpg', '30% 40%', 'Performer at the Formula 1 Las Vegas Grand Prix'],
 ];
