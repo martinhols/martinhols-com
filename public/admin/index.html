@@ -60,7 +60,7 @@ h1{font:300 88px/92px var(--font-display);letter-spacing:-.02em;margin:12px 0 0}
 .drop .ic{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--accent);color:var(--on-accent)}
 .st{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none}.st.ok{background:#5BC98F}.st.no{background:var(--accent)}
 .up{display:flex;align-items:center;gap:8px;margin-top:14px;font:500 15px/20px var(--font-body);color:var(--ink-muted)}
-.slots{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:20px}
+.slots{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
 .slm{display:flex;flex-direction:column;gap:8px}
 .slm .t{position:relative;height:110px;border-radius:10px;overflow:hidden;background:var(--surface-raised)}
 .slm .t.e{border:2px dashed var(--line-strong);background:transparent;display:grid;place-items:center;color:var(--ink-muted);font:500 13px/16px var(--font-display)}
@@ -155,7 +155,7 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const slug=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const CATS=[['festivals','Festivals'],['corporate','Corporate'],['sport','Sport'],['shows-music','Shows / Music']];
 const CN=Object.fromEntries(CATS);
-const SLOTS=[['hero','Hero','Project page header'],['card','Card','Overview, Home, Next project'],['wide','Wide','First wide gallery photo'],['tall-a','Tall A','Gallery pair, left'],['tall-b','Tall B','Gallery pair, right']];
+const SLOTS=[['hero','Hero','Project page header'],['card','Card','Overview, Home, Next project']];
 const MAXP=100,MAXT=20;
 const I={up:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V5M7 10l5-5 5 5M5 19h14"/></svg>',
 star:'<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg>',
@@ -221,13 +221,13 @@ async function saveProject(silent){readForm();const P=S.proj;if(!P||!P.title){sa
  const row={title:P.title,slug:P.slug||slug(P.title),client:P.client||null,event_name:P.event_name||null,location:P.location||null,event_date:P.event_date||null,summary:P.summary||null,categories:P.categories||[],category:(P.categories&&P.categories[0])||'festivals',published:!!P.published};
  if(P.pinned!==undefined)row.pinned=!!P.pinned;
  const ph=S.photos,by=s=>ph.find(x=>x.slot===s);
- row.hero_url=(by('hero')||{}).url||null;row.gallery=[...new Set([by('wide'),by('tall-a'),by('tall-b'),by('hero'),by('card'),...ph.filter(x=>!x.slot)].filter(Boolean).map(x=>x.url))];
+ row.hero_url=(by('hero')||{}).url||null;row.gallery=[...new Set([by('hero'),by('card'),...ph.filter(x=>x.slot!=='hero'&&x.slot!=='card')].filter(Boolean).map(x=>x.url))];
  const q=P.id?sb.from('projects').update(row).eq('id',P.id):sb.from('projects').insert(row);const{data,error}=await q.select().single();
  if(error){say('Save failed: '+error.message,1);return false}
  S.proj=data;const i=S.projects.findIndex(x=>x.id===data.id);i<0?S.projects.unshift(data):S.projects[i]=data;if(!silent)say('Saved.');return true}
 function checks(){const P=S.proj||{},ph=S.photos,need=ph.filter(x=>(x.slot||x.portfolio)&&!(x.alt||'').trim()),placed=SLOTS.filter(([k])=>ph.some(x=>x.slot===k)).length,marked=ph.filter(x=>x.marked).length;
  const det=!!(P.title&&P.event_name&&P.location&&P.event_date&&(P.categories||[]).length&&P.summary);
- return [[det,'Project details','Name, client, event, place, date, categories'],[ph.length>0,'Photos uploaded',ph.length+' photos'],[ph.some(x=>x.slot==='hero'),'Hero chosen',(ph.find(x=>x.slot==='hero')||{}).alt||'Pick one in step 3'],[placed===5,'Gallery placements',`${placed} of 5.`+(placed<5?' Open slots are left.':'')],[ph.length>0&&!need.length,'Alt text',need.length?`${need.length} still need it.`:'All placed photos have alt text'],[marked>0,'Portfolio picks',`${marked} marked, ${ph.filter(x=>x.top).length} of them Top`]]}
+ return [[det,'Project details','Name, client, event, place, date, categories'],[ph.length>0,'Photos uploaded',ph.length+' photos'],[ph.some(x=>x.slot==='hero'),'Hero chosen',(ph.find(x=>x.slot==='hero')||{}).alt||'Pick one in step 3'],[placed===2,'Hero and card chosen',`${placed} of 2.`],[ph.length>0&&!need.length,'Alt text',need.length?`${need.length} still need it.`:'All placed photos have alt text'],[marked>0,'Portfolio picks',`${marked} marked, ${ph.filter(x=>x.top).length} of them Top`]]}
 async function publishProject(){if(!(await saveProject(true)))return;const c=checks();if(!(c[0][0]&&c[1][0]&&c[2][0]&&c[4][0]))return say('Finish details, photos, hero and alt text first.',1);
  const{error}=await sb.from('projects').update({published:true}).eq('id',S.proj.id);if(error)return say(error.message,1);S.proj.published=true;await publishSite('Project published. ')}
 async function publishSite(prefix=''){let h=hook();if(!h){h=prompt('Paste the Vercel Deploy Hook URL (once).');if(!h)return;try{localStorage.setItem('deployHook',h.trim())}catch(e){}}
