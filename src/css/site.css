@@ -543,8 +543,6 @@ body.menu-open{overflow:hidden}
   .story .body p:not(.t-eyebrow){margin-top:16px;font:400 18px/28px var(--font-body)}
   .story .body h2+p{margin-top:20px}
   .road{padding:20px 8px 0}
-  .road .cbi{padding:48px 0 40px}
-  .road .cbi h2{font-size:32px;line-height:38px;margin:8px 0 20px}
   .tl{display:block;position:relative;margin-top:12px}
   .tl::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:var(--line)}
   .tl li{gap:4px;padding:12px 0 12px 32px;border-top:0}
@@ -948,15 +946,7 @@ body.lb-open{overflow:hidden}
 @media(max-width:700px){.nf-tx{padding:110px 20px 48px}.nf-links{padding:40px 20px}}
 
 /* About: coming back */
-.cb{padding:64px 48px}
-.cbi{padding:72px 0 64px}
-.cbi h2{font:300 44px/52px var(--font-display);letter-spacing:-.01em;max-width:720px;margin:16px 0 28px}
-.cb h2{max-width:720px;margin:8px 0 28px}
-.cbl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-.cbl li{display:flex;flex-direction:column;gap:4px;padding:18px 20px;border:1px solid var(--line);border-radius:16px}
-.cbl b{font:500 22px/28px var(--font-display)}
-.cbl span{font-size:14px;opacity:.7}
-@media(max-width:700px){.cb{padding:40px 20px}}
+@media(max-width:700px){}
 .lead a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 
 /* Cookiebalk + footerknop */
