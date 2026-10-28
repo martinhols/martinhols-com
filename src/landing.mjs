@@ -19,9 +19,9 @@ export function landing(c) {
   const list = catGallery(c.cat, c.galleryMax || 12);
   const slides = (list.length >= 2 ? list.slice(0, 6) : [{ file: c.hero.file, alt: c.hero.alt, pos: c.hero.pos || '50% 50%', name: c.catName }]).map((p) => ({ file: p.file, alt: p.alt, pos: p.pos, name: p.name }));
   // Geen projecten in deze categorie? Toon dan de laatste projecten in het algemeen.
-  const latest = () => { const L = PROJECTS.slice(0, 3); return L.length ? `
+  const latest = () => { const L = [...PROJECTS].sort((a, b) => String((b.db && (b.db.event_date || b.db.created_at)) || '').localeCompare(String((a.db && (a.db.event_date || a.db.created_at)) || ''))).slice(0, 3); return L.length ? `
   <section class="panel projects" aria-labelledby="projects-h">
-    <div class="hd"><div><p class="t-eyebrow acc">Projects</p><h2 id="projects-h">Latest projects</h2></div><a class="btn btn-p" href="/projects">All projects <span class="ic">${ARROW16}</span></a></div>
+    <div class="hd"><div><p class="t-eyebrow acc">Projects</p><h2 id="projects-h">Latest events</h2></div><a class="btn btn-p" href="/projects">All projects <span class="ic">${ARROW16}</span></a></div>
     <div class="pgrid">${L.map((p) => `<a class="pc" href="${p.href}">${img(p.file, p.alt, { style: `object-position:${p.pos}` })}<p class="t-eyebrow acc k">${CATS[p.cat]}</p><p class="tt">${esc(p.title)}</p></a>`).join('')}</div>
   </section>` : ''; };
   return {
@@ -121,7 +121,7 @@ export function landing(c) {
     </div>
   </section>
 
-  ${projSec(c.cat, c.catName) || latest()}
+  ${latest()}
 
   <section class="contact-grid" id="quote" aria-label="Request a quote">
     <div class="cream contact-side" data-theme="cream">
