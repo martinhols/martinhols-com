@@ -164,8 +164,8 @@ export const page = {
 
   <section class="panel story" aria-labelledby="story-h">
     <figure>
-      ${img('defqon1-pyro-show.jpg', 'Two DJs on stage seen from the crowd under purple lights', { style: 'object-position:50% 50%' })}
-      <figcaption class="glass">Close to the music, where it all started</figcaption>
+      ${img('martin-hols-festival-two-cameras.jpg', 'Martin Hols smiling up at the camera on a festival site, holding two Canon cameras', { style: 'object-position:50% 35%' })}
+      <figcaption class="glass">Still close to the music, two cameras in hand</figcaption>
     </figure>
     <div class="body">
       <p class="t-eyebrow acc">My story</p>
