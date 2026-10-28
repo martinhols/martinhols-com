@@ -63,7 +63,7 @@ export async function prepareData(dist) {
   dbPhotos = await get('photos', 'created_at.asc', false);
   dbSeo = await get('seo_pages', 'path.asc', false);
   const pub = new Set(dbProjects.map((p) => p.id));
-  dbPhotos = dbPhotos.filter((x) => x.portfolio || (x.cat_picks || []).length || x.home_hero || x.cat_header || (x.project_id && pub.has(x.project_id)));
+  dbPhotos = dbPhotos.filter((x) => x.portfolio || x.home_hero || x.cat_header || (x.project_id && pub.has(x.project_id)));
   const dims = Object.fromEntries(dbPhotos.map((x) => [x.url, [x.width, x.height]]));
   const urls = [...dbPhotos.map((x) => x.url), ...dbProjects.flatMap((p) => [p.hero_url, ...(p.gallery || [])]), ...dbPosts.map((p) => p.hero_url)].filter(Boolean);
   const names = Object.fromEntries(dbPhotos.filter((x) => x.file).map((x) => [x.url, x.file]));
@@ -89,7 +89,7 @@ const posOf = (x) => (x.focus_x != null && x.focus_y != null ? `${x.focus_x}% ${
 export function bestPhoto(cat) {
   const h = dbPhotos.find((x) => x.cat_header === cat && localMap[x.url]);
   if (h) return { file: h.url, alt: (h.alt || '').trim() || [h.event, h.city, h.year].filter(Boolean).join(', ') || 'Event photography', pos: posOf(h) };
-  const t = dbPhotos.filter((x) => x.top && (x.portfolio || (x.cat_picks || []).includes(cat)) && (x.categories || []).includes(cat) && localMap[x.url]);
+  const t = dbPhotos.filter((x) => x.portfolio && x.top && (x.categories || []).includes(cat) && localMap[x.url]);
   t.sort((a, b) => String(b.taken_on || b.created_at).localeCompare(String(a.taken_on || a.created_at)));
   return t[0] ? { file: t[0].url, alt: (t[0].alt || '').trim() || [t[0].event, t[0].city, t[0].year].filter(Boolean).join(', ') || 'Event photography', pos: posOf(t[0]) } : null;
 }
