@@ -52,10 +52,10 @@
         "7 years, as Dutch tax law requires"
        ],
        [
-        "Visitor statistics",
-        "Anonymous, aggregated page views, device type and country",
+        "Visitor statistics (Google Analytics 4)",
+        "Pages viewed, device type, browser, approximate location and how you arrived. Only after you accept cookies",
         "To see which pages are useful and improve the site",
-        "Aggregated only, no personal profile"
+        "Up to 14 months in Google Analytics"
        ],
        [
         "Event photos",
@@ -100,7 +100,7 @@
    [
     "Cookies and tracking",
     [
-     "I don’t use advertising or tracking cookies, so there is no cookie banner. Basic visitor statistics are collected without cookies and without identifying you."
+     "I use Google Analytics 4 to see which pages are useful. It only loads after you accept analytics cookies in the banner, and I do not use it for advertising or sell this data. You can change your choice at any time with “Cookie settings” in the footer. Without your consent, no analytics cookies are set."
     ]
    ],
    [
@@ -276,5 +276,5 @@
   "qtitle": "Questions about these terms?",
   "qtext": "Email me. I would rather clear it up before the job than after."
  },
- "UPDATED": "26 October 2026"
+ "UPDATED": "28 October 2026"
 }

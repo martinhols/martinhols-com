@@ -130,3 +130,25 @@
   if (reduce) { s.querySelector('.s-count').style.display = 'none'; }
   play();
 })();
+
+/* Google Analytics 4: laadt pas na toestemming (meet-ID staat in <meta name="ga4-id">) */
+(function () {
+  var m = document.querySelector('meta[name="ga4-id"]'); if (!m) return;
+  var id = m.content, bar = document.getElementById('cookie'), KEY = 'mh-consent';
+  function get() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function set(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  function load() {
+    if (window.__ga) return; window.__ga = 1;
+    window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
+    gtag('js', new Date()); gtag('config', id, { anonymize_ip: true });
+    var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id); document.head.appendChild(s);
+  }
+  function show() { if (bar) bar.hidden = false; }
+  var c = get();
+  if (c === 'yes') load(); else if (c !== 'no') show();
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-cookie]'), o = e.target.closest('[data-cookie-settings]');
+    if (b) { var v = b.getAttribute('data-cookie'); set(v); if (bar) bar.hidden = true; if (v === 'yes') load(); }
+    if (o) show();
+  });
+})();

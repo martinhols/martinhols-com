@@ -114,7 +114,7 @@ export function footer() {
         <div><p class="t-eyebrow dim">Portfolio</p><div class="fl">${cats}</div></div>
         <div><p class="t-eyebrow dim">Pages</p><div class="fl"><a href="/projects">Projects</a><a href="/about">About</a><a href="/blog">Blog</a></div></div>
         <div><p class="t-eyebrow dim">Contact</p><div class="fl"><a href="mailto:${SITE.email}">${SITE.email}</a><a href="tel:${SITE.phone}">${SITE.phoneText}</a><a href="${SITE.instagram}" target="_blank" rel="noopener">Instagram</a></div></div>
-        <div><p class="t-eyebrow dim">Legal</p><div class="fl"><a href="/privacy">Privacy policy</a><a href="/terms">Terms &amp; conditions</a></div></div>
+        <div><p class="t-eyebrow dim">Legal</p><div class="fl"><a href="/privacy">Privacy policy</a><a href="/terms">Terms &amp; conditions</a>${SITE.ga4 ? '<button type="button" class="linkbtn" data-cookie-settings>Cookie settings</button>' : ''}</div></div>
       </div>
     </div>
     <p class="t-caption copy">© 2026 ${SITE.name} · Part of <b>The Arrows</b></p>
@@ -162,6 +162,8 @@ ${page.body}
 </div>
 ${mobileMenu()}
 <script src="/assets/site.js" defer></script>
+${SITE.ga4 ? `<meta name="ga4-id" content="${SITE.ga4}">` : ''}
+${SITE.ga4 ? `<div class="cookie" id="cookie" role="dialog" aria-label="Cookie settings" hidden><p><b>Cookies?</b> I use Google Analytics to see which pages are useful. Only if you say yes. <a href="/privacy#s6">Read more</a></p><div class="cb-btns"><button type="button" data-cookie="no">No thanks</button><button type="button" data-cookie="yes" class="y">Accept</button></div></div>` : ''}
 </body>
 </html>
 `;

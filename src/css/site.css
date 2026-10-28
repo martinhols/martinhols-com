@@ -954,3 +954,17 @@ body.lb-open{overflow:hidden}
 .cbl span{font-size:14px;opacity:.7}
 @media(max-width:700px){.cb{padding:40px 20px}}
 .lead a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+
+/* Cookiebalk + footerknop */
+.cookie{position:fixed;left:16px;right:16px;bottom:16px;max-width:560px;z-index:90;background:var(--bg);color:var(--ink);border:1px solid var(--line-strong,var(--line));border-radius:16px;padding:16px 18px;box-shadow:0 12px 40px rgba(0,0,0,.35);display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.cookie[hidden]{display:none}
+.cookie p{margin:0;flex:1 1 260px;font-size:14px;line-height:20px}
+.cookie a{color:inherit;text-decoration:underline}
+.cb-btns{display:flex;gap:8px}
+.cb-btns button{font:500 14px var(--font-body,inherit);padding:10px 16px;border-radius:10px;border:1px solid var(--line-strong,var(--line));background:transparent;color:inherit;cursor:pointer}
+.cb-btns .y{background:var(--accent);border-color:var(--accent);color:#051E31}
+.linkbtn{background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+
+/* Smalle desktop: menu past voor de knoppenbalk */
+@media (min-width:1100px) and (max-width:1359px){.site-nav{gap:16px;left:316px}.site-nav a{font-size:13px;letter-spacing:.04em}.notch.n-tr{gap:8px;padding:20px 20px 28px 28px}}
+@media (min-width:1100px) and (max-width:1239px){.site-logo span{display:none}.site-nav{left:128px}}
