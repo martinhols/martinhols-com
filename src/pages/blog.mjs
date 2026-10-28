@@ -14,7 +14,7 @@ const STATIC_POSTS = [
     short: 'Pick the photographer whose style matches what you want, who can show real experience, whose price and terms are clear, and who delivers when you need the images.',
     file: 'tomorrowland-stage-night.jpg', pos: '50% 50%', alt: 'Tomorrowland main stage at night with lights and crowd', cap: 'Tomorrowland · main stage at night',
     card: 'tomorrowland-stage-night.jpg', cardAlt: 'Tomorrowland main stage at night',
-    toc: [['style', '1. Does the style match?'], ['experience', '2. How much real experience?'], ['type', '3. Have they shot your type of event?'], ['instagram', '4. What does Instagram show?'], ['references', '5. Do clients come back?'], ['price', '6. What does the price tell you?'], ['terms', '7. What are the terms?'], ['delivery', '8. When do you get the images?'], ['backup', '9. What if something goes wrong?']],
+    toc: [['style', '1. Does the style match?'], ['experience', '2. How much real experience?'], ['type', '3. Are they a specialist in your field?'], ['instagram', '4. What does Instagram show?'], ['references', '5. Do clients come back?'], ['price', '6. What does the price tell you?'], ['terms', '7. What are the terms?'], ['delivery', '8. When do you get the images?'], ['backup', '9. What if something goes wrong?']],
     body: `
       <section><h2>Choose the right one, even if it isn’t me.</h2>
         <p>The best photographer is the one who fits your event, not the one with the nicest website. These are the nine questions I would ask if I were booking a photographer myself.</p>
@@ -25,8 +25,8 @@ const STATIC_POSTS = [
       <section id="experience"><h2>2. How much real experience do they have?</h2>
         <p>A website with a handful of strong images can hide a lot of luck. Experience cannot be bought: it shows in how many events someone has shot, at what size and how often clients come back. Ask which events they have photographed that look like yours, and for how many years.</p>
       </section>
-      <section id="type"><h2>3. Have they shot your type of event?</h2>
-        <p>Not every event is the same job. A festival means dark stages, moving light, crowds and weather. A conference is about speakers, people and a clean look in a room. Sport is about speed and anticipation. A good photographer for one is not automatically good at the other, so ask for examples from events that look like yours.</p>
+      <section id="type"><h2>3. Are they a specialist in your type of event?</h2>
+        <p>Not every event is the same job. A festival means dark stages, moving light, crowds and weather. A conference is about speakers, people and a clean look in a room. Sport is about speed and anticipation. No photographer can do every kind of photography equally well, so look for a specialist in your field. Ask for examples from events that look like yours.</p>
       </section>
       <section id="instagram"><h2>4. What does their Instagram show?</h2>
         <p>Photographers are famous for not updating their website. Instagram is usually where the recent work is. Scroll back through the last months: do you see steady work at real events, or only a few good posts? A feed that is active and varied is a good sign.</p>
