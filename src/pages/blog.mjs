@@ -58,11 +58,11 @@ const STATIC_POSTS = [
     slug: 'what-does-an-event-photographer-cost', type: 'guide', tag: 'Guide',
     title: 'What does an event photographer cost?',
     desc: 'What an event photographer costs in the Netherlands: rates per event type, from €650 for a show to €1,350 for a corporate day, with editing, delivery and usage rights included.',
-    teaser: 'Prices differ per type of event. Here are my real rates for corporate events, festivals, sport, shows and image libraries, and what is included.',
+    teaser: 'Prices differ per type of event. Here are my real rates for corporate events, festivals, sport, and shows, and what is included.',
     short: 'My rates start at €650 (excl. VAT) for a show or a 4-hour event, a festival or sport day is €850 and a full corporate day is €1,350. Editing, delivery within 24 hours and all usage rights are included.',
     file: 'portfolio/mysteryland-sunset-stone-hand-stage.jpg', pos: '50% 45%', alt: 'Mysteryland main stage at sunset, a giant stone hand holding the DJ booth, red smoke and light beams over the crowd', cap: 'Mysteryland 2025 · main stage at sunset',
     card: 'portfolio/mysteryland-stage-sunset-fireworks.jpg', cardAlt: 'Festival main stage at sunset with fireworks',
-    toc: [['why', 'Why prices differ per event'], ['events', 'Corporate events'], ['festivals', 'Festivals and sport'], ['shows', 'Shows and music'], ['other', 'Image libraries and video'], ['included', 'What is included']],
+    toc: [['why', 'Why prices differ per event'], ['events', 'Corporate events'], ['festivals', 'Festivals and sport'], ['shows', 'Shows and music'], ['included', 'What is included']],
     body: `
       <section id="why"><h2>Why prices differ per event.</h2>
         <p>There is no single price for an event photographer, because events are very different jobs. A conference is a few hours in one room with a fixed programme. A festival is a long day across several stages, in weather, with crowds and moving light. A show is one performance where timing and light decide everything.</p>
@@ -82,9 +82,6 @@ const STATIC_POSTS = [
       <section id="shows"><h2>Shows and music.</h2>
         <p>For a concert, a show or a music performance the price is a fixed <b>€650 per show</b>. You know the cost before the doors open, no matter how the evening runs.</p>
         <figure class="af">${img('portfolio/guitarist-live-show-blue-light.jpg', 'Guitarist on stage in blue light during a live show', { style: 'object-position:50% 50%' })}<figcaption>Live show · one fixed price per show</figcaption></figure>
-      </section>
-      <section id="other"><h2>Image libraries and video.</h2>
-        <ul class="ck">${['Image library (beeldenbank), half day: €750', 'Image library, full day: €1,450, with €175 for each extra hour', 'Video, per day: €1,150'].map((t) => `<li>${CHECK}<span>${t}</span></li>`).join('')}</ul>
       </section>
       <section id="included"><h2>What is included.</h2>
         <p>Every price includes editing, delivery of the final images within 24 hours and all usage rights, so you can use the images wherever you need them. VAT, travel costs (€0.35 per kilometre from Hilversum) and any other costs are charged on top.</p>
