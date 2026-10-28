@@ -103,7 +103,7 @@ const specs = `
 const projSec = (slug, name) => {
   const list = PROJECTS.filter((p) => p.cat === slug).slice(0, 3);
   if (!list.length) return '';
-  const card = (p, aria = false) => `<a class="pj" href="${p.href}"${aria ? ' aria-hidden="true" tabindex="-1"' : ''}>${img(p.file, aria ? '' : p.alt, { style: `object-position:${p.pos}` })}<p class="t-eyebrow acc k">${CATS[p.cat]}</p><p class="tt">${esc(p.title)}</p></a>`;
+  const card = (p, aria = false) => `<a class="pj" href="${p.href}"${aria ? ' aria-hidden="true" tabindex="-1"' : ''}>${img(p.file, aria ? '' : p.alt, { style: `object-position:${p.pos}`, sizes: '(min-width:1100px) 34vw, 85vw' })}<p class="t-eyebrow acc k">${CATS[p.cat]}</p><p class="tt">${esc(p.title)}</p></a>`;
   return `
   <section class="panel projects" aria-labelledby="projects-h">
     <div class="hd">

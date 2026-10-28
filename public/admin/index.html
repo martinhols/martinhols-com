@@ -202,7 +202,7 @@ async function uploadFiles(files,toProject){
    const put=async(p,blob,type)=>{const r=await sb.storage.from('photos').upload(p,blob,{contentType:type});if(r.error)throw r.error};
    at(.25,'making smaller versions');
    const jobs=[[path,b,'image/jpeg'],[path.replace(/\.jpg$/,'-s.jpg'),(await enc(im,800)).b,'image/jpeg']];
-   for(const wd of [640,1280,2400]){if(wd>Math.max(im.width,im.height)&&wd!==640)continue;const v=await enc(im,wd,'image/webp',.8);if(v.b.type!=='image/webp')break;jobs.push([path.replace(/\.jpg$/,'-'+wd+'.webp'),v.b,'image/webp'])}
+   for(const wd of [640,1280,2400]){if(wd>Math.max(im.width,im.height)&&wd!==640)continue;const v=await enc(im,wd,'image/webp',.72);if(v.b.type!=='image/webp')break;jobs.push([path.replace(/\.jpg$/,'-'+wd+'.webp'),v.b,'image/webp'])}
    let done=0;at(.5,'uploading');await Promise.all(jobs.map(([p,bl,t])=>put(p,bl,t).then(()=>{done++;at(.5+.45*done/jobs.length,`uploading (${done}/${jobs.length} files)`)})));
    at(.95,'saving');const url=sb.storage.from('photos').getPublicUrl(path).data.publicUrl,P=S.proj;
    const row={file,url,width:w,height:h,bytes:b.size,marked:false,portfolio:false,top:false};

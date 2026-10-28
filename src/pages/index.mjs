@@ -33,7 +33,7 @@ const logos = [
   ['logo-formula-1.png', 'Formula 1', 'width:147px;height:64px'],
 ];
 
-const projCard = (p, aria = false) => `<a class="pj" href="${p.href}"${aria ? ' aria-hidden="true" tabindex="-1"' : ''}>${img(p.file, aria ? '' : p.alt, { style: `object-position:${p.pos}` })}<p class="t-eyebrow acc k">${p.cat}</p><p class="tt">${p.title}</p></a>`;
+const projCard = (p, aria = false) => `<a class="pj" href="${p.href}"${aria ? ' aria-hidden="true" tabindex="-1"' : ''}>${img(p.file, aria ? '' : p.alt, { style: `object-position:${p.pos}`, sizes: '(min-width:1100px) 34vw, 85vw' })}<p class="t-eyebrow acc k">${p.cat}</p><p class="tt">${p.title}</p></a>`;
 
 export const page = {
   path: '/',
