@@ -950,13 +950,18 @@ body.lb-open{overflow:hidden}
 .lead a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 
 /* Cookiebalk + footerknop */
-.cookie{position:fixed;left:16px;right:16px;bottom:16px;max-width:560px;z-index:90;background:var(--bg);color:var(--ink);border:1px solid var(--line-strong,var(--line));border-radius:16px;padding:16px 18px;box-shadow:0 12px 40px rgba(0,0,0,.35);display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.cookie{position:fixed;left:20px;bottom:20px;max-width:620px;width:calc(100% - 40px);z-index:90;background:#051E31;color:#F4EFE6;border:1px solid rgba(244,239,230,.18);border-radius:20px;padding:20px 22px;box-shadow:0 24px 60px rgba(0,0,0,.45);display:grid;grid-template-columns:auto 1fr;gap:16px 16px;align-items:start}
 .cookie[hidden]{display:none}
-.cookie p{margin:0;flex:1 1 260px;font-size:14px;line-height:20px}
-.cookie a{color:inherit;text-decoration:underline}
-.cb-btns{display:flex;gap:8px}
-.cb-btns button{font:500 14px var(--font-body,inherit);padding:10px 16px;border-radius:10px;border:1px solid var(--line-strong,var(--line));background:transparent;color:inherit;cursor:pointer}
-.cb-btns .y{background:var(--accent);border-color:var(--accent);color:#051E31}
+.ck-ic{width:44px;height:44px;border-radius:14px;background:#FF8A1F;color:#051E31;display:grid;place-items:center}
+.ck-t{margin:0;font:500 18px/24px var(--font-display)}
+.ck-d{margin:6px 0 0;font:400 16px/24px var(--font-body);opacity:.85}
+.cookie a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.cb-btns{grid-column:1/-1;display:flex;gap:10px}
+.cb-btns button{flex:1;font:500 14px/20px var(--font-display);letter-spacing:.06em;text-transform:uppercase;padding:14px 18px;border-radius:12px;border:1px solid rgba(244,239,230,.35);background:transparent;color:#F4EFE6;cursor:pointer;transition:background .2s,border-color .2s}
+.cb-btns button:hover{border-color:#F4EFE6;background:rgba(244,239,230,.08)}
+.cb-btns .y{background:#FF8A1F;border-color:#FF8A1F;color:#051E31}
+.cb-btns .y:hover{background:#ff9d44;border-color:#ff9d44}
+@media (max-width:560px){.cookie{left:12px;right:12px;bottom:12px;width:auto;padding:16px}.cb-btns{flex-direction:column}}
 .linkbtn{background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
 
 /* Smalle desktop: menu past voor de knoppenbalk */

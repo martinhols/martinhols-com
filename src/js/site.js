@@ -133,22 +133,35 @@
 
 /* Google Analytics 4: laadt pas na toestemming (meet-ID staat in <meta name="ga4-id">) */
 (function () {
-  var m = document.querySelector('meta[name="ga4-id"]'); if (!m) return;
-  var id = m.content, bar = document.getElementById('cookie'), KEY = 'mh-consent';
+  var m = document.querySelector('meta[name="ga4-id"]'), bar = document.getElementById('cookie'), KEY = 'mh-consent';
+  var id = m ? m.content : '';
   function get() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
   function set(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
   function load() {
-    if (window.__ga) return; window.__ga = 1;
+    if (!id || window.__ga) return; window.__ga = 1;
+    window['ga-disable-' + id] = false;
     window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
     gtag('js', new Date()); gtag('config', id, { anonymize_ip: true });
     var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id); document.head.appendChild(s);
   }
-  function show() { if (bar) bar.hidden = false; }
+  function stop() {
+    // Toestemming ingetrokken: meting uit en analytics-cookies weghalen.
+    if (id) window['ga-disable-' + id] = true;
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n === '_ga' || n.indexOf('_ga_') === 0 || n === '_gid') {
+        ['', '.' + location.hostname, '.' + location.hostname.replace(/^www\./, '')].forEach(function (d) { document.cookie = n + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + (d ? '; domain=' + d : ''); });
+      }
+    });
+  }
+  function show() { if (bar) { bar.hidden = false; var y = bar.querySelector('[data-cookie="yes"]'); if (y) y.focus({ preventScroll: true }); } }
   var c = get();
-  if (c === 'yes') load(); else if (c !== 'no') show();
+  if (c === 'yes') load(); else if (id && c !== 'no') show();
+  if (location.hash === '#cookie-preview') show(); // ontwerp bekijken zonder meet-ID
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-cookie]'), o = e.target.closest('[data-cookie-settings]');
-    if (b) { var v = b.getAttribute('data-cookie'); set(v); if (bar) bar.hidden = true; if (v === 'yes') load(); }
+    if (b) { var v = b.getAttribute('data-cookie'); set(v); if (bar) bar.hidden = true; if (v === 'yes') load(); else stop(); }
     if (o) show();
   });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && bar && !bar.hidden) bar.hidden = true; });
 })();

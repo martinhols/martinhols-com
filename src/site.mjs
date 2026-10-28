@@ -12,7 +12,7 @@ export const SITE = {
   // Bedrijfsgegevens: vul in als ze bekend zijn; lege velden worden niet getoond.
   company: { kvk: '[KVK-nummer invullen]', vat: '[BTW-nummer invullen]', address: '[Adres invullen]' },
   arrows: 'https://www.thearrows.nl',
-  ga4: '', // Google Analytics 4 meet-ID (G-XXXXXXXXXX). Leeg = banner en meting uit.
+  ga4: process.env.GA4_ID || '', // Google Analytics 4 meet-ID (G-XXXXXXXXXX). Leeg = banner en meting uit.
   events: '2,132',
   years: '10+',
   award: 'European Event Photography Award',

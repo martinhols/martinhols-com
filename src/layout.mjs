@@ -116,7 +116,7 @@ export function footer() {
         <div><p class="t-eyebrow dim">Portfolio</p><div class="fl">${cats}</div></div>
         <div><p class="t-eyebrow dim">Pages</p><div class="fl"><a href="/projects">Projects</a><a href="/about">About</a><a href="/blog">Blog</a></div></div>
         <div><p class="t-eyebrow dim">Contact</p><div class="fl"><a href="mailto:${SITE.email}">${SITE.email}</a><a href="tel:${SITE.phone}">${SITE.phoneText}</a><a href="${SITE.instagram}" target="_blank" rel="noopener">Instagram</a></div></div>
-        <div><p class="t-eyebrow dim">Legal</p><div class="fl"><a href="/privacy">Privacy policy</a><a href="/terms">Terms &amp; conditions</a>${SITE.ga4 ? '<button type="button" class="linkbtn" data-cookie-settings>Cookie settings</button>' : ''}</div></div>
+        <div><p class="t-eyebrow dim">Legal</p><div class="fl"><a href="/privacy">Privacy policy</a><a href="/terms">Terms &amp; conditions</a><button type="button" class="linkbtn" data-cookie-settings>Cookie settings</button></div></div>
       </div>
     </div>
     <p class="t-caption copy">© 2026 ${SITE.name} · Part of <b>${arrowsLink('The Arrows')}</b></p>
@@ -168,7 +168,11 @@ ${page.body}
 ${mobileMenu()}
 <script src="/assets/site.js" defer></script>
 ${SITE.ga4 ? `<meta name="ga4-id" content="${SITE.ga4}">` : ''}
-${SITE.ga4 ? `<div class="cookie" id="cookie" role="dialog" aria-label="Cookie settings" hidden><p><b>Cookies?</b> I use Google Analytics to see which pages are useful. Only if you say yes. <a href="/privacy#s6">Read more</a></p><div class="cb-btns"><button type="button" data-cookie="no">No thanks</button><button type="button" data-cookie="yes" class="y">Accept</button></div></div>` : ''}
+<div class="cookie" id="cookie" role="dialog" aria-modal="false" aria-labelledby="cookie-t" hidden>
+  <div class="ck-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9 4 4 0 0 1-4-4 4 4 0 0 1-5-5z"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="14" cy="15" r="1" fill="currentColor"/><circle cx="8" cy="16" r=".8" fill="currentColor"/></svg></div>
+  <div class="ck-b"><p class="ck-t" id="cookie-t">Cookies, only if you want</p><p class="ck-d">I use Google Analytics to see which pages are useful. It stays off until you say yes. No ads, no selling data. <a href="/privacy#s6">Read more</a></p></div>
+  <div class="cb-btns"><button type="button" data-cookie="no">Decline</button><button type="button" data-cookie="yes" class="y">Accept analytics</button></div>
+</div>
 </body>
 </html>
 `;
