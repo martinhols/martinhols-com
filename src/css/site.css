@@ -968,3 +968,4 @@ body.lb-open{overflow:hidden}
 /* Smalle desktop: menu past voor de knoppenbalk */
 @media (min-width:1100px) and (max-width:1359px){.site-nav{gap:16px;left:316px}.site-nav a{font-size:13px;letter-spacing:.04em}.notch.n-tr{gap:8px;padding:20px 20px 28px 28px}}
 @media (min-width:1100px) and (max-width:1239px){.site-logo span{display:none}.site-nav{left:128px}}
+.arl{color:inherit;text-decoration:underline;text-underline-offset:3px}.arl:hover{color:var(--accent-text,var(--accent))}

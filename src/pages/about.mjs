@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { SITE } from '../site.mjs';
-import { img, header, contactSection, footer, ARROW16, ICONS } from '../layout.mjs';
+import { arrowsLink, img, header, contactSection, footer, ARROW16, ICONS } from '../layout.mjs';
 
 const logos = [
   ['logo-albert-heijn.png', 'Albert Heijn', 'width:159px;height:64px'],
@@ -101,7 +101,7 @@ export const page = {
           image: `${SITE.url}/img/martin-hols-portrait.jpg`, email: SITE.email, telephone: SITE.phone, award: [SITE.award, 'Winner, Music Events – Concerts, European Event Photography Awards 2025'], subjectOf: { '@type': 'WebPage', url: 'https://www.eventphotographyawards.com/2025', name: 'European Event Photography Awards 2025 winners' },
           description: 'Event and festival photographer from Hilversum, the Netherlands. Covered 2,132 events in more than ten years, from festival main stages to brand activations and Formula 1.',
           homeLocation: { '@type': 'Place', name: 'Hilversum, the Netherlands' },
-          worksFor: { '@type': 'Organization', name: 'The Arrows' },
+          worksFor: { '@type': 'Organization', name: 'The Arrows', url: SITE.arrows },
           knowsAbout: ['Event photography', 'Festival photography', 'Overview photography', 'Pyro and special effects photography', 'Corporate event photography', 'Sports photography', 'Concert photography'],
           hasOccupation: { '@type': 'Occupation', name: 'Event photographer' },
         },
@@ -165,7 +165,7 @@ export const page = {
       <h2 id="glance-h">Martin Hols in eight facts.</h2>
       <p class="lead">The short version, for anyone who needs to know who they are hiring.</p>
     </div>
-    <dl class="gl">${facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${e(v)}</dd></div>`).join('')}</dl>
+    <dl class="gl">${facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${arrowsLink(e(v))}</dd></div>`).join('')}</dl>
   </section>
 
   <section class="panel story" aria-labelledby="story-h">
@@ -176,13 +176,13 @@ export const page = {
     <div class="body">
       <p class="t-eyebrow acc">My story</p>
       <h2 id="story-h">It started in the front row.</h2>
-      ${story.map((p) => `<p>${p}</p>`).join('')}
+      ${story.map((p) => `<p>${arrowsLink(p)}</p>`).join('')}
     </div>
   </section>
 
   <section class="cream road" data-theme="cream" aria-labelledby="road-h">
     <p class="t-eyebrow dim" id="road-h">The road so far</p>
-    <ol class="tl">${timeline.map(([y, w]) => `<li><span class="y">${y}</span><span class="w">${w}</span></li>`).join('')}</ol>
+    <ol class="tl">${timeline.map(([y, w]) => `<li><span class="y">${y}</span><span class="w">${arrowsLink(w)}</span></li>`).join('')}</ol>
   </section>
 
   <section class="panel frames" aria-labelledby="frames-h">

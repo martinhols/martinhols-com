@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { SITE } from './site.mjs';
-import { header, footer, ARROW, ARROW16, esc } from './layout.mjs';
+import { arrowsLink, header, footer, ARROW, ARROW16, esc } from './layout.mjs';
 
 const data = JSON.parse(fs.readFileSync(new URL('./legal.json', import.meta.url), 'utf8'));
 export const UPDATED = data.UPDATED;
@@ -15,7 +15,7 @@ function fillItem(x) {
 }
 
 function part(p, mobile) {
-  if (typeof p === 'string') return `<p>${esc(p)}</p>`;
+  if (typeof p === 'string') return `<p>${arrowsLink(esc(p))}</p>`;
   if (p[0] === 'list') return `<ul>${p[1].map(fillItem).filter(Boolean).map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`;
   if (p[0] === 'table') {
     const row = ([w, a, b, c]) => `<div class="r"><span class="w">${esc(w)}</span><span class="v"><i class="k">What I collect</i>${esc(a)}</span><span class="v"><i class="k">Why</i>${esc(b)}</span><span class="v"><i class="k">How long</i>${esc(c)}</span></div>`;

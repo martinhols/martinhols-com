@@ -11,6 +11,7 @@ export const SITE = {
   phoneText: '+31 6 4114 84 79',
   // Bedrijfsgegevens: vul in als ze bekend zijn; lege velden worden niet getoond.
   company: { kvk: '[KVK-nummer invullen]', vat: '[BTW-nummer invullen]', address: '[Adres invullen]' },
+  arrows: 'https://www.thearrows.nl',
   ga4: '', // Google Analytics 4 meet-ID (G-XXXXXXXXXX). Leeg = banner en meting uit.
   events: '2,132',
   years: '10+',

@@ -1,8 +1,8 @@
 import { SITE } from '../site.mjs';
-import { img, header, footer, ARROW, ARROW16 } from '../layout.mjs';
+import { arrowsLink, img, header, footer, ARROW, ARROW16 } from '../layout.mjs';
 
 const co = SITE.company;
-const details = ['MartinHols.com is part of The Arrows', co.kvk && `KVK: ${co.kvk}`, co.vat && `VAT: ${co.vat}`, co.address].filter(Boolean).join('<br>');
+const details = ['MartinHols.com is part of The Arrows', co.kvk && `KVK: ${co.kvk}`, co.vat && `VAT: ${co.vat}`, co.address].filter(Boolean).map(arrowsLink).join('<br>');
 const types = [['fest', 'Festivals'], ['corp', 'Corporate'], ['sport', 'Sport'], ['music', 'Shows / Music']];
 
 export const page = {

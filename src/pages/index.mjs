@@ -57,7 +57,7 @@ export const page = {
           areaServed: ['Netherlands', 'Europe', 'Worldwide'],
           knowsAbout: ['Event photography', 'Festival photography', 'Corporate event photography', 'Sports photography', 'Concert photography'],
           founder: { '@id': `${SITE.url}/#martin` },
-          parentOrganization: { '@type': 'Organization', name: 'The Arrows' },
+          parentOrganization: { '@type': 'Organization', name: 'The Arrows', url: SITE.arrows },
         },
         {
           '@type': 'Person', '@id': `${SITE.url}/#martin`, name: SITE.person, jobTitle: 'Event photographer',

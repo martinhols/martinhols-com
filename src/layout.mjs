@@ -12,6 +12,8 @@ const webpBases = new Set(fs.readdirSync(new URL('./img', import.meta.url), { re
 const sizes = JSON.parse(fs.readFileSync(new URL('./img/sizes.json', import.meta.url)));
 export const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+/** Maakt van elke "The Arrows" in een (al ge-escapete) tekst een link naar thearrows.nl. */
+export const arrowsLink = (html) => String(html).replace(/The Arrows/g, `<a class="arl" href="${SITE.arrows}" target="_blank" rel="noopener">The Arrows</a>`);
 export const ARROW = '<svg class="arrow" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"></path></svg>';
 export const ARROW16 = ARROW.replace(/width="20" height="20"/, 'width="16" height="16"');
 const MAIL = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>';
@@ -81,7 +83,7 @@ export function mobileMenu() {
       <a class="l" href="tel:${SITE.phone}">${SITE.phoneText}</a>
       <a class="l" href="${SITE.instagram}" target="_blank" rel="noopener">Instagram @martin.hols</a>
       <a class="m-btn p" href="/contact">Request a quote <span class="ic">${ARROW16}</span></a>
-      <p class="t-caption dim" style="margin:8px 0 0">Part of The Arrows</p>
+      <p class="t-caption dim" style="margin:8px 0 0">Part of ${arrowsLink('The Arrows')}</p>
     </div>
   </div>
 </div>`;
@@ -117,7 +119,7 @@ export function footer() {
         <div><p class="t-eyebrow dim">Legal</p><div class="fl"><a href="/privacy">Privacy policy</a><a href="/terms">Terms &amp; conditions</a>${SITE.ga4 ? '<button type="button" class="linkbtn" data-cookie-settings>Cookie settings</button>' : ''}</div></div>
       </div>
     </div>
-    <p class="t-caption copy">© 2026 ${SITE.name} · Part of <b>The Arrows</b></p>
+    <p class="t-caption copy">© 2026 ${SITE.name} · Part of <b>${arrowsLink('The Arrows')}</b></p>
   </footer>`;
 }
 
