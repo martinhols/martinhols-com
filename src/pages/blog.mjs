@@ -152,28 +152,6 @@ const STATIC_POSTS = [
       <section id="checklist"><div class="cks"><p class="t-eyebrow acc">Checklist · what goes in the briefing</p><ul class="ck">${['What the event is about, who it is for and what happens', 'The full schedule with times', 'Special moments: SFX, pyro, fireworks, confetti, headliners, speeches', 'Call time and the address, with accreditation arranged', 'Names and phone numbers of the key contacts on site', 'Must-have shots and nice-to-have shots', 'Look and feel, with example photos if you have them', 'Room for the photographer: only plan what is a real must-have, and give those moments time and information', 'A safe place to edit and store gear, with a power socket', 'When and where the photographer can eat and drink, and any dietary needs', 'When you need the first photos and the full set, and who gets them'].map((t) => `<li>${CHECK}<span>${t}</span></li>`).join('')}</ul></div></section>`,
     faq: [['Should I arrange food and drinks for the photographer?', 'Yes. Plan when and where the photographer can eat and drink, and ask about dietary needs. A well-fed photographer works better through a long event day.'], ['Should I plan every minute for the photographer?', 'No. Only plan the real must-haves, with time and information. Experienced photographers use the rest of the time for things you may not think of, and events never go exactly as planned.'], ['What should a briefing for an event photographer include?', 'What the event is about, the schedule, the special moments such as pyro, SFX and confetti, call time, key contacts, must-have and nice-to-have shots, look and feel, a place to edit, and when the photos are needed.'], ['How early should the photographer arrive?', 'About 30 minutes before the start of a corporate event and about an hour before a music event or festival. Sport events and events that need accreditation need extra time.'], ['In what format should I send the briefing?', 'One written document, as a PDF or Word file, sent well before the event.']],
   },
-  {
-    slug: 'shooting-pyro-at-defqon1', type: 'story', tag: 'Story',
-    title: 'Shooting pyro at Defqon.1.',
-    desc: 'How event photographer Martin Hols shoots pyro on the Defqon.1 main stage: know the cue, pick your spot early and stay calm when the stage turns bright.',
-    teaser: 'A pyro cue lasts a few seconds and there is no second take. Here is how I prepare for it.',
-    short: 'Pyro is a moment you get once. I shoot it by knowing the cue, standing where the heat is and staying calm when the stage turns bright.',
-    file: 'portfolio/defqon1-stage-wall-of-fire.jpg', pos: '50% 50%', alt: 'Wall of fire on the Defqon.1 main stage', cap: 'Defqon.1 · main stage pyro',
-    card: 'portfolio/defqon1-stage-wall-of-fire.jpg', cardAlt: 'Wall of fire on the Defqon.1 main stage',
-    facts: [['Event', 'Defqon.1'], ['Place', 'Biddinghuizen, the Netherlands'], ['My job', 'Main stage, pyro and overview shots']],
-    body: `
-      <section><h2>The cue comes once.</h2>
-        <p>A pyro cue lasts a few seconds and there is no second take. So the work happens before it: I read the show plan, learn where the flames go and decide where to stand.</p>
-      </section>
-      <blockquote class="pq"><p class="t-eyebrow acc">From the pit</p><p class="q">A flame doesn’t do it twice.</p><p class="by">Martin Hols</p></blockquote>
-      <section><h2>Stay calm when it gets bright.</h2>
-        <p>When the stage turns white, the camera wants to give up. I expose for the flames, let the crowd fall into shadow and trust the rhythm of the show.</p>
-      </section>
-      <section><h2>Three things I do every time.</h2>
-        <ol class="steps">${[['Know the cue', 'Ask for the show plan and the cue times before the day.'], ['Pick a spot early', 'Walk the pit before the doors open and choose where to stand.'], ['Shoot wide, then tight', 'Overview first, details when the cue comes back.']].map(([h, p], i) => `<li><span class="n">0${i + 1}</span><span><b>${h}</b>${p}</span></li>`).join('')}</ol>
-      </section>`,
-    faq: [['How do you photograph pyro at a festival?', 'By knowing the cue times from the show plan, choosing a spot before the doors open, exposing for the flames and shooting wide first, then tight when the cue returns.']],
-  },
 ];
 const dbp = dbPosts.filter((d) => d.hero_url).map((d) => ({
   slug: d.slug, type: d.type, tag: d.type === 'story' ? 'Story' : 'Guide', title: d.title.endsWith('.') ? d.title : d.title + '.',
