@@ -102,6 +102,36 @@
       "source": "/blog/de-canon-r5-mark-ii-een-review-na-100-000-clicks",
       "destination": "/blog",
       "permanent": true
+    },
+    {
+      "source": "/blog/eventfotograaf-die-geld-oplevert",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/5-simple-poses-to-look-great-in-every-photo",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/category/:path*",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/werk/:path*",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/diensten",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/werkwijze",
+      "destination": "/about",
+      "permanent": true
     }
   ]
 }
