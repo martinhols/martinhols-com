@@ -98,7 +98,7 @@ export const page = {
         { '@type': 'AboutPage', '@id': `${SITE.url}/about#page`, url: `${SITE.url}/about`, name: 'About Martin Hols', inLanguage: 'en', about: { '@id': `${SITE.url}/#martin` }, isPartOf: { '@id': `${SITE.url}/#website` } },
         {
           '@type': 'Person', '@id': `${SITE.url}/#martin`, name: SITE.person, jobTitle: 'Event photographer', url: `${SITE.url}/about`,
-          image: `${SITE.url}/img/martin-hols-portrait.jpg`, email: SITE.email, telephone: SITE.phone, award: SITE.award,
+          image: `${SITE.url}/img/martin-hols-portrait.jpg`, email: SITE.email, telephone: SITE.phone, award: [SITE.award, 'Winner, Music Events – Concerts, European Event Photography Awards 2025'], subjectOf: { '@type': 'WebPage', url: 'https://www.eventphotographyawards.com/2025', name: 'European Event Photography Awards 2025 winners' },
           description: 'Event and festival photographer from Hilversum, the Netherlands. Covered 2,132 events in more than ten years, from festival main stages to brand activations and Formula 1.',
           homeLocation: { '@type': 'Place', name: 'Hilversum, the Netherlands' },
           worksFor: { '@type': 'Organization', name: 'The Arrows' },
@@ -144,7 +144,7 @@ export const page = {
         <p class="t-eyebrow acc">About</p>
         <h2 id="intro-h">Based in the Netherlands, working wherever the event is.</h2>
         <p class="lead">I’m Martin Hols, an event and festival photographer. In more than ten years I’ve covered 2,132 events, from festival main stages to brand activations and Formula 1.</p>
-        <p class="lead">In 2025 I won the European Event Photography Award in the category Music Events – Concerts, with the image “The Last Warrior”.</p>
+        <p class="lead">In 2025 I won the <a href="https://www.eventphotographyawards.com/2025" target="_blank" rel="noopener">European Event Photography Award</a> in the category Music Events – Concerts, with the image “The Last Warrior”.</p>
       </div>
       <div class="intro-ft">
         <div class="stats">${stat(SITE.events, 'events shot')}${stat(SITE.years, 'years in the field')}${stat('4', 'kinds of events')}</div>

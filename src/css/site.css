@@ -953,3 +953,4 @@ body.lb-open{overflow:hidden}
 .cbl b{font:500 22px/28px var(--font-display)}
 .cbl span{font-size:14px;opacity:.7}
 @media(max-width:700px){.cb{padding:40px 20px}}
+.lead a{color:inherit;text-decoration:underline;text-underline-offset:3px}
