@@ -65,4 +65,20 @@ const bots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-We
 fs.writeFileSync(path.join(dist, 'robots.txt'),
   `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /seo-audit.json\nDisallow: /seo-pages.json\n\n` + bots.map((b) => `User-agent: ${b}\nAllow: /\n`).join('\n') + `\nSitemap: ${SITE.url}/sitemap.xml\n`);
 
+// llms.txt: korte gids voor AI-systemen. Pagina's komen automatisch uit de build, dus nieuwe pagina's staan er vanzelf in.
+const live = pages.filter((p) => !p.noindex && p.path !== '/404' && p.path !== '/admin');
+const group = (re) => live.filter((p) => re.test(p.path));
+const line = (p) => `- [${(p.title || p.path).replace(/\s*\|\s*Martin Hols.*$/, '')}](${SITE.url}${p.path === '/' ? '/' : p.path}): ${(p.description || '').replace(/\s+/g, ' ')}`;
+const used = new Set();
+const sect = (name, list) => { const l = list.filter((p) => !used.has(p.path)); l.forEach((p) => used.add(p.path)); return l.length ? `## ${name}\n${l.map(line).join('\n')}\n` : ''; };
+fs.writeFileSync(path.join(dist, 'llms.txt'),
+  `# Martin Hols\n\n> Martin Hols is an award-winning event and festival photographer based in Hilversum, the Netherlands, working worldwide. ${SITE.events} events in ${SITE.years} years, winner of the ${SITE.award}. Clients include Albert Heijn, Tomorrowland, MOJO, Gall & Gall and Formula 1. Edited photos are delivered during the event and the rest of the set within 24 hours. Part of The Arrows (${SITE.arrows}).\n\n` +
+  `## Services and rates\nFestivals and sport: EUR 850 per day. Shows and concerts: EUR 650 per show. Corporate events and conferences: EUR 650 for 4 hours, EUR 900 for 6 hours, EUR 1,150 for 8 hours, EUR 1,350 for a full day (up to 12 hours), EUR 125 per extra hour. All usage rights are included. VAT and travel costs (EUR 0.35 per km from Hilversum) are extra.\n\n` +
+  sect('Main pages', live.filter((p) => ['/', '/about', '/contact', '/projects', '/portfolio'].includes(p.path))) + '\n' +
+  sect('Portfolio categories', group(/^\/portfolio\//)) + '\n' +
+  sect('Landing pages', live.filter((p) => !used.has(p.path) && /^\/event-photographer/.test(p.path))) + '\n' +
+  sect('Blog', group(/^\/blog\//)) + '\n' +
+  sect('Projects', group(/^\/projects\//)) + '\n' +
+  `## Contact\nEmail ${SITE.email}, phone ${SITE.phoneText}. Request a quote: ${SITE.url}/contact\n`);
+
 console.log(`Built ${pages.length} page(s) → dist/`);
