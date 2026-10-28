@@ -153,12 +153,6 @@ export const page = {
     </div>
   </section>
 
-  <section class="cream cb" data-theme="cream" aria-labelledby="cb-h">
-    <p class="t-eyebrow acc">Coming back</p>
-    <h2 id="cb-h">Clients and events that book me again and again.</h2>
-    <ul class="cbl">${[['Albert Heijn', 2021], ['Lowlands', 2021], ['Zwarte Cross', 2021], ['Down the Rabbit Hole', 2021], ['Tomorrowland', 2023], ['Formula 1', 2025], ['Concert at Sea', 2025]].map(([n, y]) => `<li><b>${n}</b><span>since ${y}</span></li>`).join('')}</ul>
-  </section>
-
   <section class="glance cream" data-theme="cream" aria-labelledby="glance-h">
     <div class="gh">
       <p class="t-eyebrow acc">At a glance</p>
@@ -183,6 +177,11 @@ export const page = {
   <section class="cream road" data-theme="cream" aria-labelledby="road-h">
     <p class="t-eyebrow dim" id="road-h">The road so far</p>
     <ol class="tl">${timeline.map(([y, w]) => `<li><span class="y">${y}</span><span class="w">${arrowsLink(w)}</span></li>`).join('')}</ol>
+    <div class="cbi">
+    <p class="t-eyebrow acc">Coming back</p>
+      <h2 id="cb-h">Clients and events that book me again and again.</h2>
+      <ul class="cbl">${[['Albert Heijn', 2021], ['Lowlands', 2021], ['Zwarte Cross', 2021], ['Down the Rabbit Hole', 2021], ['Tomorrowland', 2023], ['Formula 1', 2025], ['Concert at Sea', 2025]].map(([n, y]) => `<li><b>${n}</b><span>since ${y}</span></li>`).join('')}</ul>
+    </div>
   </section>
 
   <section class="panel frames" aria-labelledby="frames-h">
