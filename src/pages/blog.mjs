@@ -7,6 +7,43 @@ const AUTHOR = 'Martin Hols is an event photographer from the Netherlands. He ha
 
 const STATIC_POSTS = [
   {
+    slug: 'how-to-choose-an-event-photographer', type: 'guide', tag: 'Guide',
+    title: 'How to choose an event photographer: 7 questions to ask before you book.',
+    desc: 'How to choose an event photographer: check the style, real experience (also on Instagram), price and terms, delivery time, usage rights and backup. 7 questions to ask.',
+    teaser: 'You don’t have to book me. Here are the seven questions that help you pick the right event photographer for your event.',
+    short: 'Pick the photographer whose style matches what you want, who can show real experience, whose price and terms are clear, and who delivers when you need the images.',
+    file: 'tomorrowland-stage-night.jpg', pos: '50% 50%', alt: 'Tomorrowland main stage at night with lights and crowd', cap: 'Tomorrowland · main stage at night',
+    card: 'tomorrowland-stage-night.jpg', cardAlt: 'Tomorrowland main stage at night',
+    toc: [['style', '1. Does the style match?'], ['experience', '2. How much real experience?'], ['instagram', '3. What does Instagram show?'], ['price', '4. What does the price tell you?'], ['terms', '5. What are the terms?'], ['delivery', '6. When do you get the images?'], ['backup', '7. What if something goes wrong?']],
+    body: `
+      <section><h2>Choose the right one, even if it isn’t me.</h2>
+        <p>The best photographer is the one who fits your event, not the one with the nicest website. These are the seven questions I would ask if I were booking a photographer myself.</p>
+      </section>
+      <section id="style"><h2>1. Does the portfolio match the style you want?</h2>
+        <p>Look at the pictures and ask yourself: is this what I want my event to look like? A good photographer has a recognisable style, and you are booking that style. It is not normal to ask a photographer to work in a way that is far from their own. If you want dark, dramatic stage photography and the portfolio is full of bright lifestyle shots, keep looking.</p>
+      </section>
+      <section id="experience"><h2>2. How much real experience do they have?</h2>
+        <p>A website with a handful of strong images can hide a lot of luck. Experience cannot be bought: it shows in how many events someone has shot, at what size and how often clients come back. Ask which events they have photographed that look like yours, and for how many years.</p>
+      </section>
+      <section id="instagram"><h2>3. What does their Instagram show?</h2>
+        <p>Photographers are famous for not updating their website. Instagram is usually where the recent work is. Scroll back through the last months: do you see steady work at real events, or only a few good posts? A feed that is active and varied is a good sign.</p>
+      </section>
+      <section id="price"><h2>4. What does the price tell you?</h2>
+        <p>Photographers are often told to charge high rates because cameras and lenses are expensive. But an expensive photographer is not automatically a good one. And with a cheap photographer, ask extra questions about what is included. Compare quotes on what you get, not on the number alone. On my <a href="/blog/what-does-an-event-photographer-cost">cost page</a> you can see how I price different types of event.</p>
+        <div class="cks"><p class="t-eyebrow acc">Ask every photographer</p><ul class="ck">${['What exactly is included in the price?', 'Is editing included?', 'Are VAT, travel and other costs on top?', 'How many final images will I get?'].map((t) => `<li>${CHECK}<span>${t}</span></li>`).join('')}</ul></div>
+      </section>
+      <section id="terms"><h2>5. What are the terms and usage rights?</h2>
+        <p>Ask in writing what you may do with the images: social media, press, website, campaigns. Some photographers charge extra for every use. Also check the payment, deposit and cancellation terms before you sign anything.</p>
+      </section>
+      <section id="delivery"><h2>6. When do you get the images?</h2>
+        <p>For events, speed matters. Your social team wants images during or right after the event, and sponsors and press want the full set the next day. Many photographers deliver weeks later. Ask when you will get the first images and the final set, and compare that with when you need them. See also how to <a href="/blog/how-to-brief-a-festival-photographer">brief a festival photographer</a> so delivery is agreed up front.</p>
+      </section>
+      <section id="backup"><h2>7. What if something goes wrong?</h2>
+        <p>Cameras fail and people get sick. Ask whether the photographer works with backup gear and who steps in if they cannot make it. A professional has an answer ready.</p>
+      </section>`,
+    faq: [['How do I choose an event photographer?', 'Check that the portfolio matches the style you want, look at real experience on both the website and Instagram, compare price and what is included, and agree on usage rights and delivery time.'], ['Is a cheaper event photographer a bad choice?', 'Not necessarily, but ask exactly what is included: editing, usage rights, number of images, delivery time and extra costs.'], ['How quickly should an event photographer deliver?', 'It depends on what you need. For events, ask for the first images within 24 hours so your team can start posting right away.']],
+  },
+  {
     slug: 'what-does-an-event-photographer-cost', type: 'guide', tag: 'Guide',
     title: 'What does an event photographer cost?',
     desc: 'What an event photographer costs in the Netherlands: rates per event type, from €650 for a show to €1,350 for a corporate day, with editing, delivery and usage rights included.',
