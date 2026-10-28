@@ -33,9 +33,9 @@ export const page = {
           <a class="ct" href="${SITE.instagram}" target="_blank" rel="noopener"><span><span class="t-eyebrow dim" style="display:block">Instagram</span><span class="v">@martin.hols</span></span><span class="rb">${ARROW}</span></a>
         </div>
         <div class="next"><p class="t-eyebrow dim">What happens next</p><ol>
-          <li><span>01</span><p><b>I reply the same day.</b> With a first answer and any questions about the event.</p></li>
+          <li><span>01</span><p><b>I reply within one working day,</b> with a first answer and any questions about the event.</p></li>
           <li><span>02</span><p><b>You get a clear quote.</b> Date, hours, location, deliverables and price.</p></li>
-          <li><span>03</span><p><b>Let’s get to work.</b> We confirm in writing and head into a great collaboration.</p></li>
+          <li><span>03</span><p><b>Let’s get to work.</b> We confirm everything and I start planning.</p></li>
         </ol></div>
         <div class="company"><p class="t-eyebrow dim">Company details</p><p class="d">${details}</p></div>
       </div>

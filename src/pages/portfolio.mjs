@@ -28,7 +28,7 @@ const CAT = {
       ['How fast do you deliver festival photos?', 'During the event I already deliver high-quality, fully edited images, ready to share. The rest of the set follows within 24 hours.'],
       ['Do you photograph pyro, SFX and fireworks?', 'Yes, it is one of my specialties. With the show cues in the briefing I am in position before the flames or fireworks go off.'],
       ['Do you work outside the Netherlands?', 'Yes. I am based in Hilversum and work wherever the event is, in the Netherlands and abroad.'],
-      ['Which festivals have you photographed?', 'Among others Mysteryland, Defqon.1 and Tomorrowland.'],
+      ['Which festivals have you photographed?', 'Tomorrowland, Defqon.1, Mysteryland, Pinkpop and Zwarte Cross, among others.'],
       ['How do I brief you?', 'Send a written callsheet with the programme, must-have moments, access and contacts. I plan positions, like overview spots and pyro cues, together with you and your partners.'],
     ],
   },
@@ -51,7 +51,7 @@ const CAT = {
     seo: 'Sports event photography by Martin Hols: Formula 1 Las Vegas Grand Prix, handball and more. Fully edited photos during the event, the rest within 24 hours.',
     faq: [
       ['How fast do you deliver sports photos?', 'During the event I already deliver high-quality, fully edited images, ready to share. The rest of the set follows within 24 hours.'],
-      ['Which sports events have you photographed?', 'Among others the Formula 1 Las Vegas Grand Prix and handball matches in packed arenas.'],
+      ['Which sports events have you photographed?', 'The Formula 1 Dutch Grand Prix in Zandvoort and the Las Vegas Grand Prix, and the 2025 handball World Championship, among others.'],
       ['Do you photograph the atmosphere as well as the action?', 'Yes. I cover the sport, the crowd, the venue and the brand moments around it, so you get the whole story of the event.'],
       ['Do you work outside the Netherlands?', 'Yes. I am based in Hilversum and work wherever the event is, in the Netherlands and abroad.'],
     ],
@@ -70,10 +70,19 @@ const CAT = {
   },
 };
 
+const TITLE_AS = { festivals: 'Festival', corporate: 'Corporate event', sport: 'Sports', 'shows-music': 'Show and concert' };
+// Eigen specialiteiten per categorie (beeld blijft gelijk aan de standaardset).
+const SPEC_TEXT = {
+  festivals: [['Main stage overviews', 'The whole stage, the crowd and the build, shown the way it was designed.'], ['Pyro, fireworks and lasers', 'Caught at the exact moment they peak. I learn the cues and take my spot early.'], ['Crowd and atmosphere', 'The people, the energy and the moments between the shows.']],
+  corporate: [['Speakers and stage', 'Clear, confident portraits of speakers and a stage that looks as good as it is.'], ['Networking and atmosphere', 'Real conversations and the mood of the day, not stiff group photos.'], ['Brand and sponsor moments', 'Every partner and activation, delivered in a set your marketing team can use.']],
+  sport: [['Action and podium', 'The decisive moments, from the start line to the podium.'], ['Crowd and venue', 'Grandstands, arenas and the people who make the atmosphere.'], ['Brand activations', 'Sponsor moments around the sport, shot as carefully as the sport itself.']],
+  'shows-music': [['Artists on stage', 'Front row, from above and from the crowd, so you get the artist and the show around them.'], ['Light shows and pyro', 'Lasers, flames and fireworks, caught at the exact moment they peak.'], ['Crowd and backstage', 'The energy in the room and the moments the audience never sees.']],
+};
+
 const SPECS = [
   ['Overview photography', 'The full picture: stages, crowds and venues, shown the way the event was designed.', 'portfolio/defqon1-main-stage-daylight.jpg', '50% 40%', 'Defqon.1 main stage in daylight'],
   ['SFX and pyro', 'Fire, fireworks, lasers and confetti, caught at the exact moment they peak.', 'portfolio/live-show-flame-jets-video-screen.jpg', '50% 50%', 'Live show with flame jets'],
-  ['Super fast delivery', 'Fully edited images during the event, the rest of the set within 24 hours.', 'portfolio/f1-podium-driver-waving-trophies.jpg', '30% 40%', 'Formula 1 driver on the podium at the Las Vegas Grand Prix'],
+  ['Superfast delivery', 'Fully edited images during the event, the rest of the set within 24 hours.', 'portfolio/f1-podium-driver-waving-trophies.jpg', '30% 40%', 'Formula 1 driver on the podium at the Las Vegas Grand Prix'],
 ];
 
 const tile = (p, i) => `<a class="tile ${p.size}" href="${p.full}" data-cat="${p.cats.join(' ')}" data-name="${esc(p.name)}" data-rank="${esc(p.rank)}" data-catname="${esc(CATS[p.cat])}" data-alt="${esc(p.alt)}" aria-label="Open photo: ${esc(p.alt)}">${img(p.file, p.alt, { style: `object-position:${p.pos}`, thumb: p.thumbOpt })}<span class="fade"></span><span class="cap"><span class="nm">${esc(p.name)}</span></span><span class="rb">${ARROW}</span></a>`;
@@ -94,11 +103,11 @@ const gallerySchema = (list, url, name) => ({
   image: list.map((p) => ({ '@type': 'ImageObject', contentUrl: SITE.url + p.full, thumbnailUrl: SITE.url + (p.db ? (localMap[p.file] || {}).thumb || p.full : `/img/portfolio/${p.slug}-s.jpg`), caption: p.alt, name: `${p.name}, ${CATS[p.cat]}`, creator: { '@id': `${SITE.url}/#martin` }, creditText: 'Martin Hols', copyrightNotice: '© Martin Hols' })),
 });
 
-const specs = `
+const specs = (slug) => { const T = SPEC_TEXT[slug]; const L = T ? SPECS.map((x, i) => [T[i][0], T[i][1], x[2], x[3], x[4]]) : SPECS; return `
   <section class="cream specs" data-theme="cream" aria-labelledby="sp-h">
     <div class="hh"><p class="t-eyebrow acc" id="sp-h">Specialties</p><p class="t-eyebrow dim hh-r">What I do best</p></div>
-    <div class="spg">${SPECS.map(([t, d, f, pos, alt], i) => `<div class="sp"><span class="im">${img(f, alt, { style: `object-position:${pos}` })}</span><span class="tx"><span class="n">${String(i + 1).padStart(2, '0')}</span><span class="t">${t}</span><span class="d">${d}</span></span></div>`).join('')}</div>
-  </section>`;
+    <div class="spg">${L.map(([t, d, f, pos, alt], i) => `<div class="sp"><span class="im">${img(f, alt, { style: `object-position:${pos}` })}</span><span class="tx"><span class="n">${String(i + 1).padStart(2, '0')}</span><span class="t">${t}</span><span class="d">${d}</span></span></div>`).join('')}</div>
+  </section>`; };
 
 const projSec = (slug, name) => {
   const list = PROJECTS.filter((p) => p.cat === slug).slice(0, 3);
@@ -118,11 +127,11 @@ const projSec = (slug, name) => {
   </section>`;
 };
 
-const faqSec = (c, name) => `
+const faqSec = (c, name, slug) => `
   <section class="cream faqs" data-theme="cream" aria-labelledby="faq-h">
     <div class="fq-l">
       <p class="t-eyebrow acc">FAQ</p>
-      <h2 id="faq-h">${name} photography, answered.</h2>
+      <h2 id="faq-h">${TITLE_AS[slug] || name} photography, answered.</h2>
       <p class="lead">The questions organisers ask most before they book.</p>
       <a class="btn btn-o plain" href="/contact" style="color:var(--ink);border-color:var(--line-strong)">Ask me something else</a>
     </div>
@@ -141,7 +150,7 @@ function build(slug) {
   const pills = [['all', 'All', PHOTOS.length, '/portfolio']].concat(SITE.categories.map((k) => [k.slug, k.name, PHOTOS.filter((p) => p.cats.includes(k.slug)).length, `/portfolio/${k.slug}`]));
   return {
     path,
-    title: isAll ? 'Portfolio: event & festival photography | Martin Hols' : `${name} photography portfolio | Martin Hols`,
+    title: isAll ? 'Portfolio: event & festival photography | Martin Hols' : `${TITLE_AS[slug] || name} photography portfolio | Martin Hols`,
     description: isAll ? 'The best frames from 2,132 events by event and festival photographer Martin Hols: festivals, corporate, sport and shows. Tomorrowland, Defqon.1, Mysteryland, Formula 1.' : c.seo,
     ogImage: hero.file,
     jsonld: [
@@ -177,8 +186,8 @@ function build(slug) {
     </div>
   </section>
   ${lightbox}
-  ${specs}
-  ${isAll ? '' : faqSec(c, name)}
+  ${specs(isAll ? null : slug)}
+  ${isAll ? '' : faqSec(c, name, slug)}
   ${isAll ? '' : projSec(slug, name)}
   ${contactSection('portfolio/mysteryland-stage-sunset-fireworks.jpg')}
   ${footer()}`,

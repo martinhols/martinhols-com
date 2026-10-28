@@ -35,7 +35,7 @@ const facts = [
   ['Experience', '2,132 events in 10+ years'],
   ['Award', 'European Event Photography Award'],
   ['Clients', 'Albert Heijn, Tomorrowland, MOJO, Gall & Gall, Formula 1'],
-  ['Specialties', 'Overview photography, SFX and pyro, super fast delivery'],
+  ['Specialties', 'Overview photography, SFX and pyro, superfast delivery'],
   ['Events', 'Festivals, corporate, sport, shows and music'],
   ['Part of', 'The Arrows'],
 ];
@@ -45,7 +45,7 @@ const story = [
   'At home I would watch the closing shows of festivals again and again, thinking: one day I’ll work in music. One day I’ll be on the big stages of Defqon.1 and Tomorrowland. So I bought a camera, left everything else behind and went for it.',
   'I said yes to everything I could get: nightclubs, student parties, photo booths. Those nights were my first real miles. I taught myself a lot in Photoshop, and my background in web design and marketing helped me understand what clients actually needed from their images. Step by step I grew, mostly in corporate events and music, and built a group of regular clients along the way.',
   'From 2021 the chances started coming, one after another, and I took each one with both hands. That same year I started The Arrows. I was flown abroad more often, and my fast editing and my focus on overviews and special effects brought me to bigger festivals. In 2023 I chose to focus fully on events and music.',
-  'Winning the European Event Photography Award opened doors I had only dreamed of, to events like Formula 1 and Tomorrowland. Every time I’m on one of those stages, I still think of the guy on the couch rewatching closing shows.',
+  'The award confirmed that the way I work is right: be there, be prepared and deliver. Every time I’m on one of those stages, I still think of the guy on the couch rewatching closing shows.',
 ];
 
 const timeline = [
@@ -74,7 +74,7 @@ const how = [
 const specs = [
   ['Overview photography', 'It’s the big picture that gets me: a full main stage, thousands of hands in the air, a whole production working together. I’ll climb a tower or find a roof to show an event the way its makers designed it.', 'defqon1-main-stage.jpg', '50% 40%', 'Defqon.1 main stage in daylight, seen from above the crowd'],
   ['SFX and pyro', 'Fire, fireworks, lasers, confetti. The moment it all goes off is the peak of the show, and it lasts a second. I learn the cues, take my spot early and wait for it. That second still gives me goosebumps.', 'mysteryland-festival-stage.jpg', '50% 50%', 'Fireworks shooting up behind a festival stage and crowd'],
-  ['Super fast delivery', 'An event moves fast, and so does its story online. That’s why I deliver high-quality, fully edited images during the event itself, so your team can share them while everyone is still talking about the night. The rest follows within 24 hours.', 'f1-las-vegas-grand-prix.jpg', '30% 40%', 'Performer at the Formula 1 Las Vegas Grand Prix'],
+  ['Superfast delivery', 'An event moves fast, and so does its story online. That’s why I deliver high-quality, fully edited images during the event itself, so your team can share them while everyone is still talking about the night. The rest follows within 24 hours.', 'f1-las-vegas-grand-prix.jpg', '30% 40%', 'Performer at the Formula 1 Las Vegas Grand Prix'],
 ];
 
 const sizesJ = JSON.parse(fs.readFileSync(new URL('../img/sizes.json', import.meta.url)));
@@ -113,8 +113,8 @@ export const page = {
     ${header('/about')}
     <div class="hero-main">
       <p class="t-eyebrow acc">Meet your photographer</p>
-      <h1>Over 2,000 events. One photographer who knows how they run.</h1>
-      <p class="lead">Brands such as Albert Heijn, Tomorrowland and Formula 1 trust me to represent them at their events.</p>
+      <h1>2,132 events. Clients who come back year after year.</h1>
+      <p class="lead">You can rely on me. That is why Albert Heijn, Tomorrowland and many festivals keep booking me.</p>
       <div class="ah-btns d-btns">${btns}</div>
       ${logoGrid}
       <div class="stats ah-stats">${stat(SITE.events, 'events shot')}${stat(SITE.years, 'years in the field')}</div>
@@ -144,13 +144,19 @@ export const page = {
         <p class="t-eyebrow acc">About</p>
         <h2 id="intro-h">Based in the Netherlands, working wherever the event is.</h2>
         <p class="lead">I’m Martin Hols, an event and festival photographer. In more than ten years I’ve covered 2,132 events, from festival main stages to brand activations and Formula 1.</p>
-        <p class="lead">Brands such as Albert Heijn, Tomorrowland and Formula 1 trust me to represent them. My work was recognised with the European Event Photography Award.</p>
+        <p class="lead">In 2025 I won the European Event Photography Award in the category Music Events – Concerts, with the image “The Last Warrior”.</p>
       </div>
       <div class="intro-ft">
         <div class="stats">${stat(SITE.events, 'events shot')}${stat(SITE.years, 'years in the field')}${stat('4', 'kinds of events')}</div>
         <div class="ah-btns">${btns}</div>
       </div>
     </div>
+  </section>
+
+  <section class="cream cb" data-theme="cream" aria-labelledby="cb-h">
+    <p class="t-eyebrow acc">Coming back</p>
+    <h2 id="cb-h">Clients and events that book me again and again.</h2>
+    <ul class="cbl">${[['Albert Heijn', 2021], ['Lowlands', 2021], ['Zwarte Cross', 2021], ['Down the Rabbit Hole', 2021], ['Tomorrowland', 2023], ['Formula 1', 2025], ['Concert at Sea', 2025]].map(([n, y]) => `<li><b>${n}</b><span>since ${y}</span></li>`).join('')}</ul>
   </section>
 
   <section class="glance cream" data-theme="cream" aria-labelledby="glance-h">

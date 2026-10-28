@@ -92,9 +92,9 @@ export function contactSection(photo = 'tomorrowland-mainstage-fireworks.jpg') {
   <section class="panel contact" aria-labelledby="contact-h">
     ${img(photo, '')}
     <div class="tx">
-      <p class="t-eyebrow acc">How to contact me</p>
+      <p class="t-eyebrow acc">Let’s work together</p>
       <h2 id="contact-h">Planning an event? Let’s talk.</h2>
-      <p class="lead">Send me an email or give me a call. I usually reply the same day.</p>
+      <p class="lead">Send me an email or give me a call. I reply within one working day.</p>
     </div>
     <div class="cbox glass">
       <a class="cr" href="mailto:${SITE.email}"><span><span class="t-eyebrow dim" style="display:block">Email</span><span class="v">${SITE.email}</span></span><span class="rb">${ARROW}</span></a>
@@ -144,7 +144,10 @@ ${page.noindex ? '<meta name="robots" content="noindex, follow">\n' : ''}
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="${og}">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/img/martin-hols-portrait.jpg">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/img/favicon-192.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@100..900&family=Ubuntu:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">

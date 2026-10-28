@@ -137,8 +137,8 @@ export const page = {
     </div>
     <div class="cream tx" data-theme="cream">
       <p class="t-eyebrow acc">About</p>
-      <h2 id="about-h">One photographer who knows how events run.</h2>
-      <p class="lead">In more than ten years I have photographed more than two thousand events, so your brand is represented at its best, on and off the stage.</p>
+      <h2 id="about-h">2,132 events in more than ten years.</h2>
+      <p class="lead">I know how an event runs, so your brand looks its best on the stage and off it.</p>
       <div class="stats">
         <div><p class="stat">${SITE.events}</p><p class="l">events shot</p></div>
         <div><p class="stat">${SITE.years}</p><p class="l">years in the field</p></div>

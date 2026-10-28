@@ -23,7 +23,7 @@
     var st = document.getElementById('form-status');
     var btn = f.querySelector('button[type=submit]');
     var say = function (msg, cls) { st.textContent = msg; st.className = 'status ' + cls; st.hidden = false; };
-    if (/[?&]sent=1/.test(location.search)) say('Thank you. I received your request and usually reply the same day.', 'ok');
+    if (/[?&]sent=1/.test(location.search)) say('Thank you. I received your request and reply within one working day.', 'ok');
     if (/[?&]error=1/.test(location.search)) say('Sorry, sending failed. Please email me directly at martin@thearrows.nl.', 'err');
     f.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -37,7 +37,7 @@
       btn.disabled = true;
       fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
         .then(function (r) { if (!r.ok) return r.json().catch(function () { return {}; }).then(function (j) { var e = new Error('send failed'); e.info = (j.error || r.status) + (j.detail ? ': ' + j.detail : ''); throw e; }); return r.json(); })
-        .then(function () { f.reset(); say('Thank you. I received your request and usually reply the same day.', 'ok'); })
+        .then(function () { f.reset(); say('Thank you. I received your request and reply within one working day.', 'ok'); })
         .catch(function (e) { say('Sorry, sending failed. Please email me directly at martin@thearrows.nl.' + (e && e.info ? ' (' + e.info + ')' : ''), 'err'); })
         .then(function () { btn.disabled = false; });
     });

@@ -29,7 +29,7 @@ const pages = [];
 for (const f of fs.readdirSync(path.join(root, 'src/pages')).filter((x) => x.endsWith('.mjs')).sort()) {
   const mod = await import(pathToFileURL(path.join(root, 'src/pages', f)).href);
   for (const p of mod.pages || [mod.page]) {
-    const out = p.path === '/' ? 'index.html' : p.path.replace(/^\//, '') + '/index.html';
+    const out = p.path === '/404' ? '404.html' : p.path === '/' ? 'index.html' : p.path.replace(/^\//, '') + '/index.html';
     fs.mkdirSync(path.dirname(path.join(dist, out)), { recursive: true });
     fs.writeFileSync(path.join(dist, out), layout(p));
     pages.push(p);
