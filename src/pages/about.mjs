@@ -74,7 +74,7 @@ const how = [
 const specs = [
   ['Overview photography', 'It’s the big picture that gets me: a full main stage, thousands of hands in the air, a whole production working together. I’ll climb a tower or find a roof to show an event the way its makers designed it.', 'pinkpop-overview-stage-sunset.jpg', '50% 45%', 'Pinkpop main stage and festival sign at sunset, seen from above the crowd'],
   ['SFX and pyro', 'Fire, fireworks, lasers, confetti. The moment it all goes off is the peak of the show, and it lasts a second. I learn the cues, take my spot early and wait for it. That second still gives me goosebumps.', 'arena-stage-pyro-fireworks-crowd.jpg', '50% 50%', 'Pyro fountains and fireworks behind an ornate arena stage in front of a packed crowd'],
-  ['Superfast delivery', 'An event moves fast, and so does its story online. That’s why I deliver high-quality, fully edited images during the event itself, so your team can share them while everyone is still talking about the night. The rest follows within 24 hours.', 'f1-las-vegas-grand-prix.jpg', '30% 40%', 'Performer at the Formula 1 Las Vegas Grand Prix'],
+  ['Superfast delivery', 'An event moves fast, and so does its story online. That’s why I deliver high-quality, fully edited images during the event itself, so your team can share them while everyone is still talking about the night. The rest follows within 24 hours.', 'f1-zandvoort-race-car-corner.jpg', '55% 55%', 'Formula 1 car taking a corner at the Dutch Grand Prix in Zandvoort'],
 ];
 
 const sizesJ = JSON.parse(fs.readFileSync(new URL('../img/sizes.json', import.meta.url)));

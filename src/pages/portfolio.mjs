@@ -82,7 +82,7 @@ const SPEC_TEXT = {
 const SPECS = [
   ['Overview photography', 'The full picture: stages, crowds and venues, shown the way the event was designed.', 'pinkpop-overview-stage-sunset.jpg', '50% 45%', 'Pinkpop main stage and festival sign at sunset, seen from above the crowd'],
   ['SFX and pyro', 'Fire, fireworks, lasers and confetti, caught at the exact moment they peak.', 'arena-stage-pyro-fireworks-crowd.jpg', '50% 50%', 'Pyro fountains and fireworks behind an ornate arena stage in front of a packed crowd'],
-  ['Superfast delivery', 'Fully edited images during the event, the rest of the set within 24 hours.', 'portfolio/f1-podium-driver-waving-trophies.jpg', '30% 40%', 'Formula 1 driver on the podium at the Las Vegas Grand Prix'],
+  ['Superfast delivery', 'Fully edited images during the event, the rest of the set within 24 hours.', 'f1-zandvoort-race-car-corner.jpg', '55% 55%', 'Formula 1 car taking a corner at the Dutch Grand Prix in Zandvoort'],
 ];
 
 const tile = (p, i) => `<a class="tile ${p.size}" href="${p.full}" data-cat="${p.cats.join(' ')}" data-name="${esc(p.name)}" data-rank="${esc(p.rank)}" data-catname="${esc(CATS[p.cat])}" data-alt="${esc(p.alt)}" aria-label="Open photo: ${esc(p.alt)}">${img(p.file, p.alt, { style: `object-position:${p.pos}`, thumb: p.thumbOpt })}<span class="fade"></span><span class="cap"><span class="nm">${esc(p.name)}</span></span><span class="rb">${ARROW}</span></a>`;
