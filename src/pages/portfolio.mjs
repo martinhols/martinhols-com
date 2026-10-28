@@ -11,10 +11,16 @@ const sizeOf = (x) => { const r = (x.width || 3) / (x.height || 2); return r < 0
 const CATS = Object.fromEntries(SITE.categories.map((c) => [c.slug, c.name]));
 // Ontbreekt de alt-tekst nog, dan maken we een nette terugval uit event, plaats en jaar.
 const altFor = (x) => (x.alt || '').trim() || [x.event || x.caption, x.city, x.year].filter(Boolean).join(', ') + (x.event || x.caption ? ' · ' : '') + `${CATS[(x.categories || [])[0]] || 'Event'} photography`;
-const DB = dbPhotos.filter((x) => x.portfolio && localMap[x.url] && (x.categories || []).length)
-  .map((x) => ({ slug: x.id, cat: x.categories[0], cats: x.categories, size: sizeOf(x), pos: x.crop || '50% 50%', name: x.event || x.caption || 'Event photography', alt: altFor(x), top: x.top, date: dateOf(x), full: siteUrl(x.url), file: x.url, thumbOpt: true, db: x }));
+// Per categorie een eigen selectie (kolom cat_picks). Bestaat de kolom nog niet, dan geldt de oude regel: portfolio aan = in al zijn categorieën.
+const HAS_PICKS = dbPhotos.some((x) => 'cat_picks' in x);
+const picksOf = (x) => (HAS_PICKS ? x.cat_picks || [] : x.portfolio ? x.categories || [] : []);
+const DB = dbPhotos.filter((x) => (x.portfolio || picksOf(x).length) && localMap[x.url] && (x.categories || []).length)
+  .map((x) => ({ slug: x.id, cat: x.categories[0], cats: x.categories, picks: picksOf(x), main: !!x.portfolio, size: sizeOf(x), pos: x.crop || '50% 50%', name: x.event || x.caption || 'Event photography', alt: altFor(x), top: x.top, date: dateOf(x), full: siteUrl(x.url), file: x.url, thumbOpt: true, db: x }));
 DB.sort((a, b) => b.date.localeCompare(a.date));
-const PHOTOS = [...DB.filter((x) => x.top), ...STATIC, ...DB.filter((x) => !x.top)].map((p, i) => ({ ...p, rank: `No. ${String(i + 1).padStart(2, '0')}` }));
+const rank = (arr) => arr.map((p, i) => ({ ...p, rank: `No. ${String(i + 1).padStart(2, '0')}` }));
+const PHOTOS = rank([...DB.filter((x) => x.main && x.top), ...STATIC, ...DB.filter((x) => x.main && !x.top)]);
+const catPhotos = (k) => rank([...DB.filter((x) => x.picks.includes(k) && x.top), ...STATIC.filter((x) => x.cats.includes(k)), ...DB.filter((x) => x.picks.includes(k) && !x.top)]);
+const CAT_LIST = Object.fromEntries(SITE.categories.map((k) => [k.slug, catPhotos(k.slug)]));
 const HERO = { file: 'portfolio/mysteryland-sunset-stone-hand-stage.jpg', alt: 'Mysteryland main stage at sunset, a giant stone hand holding the DJ booth, red smoke and light beams over the crowd' };
 
 // Per categorie: hero, teksten, FAQ (GEO). Teksten voor corporate, sport en shows/music zijn voorstellen.
@@ -142,12 +148,12 @@ function build(slug) {
   const isAll = !slug;
   const c = isAll ? null : CAT[slug];
   const name = isAll ? 'Portfolio' : CATS[slug];
-  const list = isAll ? PHOTOS : PHOTOS.filter((p) => p.cats.includes(slug));
+  const list = isAll ? PHOTOS : CAT_LIST[slug];
   const path = isAll ? '/portfolio' : `/portfolio/${slug}`;
   const url = SITE.url + path;
   const best = bestPhoto(isAll ? 'all' : slug);
   const hero = isAll ? best || { file: HERO.file, alt: HERO.alt, pos: '50% 45%' } : best || { file: c.hero, alt: c.alt, pos: c.pos };
-  const pills = [['all', 'All', PHOTOS.length, '/portfolio']].concat(SITE.categories.map((k) => [k.slug, k.name, PHOTOS.filter((p) => p.cats.includes(k.slug)).length, `/portfolio/${k.slug}`]));
+  const pills = [['all', 'All', PHOTOS.length, '/portfolio']].concat(SITE.categories.map((k) => [k.slug, k.name, CAT_LIST[k.slug].length, `/portfolio/${k.slug}`]));
   return {
     path,
     title: isAll ? 'Portfolio: event & festival photography | Martin Hols' : `${TITLE_AS[slug] || name} photography portfolio | Martin Hols`,
