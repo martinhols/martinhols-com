@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { SUPABASE } from './site.mjs';
 
-export let dbProjects = [], dbPosts = [], dbPhotos = [];
+export let dbProjects = [], dbPosts = [], dbPhotos = [], dbSeo = [];
 export const localMap = {}; // supabase-url -> { src, thumb, w, h }
 
 async function get(table, order, onlyPublished = true) {
@@ -61,6 +61,7 @@ export async function prepareData(dist) {
   dbProjects = await get('projects', 'event_date.desc.nullslast,created_at.desc');
   dbPosts = await get('posts', 'published_at.desc.nullslast,created_at.desc');
   dbPhotos = await get('photos', 'created_at.asc', false);
+  dbSeo = await get('seo_pages', 'path.asc', false);
   const pub = new Set(dbProjects.map((p) => p.id));
   dbPhotos = dbPhotos.filter((x) => x.portfolio || x.home_hero || x.cat_header || (x.project_id && pub.has(x.project_id)));
   const dims = Object.fromEntries(dbPhotos.map((x) => [x.url, [x.width, x.height]]));

@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { layout } from './src/layout.mjs';
 import { SITE } from './src/site.mjs';
-import { prepareData } from './src/data.mjs';
+import { prepareData, dbSeo } from './src/data.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(root, 'dist');
@@ -26,15 +26,26 @@ await prepareData(dist);
 
 // pagina's: elke src/pages/*.mjs exporteert `page`
 const pages = [];
+const seoList = [];
+const SEO_FILE = JSON.parse(fs.readFileSync(path.join(root, 'src/seo.json'), 'utf8'));
 for (const f of fs.readdirSync(path.join(root, 'src/pages')).filter((x) => x.endsWith('.mjs')).sort()) {
   const mod = await import(pathToFileURL(path.join(root, 'src/pages', f)).href);
   for (const p of mod.pages || [mod.page]) {
+    // SEO: voorzet uit src/seo.json, daarna aanpassingen uit de admin (tabel seo_pages) die winnen.
+    const base = { title: p.title, description: p.description, noindex: !!p.noindex };
+    Object.assign(p, SEO_FILE[p.path] || {});
+    const dflt = { title: p.title, description: p.description, noindex: !!p.noindex };
+    const ov = dbSeo.find((x) => x.path === p.path);
+    if (ov) { if (ov.title) p.title = ov.title; if (ov.description) p.description = ov.description; if (ov.og_title) p.ogTitle = ov.og_title; if (ov.og_description) p.ogDescription = ov.og_description; if (ov.noindex !== null && ov.noindex !== undefined) p.noindex = ov.noindex; }
+    seoList.push({ path: p.path, title: p.title, description: p.description, ogTitle: p.ogTitle || '', ogDescription: p.ogDescription || '', noindex: !!p.noindex, def: dflt, orig: base });
     const out = p.path === '/404' ? '404.html' : p.path === '/' ? 'index.html' : p.path.replace(/^\//, '') + '/index.html';
     fs.mkdirSync(path.dirname(path.join(dist, out)), { recursive: true });
     fs.writeFileSync(path.join(dist, out), layout(p));
     pages.push(p);
   }
 }
+
+fs.writeFileSync(path.join(dist, 'seo-pages.json'), JSON.stringify(seoList.filter((x) => x.path !== '/404')));
 
 // sitemap + robots
 const today = new Date().toISOString().slice(0, 10);

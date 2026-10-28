@@ -1,0 +1,46 @@
+{
+  "/": {
+    "title": "Event & Festival Photographer Netherlands | Martin Hols",
+    "description": "Award-winning event and festival photographer in the Netherlands, working worldwide. 2,132 events, edited photos during the event, the rest within 24 hours."
+  },
+  "/about": {
+    "title": "About Martin Hols | Event Photographer, 2,132 Events",
+    "description": "Event and festival photographer from Hilversum. 2,132 events, European Event Photography Award 2025 winner, booked again by Albert Heijn and Tomorrowland."
+  },
+  "/portfolio": {
+    "title": "Event & Festival Photography Portfolio | Martin Hols",
+    "description": "The best frames from 2,132 events: festivals, corporate, sport and shows. Tomorrowland, Defqon.1, Pinkpop, Formula 1 and more."
+  },
+  "/portfolio/festivals": {
+    "title": "Festival Photographer Netherlands | Martin Hols",
+    "description": "Festival photography by Martin Hols: main stages, crowds, pyro and fireworks at Tomorrowland, Defqon.1, Mysteryland and Pinkpop. Edited photos during the event."
+  },
+  "/portfolio/corporate": {
+    "title": "Corporate Event Photographer Netherlands | Martin Hols",
+    "description": "Corporate event photography: congresses, company days and brand activations. Fully edited photos during the event, the rest within 24 hours."
+  },
+  "/portfolio/sport": {
+    "title": "Sports Event Photographer Netherlands | Martin Hols",
+    "description": "Sports event photography by Martin Hols: Formula 1 Dutch and Las Vegas Grand Prix, handball and more. Edited photos during the event."
+  },
+  "/portfolio/shows-music": {
+    "title": "Concert & Show Photographer Netherlands | Martin Hols",
+    "description": "Concert and show photography: DJs, artists, pyro and light shows. Winner of the 2025 European Event Photography Award, Music Events – Concerts."
+  },
+  "/projects": {
+    "title": "Event Photography Projects | Martin Hols",
+    "description": "Recent event and festival photography projects by Martin Hols, from Tomorrowland and Defqon.1 to Formula 1. Browse by category."
+  },
+  "/blog": {
+    "title": "Blog: Event Photography Guides | Martin Hols",
+    "description": "Practical guides for event organisers and stories from behind the lens, by event photographer Martin Hols."
+  },
+  "/contact": {
+    "title": "Hire an Event Photographer | Contact Martin Hols",
+    "description": "Planning an event? Tell Martin Hols the date, the place and what you need. Quote and first answer within one working day."
+  },
+  "/blog/how-to-brief-a-festival-photographer": {
+    "title": "How to Brief a Festival Photographer | Martin Hols",
+    "description": "Send a written callsheet with the schedule, must-have moments, access and contacts. A practical guide by event photographer Martin Hols."
+  }
+}

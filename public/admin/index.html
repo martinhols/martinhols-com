@@ -236,7 +236,7 @@ async function publishSite(prefix=''){let h=hook();if(!h){h=prompt('Paste the Ve
 /* ---------- views ---------- */
 function head(title,main){return `<header class="top"><a class="brand" href="/admin"><img src="/img/martin-hols-portrait.jpg" alt=""><b>MartinHols.com</b><span class="badge">Admin · not public</span></a>
 <div class="notch n-tr">${main}</div><div><p class="eyebrow">Photo intake</p><h1>${title}</h1></div>
-<div class="tabs">${[['project','New project'],['single','Single photos'],['portfolio','Portfolio'],['site','Site images'],['dupes','Duplicates']].map(([k,l])=>`<button data-tab="${k}" class="${S.tab===k?'on':''}">${l}</button>`).join('')}</div></header><div class="msg ${S.err?'err':''}" id="msg" style="display:${S.msg?'block':'none'}">${esc(S.msg)}</div>`}
+<div class="tabs">${[['project','New project'],['single','Single photos'],['portfolio','Portfolio'],['site','Site images'],['dupes','Duplicates'],['seo','SEO']].map(([k,l])=>`<button data-tab="${k}" class="${S.tab===k?'on':''}">${l}</button>`).join('')}</div></header><div class="msg ${S.err?'err':''}" id="msg" style="display:${S.msg?'block':'none'}">${esc(S.msg)}</div>`}
 const btnPub=(l,act)=>`<button class="btn" data-act="${act}">${l}<span class="ic">${I.ar}</span></button>`;
 const dHashU=u=>new Promise(res=>{const im=new Image();im.crossOrigin='anonymous';im.onload=()=>{try{const c=document.createElement('canvas');c.width=9;c.height=8;const g=c.getContext('2d');g.drawImage(im,0,0,9,8);const d=g.getImageData(0,0,9,8).data,b=[];for(let y=0;y<8;y++)for(let x=0;x<8;x++){const i=(y*9+x)*4,j=i+4;b.push(d[i]*.3+d[i+1]*.6+d[i+2]*.1>d[j]*.3+d[j+1]*.6+d[j+2]*.1?1:0)}res(b)}catch(e){res(null)}};im.onerror=()=>res(null);im.src=u});
 const hamU=(a,b)=>{let n=0;for(let i=0;i<64;i++)if(a[i]!==b[i])n++;return n};
@@ -248,7 +248,25 @@ function vDupes(){const D=S.dp||(S.dp={g:null,run:false,msg:''});
   for(let i=0;i<ok.length;i++)for(let j=i+1;j<ok.length;j++)if(hamU(ok[i][1],ok[j][1])<=5)par[f(i)]=f(j);
   const gr={};ok.forEach((a,i)=>(gr[f(i)]=gr[f(i)]||[]).push(a[0]));D.g=Object.values(gr).filter(g=>g.length>1);D.run=false;D.msg=(A.length-ok.length?(A.length-ok.length)+' photos could not be read. ':'')+D.g.length+' group(s) found';show()};
  document.querySelectorAll('[data-dpoff]').forEach(b=>b.onclick=async()=>{try{await dbPhoto(b.dataset.dpoff,{portfolio:false});D.g=D.g.map(g=>g.filter(x=>x.id!==b.dataset.dpoff)).filter(g=>g.length>1);show()}catch(e){say(e.message,1)}})}
-function show(){S.tab==='project'?vProject():S.tab==='single'?vSingle():S.tab==='site'?vSite():S.tab==='dupes'?vDupes():vPortfolio();bind()}
+async function vSeo(){const Q=S.sq||(S.sq={list:null,ov:{},f:''});
+ app.innerHTML=head('Titles and descriptions for search.',btnPub('Publish site','site'))+'<section class="panel"><p class="hint" style="font-size:18px">Loading pages…</p></section>';
+ if(!Q.list){try{Q.list=await (await fetch('/seo-pages.json?'+Date.now())).json()}catch(e){Q.list=[]}
+  const r=await sb.from('seo_pages').select('*');if(r.error){Q.err=/seo_pages/.test(r.error.message)?'Run schema-7.sql in Supabase first (creates the SEO table).':r.error.message}else{Q.err='';Q.ov=Object.fromEntries(r.data.map(x=>[x.path,x]))}}
+ const f=Q.f.toLowerCase(),L=Q.list.filter(x=>!f||x.path.includes(f)||x.title.toLowerCase().includes(f));
+ const cnt=(n,max,min)=>`<span class="hint" style="color:${n>max||n<min?'#E8730C':'inherit'}">${n} / ${max}</span>`;
+ app.innerHTML=head('Titles and descriptions for search.',btnPub('Publish site','site'))+`<section class="panel"><p class="hint" style="font-size:18px">Google shows the title and description in search results. Aim for a title up to 60 characters and a description of 120 to 155. Empty fields use my suggestion. Changes go live after Publish site.</p>${Q.err?`<p class="hint" style="color:#E8730C;margin-top:12px">${esc(Q.err)}</p>`:''}<input id="sqf" placeholder="Filter pages…" value="${esc(Q.f)}" style="margin-top:16px;width:100%;max-width:420px"></section>`+L.map((x,i)=>{const o=Q.ov[x.path]||{};const t=o.title||x.title,d=o.description||x.description;return `<section class="panel" style="margin-top:20px" data-sp="${esc(x.path)}"><div class="row" style="gap:12px;flex-wrap:wrap;align-items:center"><p class="eyebrow" style="margin:0">${esc(x.path)}</p>${o.path?'<span class="chip on">edited</span>':''}${x.noindex?'<span class="chip">noindex</span>':''}</div>
+<div class="serp" style="margin-top:12px"><p class="a" data-pt>${esc(t)}</p><p class="u">martinhols.com${esc(x.path==='/'?'':x.path)}</p><p class="b" data-pd>${esc(d)}</p></div>
+<div class="fd"><label class="lb">Title ${cnt(t.length,60,30)}</label><input data-sf="title" value="${esc(o.title||'')}" placeholder="${esc(x.def.title)}"></div>
+<div class="fd"><label class="lb">Description ${cnt(d.length,155,100)}</label><textarea data-sf="description" rows="2" placeholder="${esc(x.def.description)}">${esc(o.description||'')}</textarea></div>
+<div class="fd"><label class="lb">Title when shared (WhatsApp, LinkedIn). Optional</label><input data-sf="og_title" value="${esc(o.og_title||'')}"></div>
+<div class="row" style="margin-top:12px;gap:12px;flex-wrap:wrap"><label class="hint"><input type="checkbox" data-sf="noindex" ${(o.noindex!=null?o.noindex:x.noindex)?'checked':''}> Hide from search (noindex)</label><span style="flex:1"></span>${o.path?`<button class="chip" data-sreset="${esc(x.path)}">Back to suggestion</button>`:''}<button class="btn p" data-ssave="${esc(x.path)}">Save</button></div></section>`}).join('');
+ bind();
+ $('#sqf').oninput=e=>{Q.f=e.target.value;const c=e.target.selectionStart;vSeo().then(()=>{const i=$('#sqf');i.focus();i.setSelectionRange(c,c)})};
+ document.querySelectorAll('[data-ssave]').forEach(b=>b.onclick=async()=>{const p=b.dataset.ssave,sec=b.closest('[data-sp]'),g=k=>{const e=sec.querySelector('[data-sf='+k+']');return e.type==='checkbox'?e.checked:(e.value.trim()||null)},base=Q.list.find(x=>x.path===p);
+  const row={path:p,title:g('title'),description:g('description'),og_title:g('og_title'),noindex:g('noindex')===!!base.def.noindex?null:g('noindex'),updated_at:new Date().toISOString()};
+  const r=await sb.from('seo_pages').upsert(row);if(r.error)return say(r.error.message,1);Q.ov[p]=row;say('Saved. Live after Publish site.');vSeo()});
+ document.querySelectorAll('[data-sreset]').forEach(b=>b.onclick=async()=>{const p=b.dataset.sreset;const r=await sb.from('seo_pages').delete().eq('path',p);if(r.error)return say(r.error.message,1);delete Q.ov[p];say('Back to the suggestion. Live after Publish site.');vSeo()})}
+function show(){S.tab==='project'?vProject():S.tab==='single'?vSingle():S.tab==='site'?vSite():S.tab==='dupes'?vDupes():S.tab==='seo'?vSeo():vPortfolio();bind()}
 const fld=(id,l,v,ph='',extra='')=>`<div class="fd"><label class="lb" for="${id}">${l}</label><input id="${id}" value="${esc(v||'')}" placeholder="${esc(ph)}" ${extra}></div>`;
 
 function vProject(){const P=S.proj||{categories:[]},ph=S.photos,c=checks(),done=c.filter(x=>x[0]).length,sel=ph.find(x=>x.id===S.sel),slot=k=>ph.find(x=>x.slot===k);

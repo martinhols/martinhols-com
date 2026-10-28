@@ -134,16 +134,19 @@ export function layout(page) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(page.title)}</title>
 <meta name="description" content="${esc(page.description)}">
-${page.noindex ? '<meta name="robots" content="noindex, follow">\n' : ''}
+${page.noindex ? '<meta name="robots" content="noindex, follow">\n' : '<meta name="robots" content="index, follow, max-image-preview:large">\n'}
 <link rel="canonical" href="${url}">
 <meta name="theme-color" content="#F4EFE6">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${SITE.name}">
-<meta property="og:title" content="${esc(page.title)}">
-<meta property="og:description" content="${esc(page.description)}">
+<meta property="og:title" content="${esc(page.ogTitle || page.title)}">
+<meta property="og:description" content="${esc(page.ogDescription || page.description)}">
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="${og}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(page.ogTitle || page.title)}">
+<meta name="twitter:description" content="${esc(page.ogDescription || page.description)}">
+<meta name="twitter:image" content="${og}">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/img/favicon-192.png">
