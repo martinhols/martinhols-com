@@ -108,17 +108,13 @@ export function landing(c) {
     </div>
   </section>
 
-  <section class="cream faqs" data-theme="cream" aria-labelledby="price-h" id="prices">
-    <div class="fq-l">
-      <p class="t-eyebrow acc">Prices</p>
-      <h2 id="price-h">${c.priceTitle}</h2>
+  <section class="cream pricing" data-theme="cream" aria-labelledby="price-h" id="prices">
+    <div class="pr-h">
+      <div><p class="t-eyebrow acc">Prices</p><h2 id="price-h">${c.priceTitle}</h2></div>
       <p class="lead">${c.priceIntro}</p>
-      <a class="btn btn-p" href="#quote">Request a quote <span class="ic">${ARROW16}</span></a>
     </div>
-    <div class="art" style="flex:1;min-width:0">
-      <table class="pt"><thead><tr><th>${c.priceHead}</th><th>Price</th></tr></thead><tbody>${c.prices.map(([n, p]) => `<tr><td>${n}</td><td>${p}</td></tr>`).join('')}</tbody></table>
-      <p>${c.priceNote}</p>
-    </div>
+    <div class="pr-grid">${c.prices.map(([n, p, d], i) => `<a class="pr-card${i === c.prices.length - 1 ? ' hi' : ''}" href="#quote" data-cta="${c.key}-price-${i + 1}"><p class="t-eyebrow acc">${n}</p><p class="pr-p">${p}</p><p class="pr-d">${d || ''}</p><ul>${(c.priceIncl || []).map((t) => `<li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>${t}</li>`).join('')}</ul><span class="pr-go">Request a quote <i>${ARROW}</i></span></a>`).join('')}</div>
+    <div class="pr-notes">${(c.priceNotes || []).map(([k, v]) => `<div><p class="t-eyebrow dim">${k}</p><p>${v}</p></div>`).join('')}</div>
   </section>
 
   ${latest()}
