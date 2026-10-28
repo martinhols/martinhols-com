@@ -971,3 +971,8 @@ body.lb-open{overflow:hidden}
 .art .pt td:last-child,.art .pt th:last-child{text-align:right;white-space:nowrap;padding-right:0;font-weight:600}
 .art .pt .sub td{padding:8px 12px 8px 24px;border-top:0;opacity:.85}
 @media (max-width:760px){.art [style*="repeat(3"]{grid-template-columns:1fr!important}.art [style*="repeat(3"] img{height:200px!important}}
+/* landingspagina's: kleinere H1, ruimte voor knoppen */
+.phero.lp{min-height:760px}
+.lp .ph-tx{width:min(900px,calc(100% - 80px))}
+.lp .ph-tx h1{font:300 96px/100px var(--font-display);letter-spacing:-.03em}
+@media (max-width:760px){.phero.lp{min-height:700px;height:700px}.lp .ph-tx{left:20px;width:calc(100% - 40px)}.lp .ph-tx h1{font:300 44px/48px var(--font-display)}.lp .ph-tx .lead{font-size:18px;line-height:28px}}

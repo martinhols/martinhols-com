@@ -19,7 +19,7 @@ const MAX_ALL = 100, MAX_CAT = 40;
 const rank = (arr) => arr.map((p, i) => ({ ...p, rank: `No. ${String(i + 1).padStart(2, '0')}` }));
 const ORDERED = [...DB.filter((x) => x.top), ...STATIC, ...DB.filter((x) => !x.top)];
 const PHOTOS = rank(ORDERED.slice(0, MAX_ALL));
-const CAT_LIST = Object.fromEntries(SITE.categories.map((k) => [k.slug, rank(ORDERED.filter((p) => p.cats.includes(k.slug)).slice(0, MAX_CAT))]));
+export const CAT_LIST = Object.fromEntries(SITE.categories.map((k) => [k.slug, rank(ORDERED.filter((p) => p.cats.includes(k.slug)).slice(0, MAX_CAT))]));
 const HERO = { file: 'portfolio/mysteryland-sunset-stone-hand-stage.jpg', alt: 'Mysteryland main stage at sunset, a giant stone hand holding the DJ booth, red smoke and light beams over the crowd' };
 
 // Per categorie: hero, teksten, FAQ (GEO). Teksten voor corporate, sport en shows/music zijn voorstellen.
@@ -90,9 +90,9 @@ const SPECS = [
   ['Superfast delivery', 'Fully edited images during the event, the rest of the set within 24 hours.', 'f1-zandvoort-race-car-corner.jpg', '55% 55%', 'Formula 1 car taking a corner at the Dutch Grand Prix in Zandvoort'],
 ];
 
-const tile = (p, i) => `<a class="tile ${p.size}" href="${p.full}" data-cat="${p.cats.join(' ')}" data-name="${esc(p.name)}" data-rank="${esc(p.rank)}" data-catname="${esc(CATS[p.cat])}" data-alt="${esc(p.alt)}" aria-label="Open photo: ${esc(p.alt)}">${img(p.file, p.alt, { style: `object-position:${p.pos}`, thumb: p.thumbOpt })}<span class="fade"></span><span class="cap"><span class="nm">${esc(p.name)}</span></span><span class="rb">${ARROW}</span></a>`;
+export const tile = (p, i) => `<a class="tile ${p.size}" href="${p.full}" data-cat="${p.cats.join(' ')}" data-name="${esc(p.name)}" data-rank="${esc(p.rank)}" data-catname="${esc(CATS[p.cat])}" data-alt="${esc(p.alt)}" aria-label="Open photo: ${esc(p.alt)}">${img(p.file, p.alt, { style: `object-position:${p.pos}`, thumb: p.thumbOpt })}<span class="fade"></span><span class="cap"><span class="nm">${esc(p.name)}</span></span><span class="rb">${ARROW}</span></a>`;
 
-const lightbox = `
+export const lightbox = `
   <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
     <button type="button" class="bd" data-lb-close aria-label="Close"></button>
     <figure><img alt="" data-lb-img><figcaption><span class="ce" data-lb-rank></span><span class="nm" data-lb-name></span><span class="ce" data-lb-count></span></figcaption></figure>
@@ -114,7 +114,7 @@ const specs = (slug) => { const T = SPEC_TEXT[slug]; const L = T ? SPECS.map((x,
     <div class="spg">${L.map(([t, d, f, pos, alt], i) => `<div class="sp"><span class="im">${img(f, alt, { style: `object-position:${pos}` })}</span><span class="tx"><span class="n">${String(i + 1).padStart(2, '0')}</span><span class="t">${t}</span><span class="d">${d}</span></span></div>`).join('')}</div>
   </section>`; };
 
-const projSec = (slug, name) => {
+export const projSec = (slug, name) => {
   const list = PROJECTS.filter((p) => p.cat === slug).slice(0, 3);
   if (!list.length) return '';
   const card = (p, aria = false) => `<a class="pj" href="${p.href}"${aria ? ' aria-hidden="true" tabindex="-1"' : ''}>${img(p.file, aria ? '' : p.alt, { style: `object-position:${p.pos}`, sizes: '(min-width:1100px) 34vw, 85vw' })}<p class="t-eyebrow acc k">${CATS[p.cat]}</p><p class="tt">${esc(p.title)}</p></a>`;
