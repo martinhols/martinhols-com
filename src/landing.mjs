@@ -2,7 +2,7 @@
 // Volgorde: hero, klanten, portfolio van één categorie, FAQ, over mij, prijstabel, laatste projecten, offerteformulier.
 import { SITE } from './site.mjs';
 import { esc, img, header, footer, ARROW, ARROW16, ICONS } from './layout.mjs';
-import { tile, lightbox, projSec, CAT_LIST } from './pages/portfolio.mjs';
+import { tile, lightbox, projSec, catGallery } from './pages/portfolio.mjs';
 import { PROJECTS, CATS } from './pages/projects.mjs';
 
 const LOGOS = [
@@ -16,7 +16,8 @@ const TYPES = [['fest', 'Festivals'], ['corp', 'Corporate'], ['sport', 'Sport'],
 
 export function landing(c) {
   const url = SITE.url + c.path;
-  const list = (CAT_LIST[c.cat] || []).slice(0, c.galleryMax || 12);
+  const list = catGallery(c.cat, c.galleryMax || 12);
+  const slides = (list.length >= 2 ? list.slice(0, 6) : [{ file: c.hero.file, alt: c.hero.alt, pos: c.hero.pos || '50% 50%', name: c.catName }]).map((p) => ({ file: p.file, alt: p.alt, pos: p.pos, name: p.name }));
   // Geen projecten in deze categorie? Toon dan de laatste projecten in het algemeen.
   const latest = () => { const L = PROJECTS.slice(0, 3); return L.length ? `
   <section class="panel projects" aria-labelledby="projects-h">
@@ -32,19 +33,37 @@ export function landing(c) {
       { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' }, { '@type': 'ListItem', position: 2, name: c.crumb, item: url }] },
     ],
     body: `
-  <header class="panel phero lp" id="main">
-    ${img(c.hero.file, c.hero.alt, { priority: true, style: `object-position:${c.hero.pos || '50% 50%'}` })}
-    <div class="shade"></div>
+  <header class="panel hero lp2" id="main">
     ${header('')}
-    <div class="ph-tx">
+    <div class="hero-main">
       <div class="eyebrows"><p class="t-eyebrow acc">${c.eyebrow}</p><i></i><p class="t-eyebrow dim">${c.eyebrow2}</p></div>
       <h1>${c.h1}</h1>
-      <p class="lead">${c.lead}</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px">
+      <p class="lead" style="margin:16px 0 0;max-width:640px;font:400 22px/34px var(--font-body);color:var(--ink-muted)">${c.lead}</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin:24px 0 28px">
         <a class="btn btn-p" href="#quote" data-cta="${c.key}-hero-quote">Request a quote <span class="ic">${ARROW16}</span></a>
         <a class="btn btn-o" href="tel:${SITE.phone}" data-cta="${c.key}-hero-call">Call ${SITE.phoneText}</a>
       </div>
+      <div class="slider" data-slider role="group" aria-roledescription="carousel" aria-label="Selected ${c.catName.toLowerCase()} photos">
+        <div class="track">
+          ${slides.map((p, i) => `<div class="slide${i === 0 ? ' on' : ''}" data-name="${esc(p.name)}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${slides.length}">${img(p.file, p.alt, { style: `object-position:${p.pos}`, priority: i === 0, sizes: '(min-width:1100px) 72vw, 100vw' })}</div>`).join('')}
+        </div>
+        <a class="s-cap glass" href="/portfolio/${c.cat}" data-cap>${esc(slides[0].name)}</a>
+        <div class="s-count glass" aria-hidden="true"><span data-num>01</span><span class="bar"><i></i></span><span class="of">${String(slides.length).padStart(2, '0')}</span></div>
+        <a class="rb s-go" href="/portfolio/${c.cat}" aria-label="View ${c.catName.toLowerCase()} photos">${ARROW}</a>
+      </div>
     </div>
+
+    <div class="portrait-d">
+      ${img('martin-hols-portrait.jpg', 'Portrait of Martin Hols, smiling, in a black shirt against a warm orange backdrop', { priority: true })}
+      <div class="award"><div class="ai">${ICONS.STAR}</div><div><p class="t-eyebrow">Award winner</p><p class="t-caption">European Event<br>Photography Award</p></div></div>
+      <div class="namecard"><p class="t-eyebrow acc" style="font-size:12px;line-height:16px;letter-spacing:.22em">Event photographer</p><p class="nm">Martin Hols</p></div>
+    </div>
+
+    <div class="portrait-m">
+      ${img('martin-hols-portrait.jpg', 'Portrait of Martin Hols')}
+      <div><p class="nm">Martin Hols</p><p class="t-eyebrow">Event photographer</p></div>
+    </div>
+    <a class="m-btn p btn-q" href="#quote">Request a quote <span class="ic">${ARROW16}</span></a>
   </header>
 
   <section class="cream trusted" data-theme="cream" aria-labelledby="trusted-h">

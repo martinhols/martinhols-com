@@ -976,3 +976,4 @@ body.lb-open{overflow:hidden}
 .lp .ph-tx{width:min(900px,calc(100% - 80px))}
 .lp .ph-tx h1{font:300 96px/100px var(--font-display);letter-spacing:-.03em}
 @media (max-width:760px){.phero.lp{min-height:700px;height:700px}.lp .ph-tx{left:20px;width:calc(100% - 40px)}.lp .ph-tx h1{font:300 44px/48px var(--font-display)}.lp .ph-tx .lead{font-size:18px;line-height:28px}}
+@media (min-width:1100px){.lp2 .hero-main h1{font-size:84px;line-height:88px}.lp2 .hero-main .lead{margin-top:10px!important;font-size:20px!important;line-height:30px!important}.lp2 .hero-main>div[style*="flex"]{margin:16px 0 20px!important}}

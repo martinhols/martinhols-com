@@ -20,6 +20,16 @@ const rank = (arr) => arr.map((p, i) => ({ ...p, rank: `No. ${String(i + 1).padS
 const ORDERED = [...DB.filter((x) => x.top), ...STATIC, ...DB.filter((x) => !x.top)];
 const PHOTOS = rank(ORDERED.slice(0, MAX_ALL));
 export const CAT_LIST = Object.fromEntries(SITE.categories.map((k) => [k.slug, rank(ORDERED.filter((p) => p.cats.includes(k.slug)).slice(0, MAX_CAT))]));
+// Voor landingspagina's: eerst de portfolio-selectie van de categorie, daarna aangevuld met andere foto's uit die categorie (ook uit projecten).
+export const catGallery = (slug, max) => {
+  const base = CAT_LIST[slug] || [];
+  if (base.length >= max) return base.slice(0, max);
+  const used = new Set(base.map((p) => p.slug));
+  const extra = dbPhotos.filter((x) => !x.portfolio && !x.archived && localMap[x.url] && (x.categories || []).includes(slug) && !used.has(x.id))
+    .map((x) => ({ slug: x.id, cat: slug, cats: x.categories, size: sizeOf(x), pos: x.crop || '50% 50%', name: x.event || x.caption || 'Event photography', alt: altFor(x), top: x.top, date: dateOf(x), full: siteUrl(x.url), file: x.url, thumbOpt: true, db: x }))
+    .sort((a, b) => b.date.localeCompare(a.date));
+  return rank([...base, ...extra].slice(0, max));
+};
 const HERO = { file: 'portfolio/mysteryland-sunset-stone-hand-stage.jpg', alt: 'Mysteryland main stage at sunset, a giant stone hand holding the DJ booth, red smoke and light beams over the crowd' };
 
 // Per categorie: hero, teksten, FAQ (GEO). Teksten voor corporate, sport en shows/music zijn voorstellen.
