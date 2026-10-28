@@ -2,7 +2,7 @@
 export const SUPABASE = { url: 'https://rpspddxsnedszscudfke.supabase.co', key: 'sb_publishable__p3yyQ_mtRIaa-MDEWG_CQ_vn0cEPVB' };
 
 export const SITE = {
-  url: 'https://martinhols.com',
+  url: 'https://www.martinhols.com',
   name: 'MartinHols.com',
   person: 'Martin Hols',
   email: 'martin@thearrows.nl',
