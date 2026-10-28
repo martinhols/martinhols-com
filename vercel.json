@@ -31,5 +31,77 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/cases",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/case/mysteryland-photography",
+      "destination": "/projects/mysteryland-2025",
+      "permanent": true
+    },
+    {
+      "source": "/case/albert-heijn",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/case/defqon-1-festivalphotography",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/case/pinkpop",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/case/qlimax-the-final-prophecy",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/case/ronde-photography",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/case/the-dutch-gp-zandvoort-fotografie",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/case/tomorrowland-2024",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/case/zwarte-cross-2024",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/case/:slug",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/l/event-photographer-amsterdam",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/l/landingspagina-titel-lorem-ipsum",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/de-canon-r5-mark-ii-een-review-na-100-000-clicks",
+      "destination": "/blog",
+      "permanent": true
+    }
   ]
 }
