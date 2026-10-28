@@ -21,12 +21,15 @@ const STATIC_POSTS = [
       </section>
       <section id="style"><h2>1. Does the portfolio match the style you want?</h2>
         <p>Look at the pictures and ask yourself: is this what I want my event to look like? A good photographer has a recognisable style, and you are booking that style. It is not normal to ask a photographer to work in a way that is far from their own. If you want dark, dramatic stage photography and the portfolio is full of bright lifestyle shots, keep looking.</p>
+        <figure class="af">${img('portfolio/tomorrowland-stage-laser-beams.jpg', 'Tomorrowland stage with laser beams cutting through the night', { style: 'object-position:50% 50%' })}<figcaption>Dark, dramatic stage photography is a style of its own</figcaption></figure>
       </section>
       <section id="experience"><h2>2. How much real experience do they have?</h2>
         <p>A website with a handful of strong images can hide a lot of luck. Experience cannot be bought: it shows in how many events someone has shot, at what size and how often clients come back. Ask which events they have photographed that look like yours, and for how many years.</p>
       </section>
       <section id="type"><h2>3. Are they a specialist in your type of event?</h2>
         <p>Not every event is the same job. A festival means dark stages, moving light, crowds and weather. A conference is about speakers, people and a clean look in a room. Sport is about speed and anticipation. No photographer can do every kind of photography equally well, so look for a specialist in your field. Ask for examples from events that look like yours.</p>
+        <figure class="af">${img('portfolio/handball-match-arena-crowd.jpg', 'Handball match in a full arena with a crowd', { style: 'object-position:50% 50%' })}<figcaption>Sport: speed and anticipation</figcaption></figure>
+        <figure class="af">${img('portfolio/corporate-event-circular-auditorium.jpg', 'Corporate event in a circular auditorium', { style: 'object-position:50% 50%' })}<figcaption>Corporate: people, speakers and a clean room</figcaption></figure>
       </section>
       <section id="instagram"><h2>4. What does their Instagram show?</h2>
         <p>Photographers are famous for not updating their website. Instagram is usually where the recent work is. Scroll back through the last months: do you see steady work at real events, or only a few good posts? A feed that is active and varied is a good sign.</p>
@@ -43,10 +46,12 @@ const STATIC_POSTS = [
       </section>
       <section id="delivery"><h2>8. When do you get the images?</h2>
         <p>For events, speed matters. Your social team wants images during or right after the event, and sponsors and press want the full set the next day. Many photographers deliver weeks later. Ask when you will get the first images and the final set, and compare that with when you need them. See also how to <a href="/blog/how-to-brief-a-festival-photographer">brief a festival photographer</a> so delivery is agreed up front.</p>
+        <figure class="af">${img('portfolio/f1-podium-driver-waving-trophies.jpg', 'Formula 1 driver waving two trophies on the podium', { style: 'object-position:50% 50%' })}<figcaption>Some moments need to be online within minutes</figcaption></figure>
       </section>
       <section id="backup"><h2>9. What if something goes wrong?</h2>
         <p>Cameras fail and people get sick. Ask whether the photographer works with backup gear and who steps in if they cannot make it. A professional has an answer ready.</p>
-      </section>`,
+      </section>
+      <section id="checklist"><div class="cks"><p class="t-eyebrow acc">Checklist · ask every photographer</p><ul class="ck">${['Does your style match what I want for this event?', 'How many events have you shot, and for how many years?', 'Are you a specialist in my type of event? Can I see examples?', 'Can I see your recent work on Instagram?', 'Which clients come back, and can I speak to one?', 'What exactly is included in the price, and what is not?', 'What are the terms, usage rights, deposit and cancellation?', 'When do I get the first images and the final set?', 'What is your backup plan for gear and for illness?'].map((t) => `<li>${CHECK}<span>${t}</span></li>`).join('')}</ul></div></section>`,
     faq: [['How do I choose an event photographer?', 'Check that the portfolio matches the style you want, look at real experience on both the website and Instagram, compare price and what is included, and agree on usage rights and delivery time.'], ['Is a cheaper event photographer a bad choice?', 'Not necessarily, but ask exactly what is included: editing, usage rights, number of images, delivery time and extra costs.'], ['How quickly should an event photographer deliver?', 'It depends on what you need. For events, ask for the first images within 24 hours so your team can start posting right away.']],
   },
   {
@@ -67,12 +72,16 @@ const STATIC_POSTS = [
         <p>For conferences, company parties and trade shows I charge by the hour block. You pay for the time I am on site, and that is clear up front.</p>
         <div class="cks"><p class="t-eyebrow acc">Standard rates</p><ul class="ck">${['4 hours: €650', '6 hours: €900', '8 hours: €1,150', 'Full day (up to 12 hours): €1,350', 'Every extra hour after 12 hours: €125'].map((t) => `<li>${CHECK}<span>${t}</span></li>`).join('')}</ul></div>
         <p>Hours are rounded up to the next even block, so a 5-hour event is priced as 6 hours.</p>
+        <figure class="af">${img('portfolio/corporate-event-circular-auditorium.jpg', 'Corporate event in a circular auditorium with the audience seated around the stage', { style: 'object-position:50% 50%' })}<figcaption>Corporate event · priced by the hour block</figcaption></figure>
       </section>
       <section id="festivals"><h2>Festivals and sport events.</h2>
         <p>Festivals and sport events are priced per day: <b>€850 per day</b>. These days are long, the ground is rough and the light changes every hour, so I work with a day rate instead of counting hours. For multi-day festivals or several photographers, <a href="/contact">get in touch</a> and I will make a quote.</p>
+        <figure class="af">${img('portfolio/festival-pink-canopy-stage-crowd.jpg', 'Festival stage under a pink canopy with a crowd in front', { style: 'object-position:50% 50%' })}<figcaption>Festival · priced per day</figcaption></figure>
+        <figure class="af">${img('portfolio/handball-match-arena-crowd.jpg', 'Handball match in a full arena', { style: 'object-position:50% 50%' })}<figcaption>Sport · also priced per day</figcaption></figure>
       </section>
       <section id="shows"><h2>Shows and music.</h2>
         <p>For a concert, a show or a music performance the price is a fixed <b>€650 per show</b>. You know the cost before the doors open, no matter how the evening runs.</p>
+        <figure class="af">${img('portfolio/guitarist-live-show-blue-light.jpg', 'Guitarist on stage in blue light during a live show', { style: 'object-position:50% 50%' })}<figcaption>Live show · one fixed price per show</figcaption></figure>
       </section>
       <section id="other"><h2>Portraits and image libraries.</h2>
         <ul class="ck">${['Portraits and headshots: €850 for up to 25 people, €1,600 for up to 75 people, €25 for each extra person', 'Image library (beeldenbank), half day: €750', 'Image library, full day: €1,450, with €175 for each extra hour', 'Video, per day: €1,150'].map((t) => `<li>${CHECK}<span>${t}</span></li>`).join('')}</ul>
@@ -80,7 +89,8 @@ const STATIC_POSTS = [
       <section id="included"><h2>What is included.</h2>
         <p>Every price includes editing, delivery of the final images within 24 hours and all usage rights, so you can use the images wherever you need them. VAT, travel costs (€0.35 per kilometre from Hilversum) and any other costs are charged on top.</p>
         <p>The cheapest option is not always the best one. If you are still choosing, read my guide on how to <a href="/blog/how-to-brief-a-festival-photographer">brief a festival photographer</a>, and send me the date and the type of event for a fixed quote.</p>
-      </section>`,
+      </section>
+      <section id="checklist"><div class="cks"><p class="t-eyebrow acc">Checklist · send this for a fixed quote</p><ul class="ck">${['Type of event: corporate, festival, sport or show', 'Date, start and end time, and the location', 'Number of days, and whether you need more than one photographer', 'What the images are for: social, press, sponsors, campaign', 'When you need the first images and the final set', 'Whether VAT, travel and other costs are included in the quote'].map((t) => `<li>${CHECK}<span>${t}</span></li>`).join('')}</ul></div></section>`,
     faq: [['How much does an event photographer cost in the Netherlands?', 'With Martin Hols, a show costs €650, a festival or sport day €850 and a corporate event starts at €650 for 4 hours, up to €1,350 for a full day. All prices exclude VAT and travel.'], ['Why do prices differ per type of event?', 'Because the work differs: a festival or sport day is long and unpredictable, a show is a single performance, and a conference is a fixed number of hours. Each type has its own tariff.'], ['What is included in the price?', 'Editing, delivery of the final images within 24 hours and all usage rights. VAT, travel (€0.35 per kilometre from Hilversum) and other costs are extra.']],
   },
   {
