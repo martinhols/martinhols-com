@@ -24,7 +24,7 @@ img{max-width:100%}
 .site-logo{position:absolute;left:40px;top:24px;display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);z-index:3}
 .site-logo img{width:48px;height:48px;border-radius:16px;object-fit:cover;object-position:50% 22%;display:block}
 .site-logo span{font:500 22px/28px var(--font-display);letter-spacing:-.005em}
-.site-nav{position:absolute;left:330px;top:38px;display:flex;gap:28px;align-items:center;z-index:3}
+.site-nav{position:absolute;left:330px;top:38px;display:flex;gap:28px;align-items:center;z-index:10}
 .site-nav a{font:500 14px/20px var(--font-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none}
 .site-nav a[aria-current="page"],.site-nav a:hover{color:var(--accent-text)}
 .notch.n-tr{z-index:3;display:flex;align-items:center;gap:12px;padding:20px 28px 28px 36px}
@@ -593,7 +593,7 @@ body.menu-open{overflow:hidden}
 .phero{position:relative;min-height:780px;overflow:hidden;display:block}
 .phero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .phero .shade{position:absolute;inset:0;background:linear-gradient(to top,#051E31F2 0%,#051E31B3 30%,#051E3100 62%),linear-gradient(to bottom,#051E3199 0%,#051E3100 22%)}
-.phero .site-logo,.phero .site-nav,.phero .notch{z-index:2}
+.phero .site-logo,.phero .notch{z-index:2}.phero .site-nav{z-index:10}
 .ph-tx{position:absolute;left:40px;bottom:48px;width:min(1000px,calc(100% - 420px));z-index:2}
 .ph-tx h1{font:300 160px/150px var(--font-display);letter-spacing:-.035em;margin-top:16px}
 .ph-tx .lead{margin-top:20px;max-width:620px;font:400 23px/36px var(--font-body);color:var(--ink-muted)}
