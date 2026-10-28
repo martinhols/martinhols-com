@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { layout } from './src/layout.mjs';
 import { SITE } from './src/site.mjs';
+import { audit } from './src/audit.mjs';
 import { prepareData, dbSeo } from './src/data.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
@@ -47,6 +48,14 @@ for (const f of fs.readdirSync(path.join(root, 'src/pages')).filter((x) => x.end
 
 fs.writeFileSync(path.join(dist, 'seo-pages.json'), JSON.stringify(seoList.filter((x) => x.path !== '/404')));
 
+// SEO-controle (voor mensen en agents): dist/seo-audit.json
+{
+  const a = audit(dist, seoList.filter((x) => x.path !== '/404'), SITE.url);
+  fs.writeFileSync(path.join(dist, 'seo-audit.json'), JSON.stringify(a));
+  console.log(`[seo] ${a.summary.pages} pagina's gecontroleerd: ${a.summary.high} hoog, ${a.summary.medium} middel, ${a.summary.low} laag`);
+  for (const pg of a.pages) for (const i of pg.issues.filter((x) => x.severity === 'high')) console.log(`[seo]   ${pg.path}: ${i.message}`);
+}
+
 // sitemap + robots
 const today = new Date().toISOString().slice(0, 10);
 fs.writeFileSync(path.join(dist, 'sitemap.xml'),
@@ -54,6 +63,6 @@ fs.writeFileSync(path.join(dist, 'sitemap.xml'),
   pages.filter((p) => !p.noindex).map((p) => `  <url><loc>${SITE.url}${p.path === '/' ? '/' : p.path}</loc><lastmod>${today}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
 const bots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-Web', 'PerplexityBot', 'Google-Extended', 'Applebot-Extended', 'CCBot', 'Bingbot'];
 fs.writeFileSync(path.join(dist, 'robots.txt'),
-  `User-agent: *\nAllow: /\nDisallow: /admin\n\n` + bots.map((b) => `User-agent: ${b}\nAllow: /\n`).join('\n') + `\nSitemap: ${SITE.url}/sitemap.xml\n`);
+  `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /seo-audit.json\nDisallow: /seo-pages.json\n\n` + bots.map((b) => `User-agent: ${b}\nAllow: /\n`).join('\n') + `\nSitemap: ${SITE.url}/sitemap.xml\n`);
 
 console.log(`Built ${pages.length} page(s) → dist/`);
