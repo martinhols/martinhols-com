@@ -14,7 +14,12 @@ const altFor = (x) => (x.alt || '').trim() || [x.event || x.caption, x.city, x.y
 const DB = dbPhotos.filter((x) => x.portfolio && localMap[x.url] && (x.categories || []).length)
   .map((x) => ({ slug: x.id, cat: x.categories[0], cats: x.categories, size: sizeOf(x), pos: x.crop || '50% 50%', name: x.event || x.caption || 'Event photography', alt: altFor(x), top: x.top, date: dateOf(x), full: siteUrl(x.url), file: x.url, thumbOpt: true, db: x }));
 DB.sort((a, b) => b.date.localeCompare(a.date));
-const PHOTOS = [...DB.filter((x) => x.top), ...STATIC, ...DB.filter((x) => !x.top)].map((p, i) => ({ ...p, rank: `No. ${String(i + 1).padStart(2, '0')}` }));
+// Eén grote selectie (portfolio aan). Top-foto's eerst, dan de rest. Hoofdpagina max. 100, elke categoriepagina max. 40.
+const MAX_ALL = 100, MAX_CAT = 40;
+const rank = (arr) => arr.map((p, i) => ({ ...p, rank: `No. ${String(i + 1).padStart(2, '0')}` }));
+const ORDERED = [...DB.filter((x) => x.top), ...STATIC, ...DB.filter((x) => !x.top)];
+const PHOTOS = rank(ORDERED.slice(0, MAX_ALL));
+const CAT_LIST = Object.fromEntries(SITE.categories.map((k) => [k.slug, rank(ORDERED.filter((p) => p.cats.includes(k.slug)).slice(0, MAX_CAT))]));
 const HERO = { file: 'portfolio/mysteryland-sunset-stone-hand-stage.jpg', alt: 'Mysteryland main stage at sunset, a giant stone hand holding the DJ booth, red smoke and light beams over the crowd' };
 
 // Per categorie: hero, teksten, FAQ (GEO). Teksten voor corporate, sport en shows/music zijn voorstellen.
@@ -142,12 +147,12 @@ function build(slug) {
   const isAll = !slug;
   const c = isAll ? null : CAT[slug];
   const name = isAll ? 'Portfolio' : CATS[slug];
-  const list = isAll ? PHOTOS : PHOTOS.filter((p) => p.cats.includes(slug));
+  const list = isAll ? PHOTOS : CAT_LIST[slug];
   const path = isAll ? '/portfolio' : `/portfolio/${slug}`;
   const url = SITE.url + path;
   const best = bestPhoto(isAll ? 'all' : slug);
   const hero = isAll ? best || { file: HERO.file, alt: HERO.alt, pos: '50% 45%' } : best || { file: c.hero, alt: c.alt, pos: c.pos };
-  const pills = [['all', 'All', PHOTOS.length, '/portfolio']].concat(SITE.categories.map((k) => [k.slug, k.name, PHOTOS.filter((p) => p.cats.includes(k.slug)).length, `/portfolio/${k.slug}`]));
+  const pills = [['all', 'All', PHOTOS.length, '/portfolio']].concat(SITE.categories.map((k) => [k.slug, k.name, CAT_LIST[k.slug].length, `/portfolio/${k.slug}`]));
   return {
     path,
     title: isAll ? 'Portfolio: event & festival photography | Martin Hols' : `${TITLE_AS[slug] || name} photography portfolio | Martin Hols`,
