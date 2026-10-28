@@ -90,7 +90,7 @@
     },
     {
       "source": "/l/event-photographer-amsterdam",
-      "destination": "/",
+      "destination": "/event-photographer-amsterdam",
       "permanent": true
     },
     {

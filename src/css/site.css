@@ -970,3 +970,4 @@ body.lb-open{overflow:hidden}
 .art .pt thead th{border-top:0;font-weight:500;opacity:.7;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
 .art .pt td:last-child,.art .pt th:last-child{text-align:right;white-space:nowrap;padding-right:0;font-weight:600}
 .art .pt .sub td{padding:8px 12px 8px 24px;border-top:0;opacity:.85}
+@media (max-width:760px){.art [style*="repeat(3"]{grid-template-columns:1fr!important}.art [style*="repeat(3"] img{height:200px!important}}
