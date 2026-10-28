@@ -12,7 +12,7 @@
 html,body{overflow-x:hidden}
 body{background:var(--page);color:var(--on-page);font:400 18px/28px var(--font-body)}
 a{color:inherit}button{font:inherit;color:inherit;cursor:pointer}
-.wrap{max-width:1440px;margin:0 auto;padding:24px;display:flex;flex-direction:column;gap:24px}
+.wrap{max-width:2400px;margin:0 auto;padding:24px;display:flex;flex-direction:column;gap:24px}
 .panel{padding:40px;border-radius:24px;background:var(--bg);color:var(--ink)}
 .top{position:relative;border-radius:24px;background:var(--bg);color:var(--ink);padding:136px 40px 40px;min-height:324px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .brand{position:absolute;left:40px;top:24px;display:flex;align-items:center;gap:14px;text-decoration:none}
@@ -70,7 +70,7 @@ h1{font:300 88px/92px var(--font-display);letter-spacing:-.02em;margin:12px 0 0}
 .imgc{width:100%;height:100%;object-fit:cover;display:block}
 .share{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:20px;padding:16px 20px;border-radius:12px;background:var(--surface);font:400 17px/24px var(--font-body)}
 .share b{font-weight:500}
-.tgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:12px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:12px}
 .tl2{position:relative;border-radius:12px;overflow:hidden;height:150px;background:var(--surface-raised);outline:2px solid transparent;outline-offset:2px;cursor:pointer;border:0;padding:0}
 .tl2.sel{outline-color:var(--accent)}.tl2.off img{opacity:.35}
 .tl2 .lbl{position:absolute;left:8px;bottom:8px;display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:6px;background:var(--accent);color:var(--on-accent);font:500 11px/14px var(--font-display);letter-spacing:.12em;text-transform:uppercase}
@@ -114,7 +114,7 @@ h1{font:300 88px/92px var(--font-display);letter-spacing:-.02em;margin:12px 0 0}
 .serp .a{font:500 20px/28px var(--font-display);margin-top:10px}.serp .u{color:var(--ink-muted);font:400 16px/24px var(--font-body)}
 .serp .b{margin-top:8px;font:400 18px/28px var(--font-body)}
 .fdc{display:flex;flex-direction:column;gap:20px}
-.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px 16px;margin-top:24px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:24px 16px;margin-top:24px}
 .pt{display:flex;flex-direction:column;gap:10px}
 .pt .im{position:relative;height:190px;border-radius:12px;overflow:hidden;background:var(--surface-raised)}
 .pt.off .im img{opacity:.35}
@@ -327,16 +327,16 @@ ${[['all','Portfolio page'],...CATS].map(([k,l])=>{const all=k==='all'?ok:ok.fil
 <div class="row" style="margin-top:20px"><span class="hint">${all.length} landscape photos${k==='all'?'':' in '+l}</span>${all.length>list.length?`<button class="chip" data-shmore="${k}">Show more</button>`:''}</div></section>`}).join('')}`}
 async function setHero(id,on){const p=S.all.find(x=>x.id===id);if(on){const used=S.all.filter(x=>x.home_hero).map(x=>x.home_hero);if(used.length>=MAXH)return say('The hero holds '+MAXH+' photos. Switch one off first.',1);let n=1;while(used.includes(n))n++;await dbPhoto(id,{home_hero:n})}else await dbPhoto(id,{home_hero:null});say('')}
 async function setCatHeader(id,k,on){if(on){for(const o of S.all.filter(x=>x.cat_header===k&&x.id!==id))await dbPhoto(o.id,{cat_header:null});await dbPhoto(id,{cat_header:k})}else await dbPhoto(id,{cat_header:null});say('')}
-function vPortfolio(){const A=S.all.filter(x=>x.marked||x.portfolio||!x.project_id),on=A.filter(x=>x.portfolio),off=A.filter(x=>!x.portfolio),F=S.pf;
- let L=A.filter(x=>F.f==='all'||(F.f==='on'&&x.portfolio)||(F.f==='off'&&!x.portfolio)||(F.f==='top'&&x.top)||(F.f==='inc'&&!isDone(x)));if(F.c)L=L.filter(x=>(x.categories||[]).includes(F.c));
- L.sort((a,b)=>(b.top-a.top)||((b.taken_on||b.created_at)>(a.taken_on||a.created_at)?1:-1));const shown=L.slice(0,F.n),cc=k=>A.filter(x=>(x.categories||[]).includes(k)).length;
+function vPortfolio(){const AA=S.all.filter(x=>x.marked||x.portfolio||!x.project_id),A=AA.filter(x=>!x.archived),arch=AA.filter(x=>x.archived),on=A.filter(x=>x.portfolio),off=A.filter(x=>!x.portfolio),F=S.pf;
+ let L=(F.f==='hid'?arch:A).filter(x=>F.f==='hid'||F.f==='all'||(F.f==='on'&&x.portfolio)||(F.f==='off'&&!x.portfolio)||(F.f==='top'&&x.top)||(F.f==='inc'&&!isDone(x)));if(F.c)L=L.filter(x=>(x.categories||[]).includes(F.c));
+ L.sort((a,b)=>(!!b.portfolio-!!a.portfolio)||(String(b.created_at||'')>String(a.created_at||'')?1:-1));const shown=L.slice(0,F.n),cc=k=>A.filter(x=>(x.categories||[]).includes(k)).length;
  const fb=(k,l,n)=>`<button class="chip ${F.f===k?'on':''}" data-pff="${k}">${l} · ${n}</button>`;
  app.innerHTML=head('Choose the portfolio.',btnPub('Publish site','site'))+`<section class="panel"><div class="row" style="align-items:flex-end;gap:48px;flex-wrap:wrap"><div style="flex:1;min-width:300px"><p class="eyebrow">Portfolio</p><h2 style="font:400 30px/38px var(--font-display);margin:8px 0">All photos marked for the portfolio</h2><p class="hint" style="font-size:18px">Every photo you starred in a project or as a single photo ends up here. Switch a photo on to show it in the portfolio, or off to keep it for later.</p></div>
 <div class="limit"><div class="big"><span>${on.length} of ${MAXP}</span><small>on in the portfolio</small></div><div class="bar" style="margin-top:8px"><i style="width:${on.length}%"></i></div><p class="hint" style="margin-top:8px">${Math.max(0,MAXP-on.length)} spots left. ${off.length} marked photos are off. Top: ${cntT()} of ${MAXT}.</p></div></div>
-<div class="row" style="margin-top:28px;flex-wrap:wrap"><div class="chips">${fb('all','All marked',A.length)}${fb('on','On',on.length)}${fb('off','Off',off.length)}${fb('top','Top',cntT())}${fb('inc','To finish',A.filter(x=>!isDone(x)).length)}</div><div class="chips">${CATS.map(([k,l])=>`<button class="chip ${F.c===k?'on':''}" data-pfc="${k}">${l} · ${cc(k)}</button>`).join('')}</div></div>
+<div class="row" style="margin-top:28px;flex-wrap:wrap"><div class="chips">${fb('all','All marked',A.length)}${fb('on','On',on.length)}${fb('off','Off',off.length)}${fb('top','Top',cntT())}${fb('inc','To finish',A.filter(x=>!isDone(x)).length)}${fb('hid','Hidden',arch.length)}</div><div class="chips">${CATS.map(([k,l])=>`<button class="chip ${F.c===k?'on':''}" data-pfc="${k}">${l} · ${cc(k)}</button>`).join('')}</div></div>
 <div class="pgrid">${shown.map(p=>`<div class="pt ${p.portfolio?'':'off'}"><div class="im" data-pe="${p.id}" style="cursor:pointer"><img class="imgc" src="${esc(p.url)}" alt="" loading="lazy"><button class="star ${p.top?'on':''}" data-top="${p.id}" title="${p.top?'Top photo · click to remove':'Add to Top '+MAXT}">${I.star}</button><span class="cat">${(p.categories||[]).map(k=>CN[k]).join(' · ')}</span></div>
-<div class="row2"><div><div class="nm" data-pe="${p.id}" style="cursor:pointer">${esc(p.event||p.file)}</div><div class="ev">${p.year||''} · <span class="st ${isDone(p)?'ok':'no'}"></span>${isDone(p)?'complete':'to finish'} · <a href="#" data-pe="${p.id}" style="color:inherit;text-decoration:underline">Edit</a></div></div><button class="sw ${p.portfolio?'on':''}" data-pf="${p.id}"><i></i>${p.portfolio?'On':'Off'}</button></div></div>`).join('')||'<p class="hint">Nothing here yet. Star photos in a project or as single photos.</p>'}</div>
-<div class="row" style="margin-top:28px;padding-top:20px;border-top:1px solid var(--line)"><span class="hint">Showing ${shown.length} of ${L.length} · Top first, then newest</span>${L.length>shown.length?'<button class="chip" data-more>Show more</button>':''}</div></section>
+<div class="row2"><div><div class="nm" data-pe="${p.id}" style="cursor:pointer">${esc(p.event||p.file)}</div><div class="ev">${p.year||''} · <span class="st ${isDone(p)?'ok':'no'}"></span>${isDone(p)?'complete':'to finish'} · <a href="#" data-pe="${p.id}" style="color:inherit;text-decoration:underline">Edit</a></div></div>${p.archived?`<button class="chip" data-arch="${p.id}|0">Show again</button>`:`<button class="sw ${p.portfolio?'on':''}" data-pf="${p.id}"><i></i>${p.portfolio?'On':'Off'}</button>`}</div>${p.archived?'':`<a href="#" data-arch="${p.id}|1" class="hint" style="text-decoration:underline">Hide from overview</a>`}</div>`).join('')||'<p class="hint">Nothing here yet. Star photos in a project or as single photos.</p>'}</div>
+<div class="row" style="margin-top:28px;padding-top:20px;border-top:1px solid var(--line)"><span class="hint">Showing ${shown.length} of ${L.length} · On first, then latest uploads</span>${L.length>shown.length?'<button class="chip" data-more>Show more</button>':''}</div></section>
 ${(()=>{const e=S.pe&&S.all.find(x=>x.id===S.pe);return e?`<div class="drawer-bg" data-pclose></div><aside class="drawer"><div class="row" style="margin-bottom:16px"><p class="eyebrow">Edit photo</p><button class="btn dk" data-pclose>Close</button></div>${editor(e,esc(e.file),true)}</aside>`:''})()}
 <div class="foot2"><div><p class="eyebrow">How the limit works</p><p>The portfolio holds up to 100 photos. At 100, the next photo can only go on when you switch another one off. Up to 20 photos can be Top; they show first on the site. Switching a photo off also removes its Top.</p></div><div><p class="eyebrow">Photos without alt text</p><p>A photo without alt text can go on. The site makes a simple description from event, city and year until you write one. Search engines like your own better, so add it later.</p></div></div>`}
 
@@ -373,6 +373,7 @@ function bind(){
  document.querySelectorAll('[data-ch]').forEach(b=>b.onclick=async()=>{try{const [id,k]=b.dataset.ch.split('|'),p=S.all.find(x=>x.id===id);await setCatHeader(id,k,p.cat_header!==k);show()}catch(x){say(x.message,1)}});
  document.querySelectorAll('[data-shmore]').forEach(b=>b.onclick=()=>{const k=b.dataset.shmore;if(k==='h')S.sh.n+=24;else S.sh.c[k]=(S.sh.c[k]||12)+12;show()});
  document.querySelectorAll('[data-pe]').forEach(b=>b.onclick=e=>{e.preventDefault();S.pe=b.dataset.pe;show()});document.querySelectorAll('[data-pclose]').forEach(b=>b.onclick=()=>{S.pe=null;show()});
+ document.querySelectorAll('[data-arch]').forEach(b=>b.onclick=async e=>{e.preventDefault();try{const[i,v]=b.dataset.arch.split('|');await dbPhoto(i,v==='1'?{archived:true,portfolio:false,top:false}:{archived:false});show()}catch(x){say(/archived/.test(x.message)?'Run schema-6.sql in Supabase first (adds the Hide option).':x.message,1)}});
  const mo=$('[data-more]');if(mo)mo.onclick=()=>{S.pf.n+=20;show()};
  document.querySelectorAll('[data-act]').forEach(b=>b.onclick=async()=>{const a=b.dataset.act;try{
   if(a==='draft'){if(S.tab==='project'){await saveProject();show()}else say('Saved.')}
