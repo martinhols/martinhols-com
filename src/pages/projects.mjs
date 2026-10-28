@@ -148,13 +148,13 @@ const dbDetail = (p) => {
   // Rijen met gelijke hoogte: elke foto krijgt zijn eigen beeldverhouding, staande foto's blijven staand.
   const rows = [];
   for (let i = 0; i < gal.length;) {
-    const row = [], first = rows.length === 0;
-    let S = 0;
-    while (i < gal.length && row.length < 4) {
+    const row = []; let S = 0;
+    while (i < gal.length && row.length < 3) {
       const r = ratio(gal[i]);
-      if (row.length && (first || S >= 2.4 || (S >= 1.9 && S + r > 3.4))) break;
+      if (!row.length && r >= 1.6) { row.push([gal[i], r]); i++; break; }
+      if (row.length && r >= 1.6 && S >= 1.4) break;
       row.push([gal[i], r]); S += r; i++;
-      if (first && r >= 1.4) break;
+      if (S >= 2.0) break;
     }
     rows.push(row);
   }
@@ -171,7 +171,7 @@ const dbDetail = (p) => {
   ${phero(d.hero_url, p.alt, '50% 50%', `<div class="eyebrows"><p class="t-eyebrow acc">Project</p><i></i><p class="t-eyebrow dim">${CATS[d.category]}</p></div>`, `${esc(d.title)}.`, '')}
   <section class="cream psum" id="detail" data-theme="cream"><div class="ps-l"><p class="t-eyebrow acc">Project summary</p><p class="sum">${esc(sum)}</p></div>
     <dl class="fxg" style="grid-template-columns:repeat(${Math.min(fx.length, 4)},minmax(0,1fr))">${fx.map(([k, v]) => `<div class="fx"><dt class="t-eyebrow dim">${k}</dt><dd class="v">${esc(v)}</dd></div>`).join('')}</dl></section>
-  ${rows.length ? `<section class="panel pgal" aria-label="Photos">${rows.map((r) => { const S = r.reduce((a, [, x]) => a + x, 0); return `<div class="pr${r.length > 1 && r.every(([, x]) => x < 0.9) ? ' pv' : ''}" style="--s:${S.toFixed(3)};--n:${r.length}${r.length === 1 ? ';--rh:760px' : ''}">${r.map(([u, x]) => `<div class="pi" style="flex:${x.toFixed(3)} 1 0;aspect-ratio:${x.toFixed(3)}">${img(u, altOf[u] || `${d.title} event photography`)}</div>`).join('')}</div>`; }).join('')}</section>` : ''}
+  ${rows.length ? `<section class="panel pgal" aria-label="Photos">${rows.map((r) => { const S = r.reduce((a, [, x]) => a + x, 0); return `<div class="pr${r.length > 1 && r.every(([, x]) => x < 0.9) ? ' pv' : ''}" style="--s:${S.toFixed(3)};--n:${r.length}">${r.map(([u, x]) => `<div class="pi" style="flex:${x.toFixed(3)} 1 0;aspect-ratio:${x.toFixed(3)}">${img(u, altOf[u] || `${d.title} event photography`)}</div>`).join('')}</div>`; }).join('')}</section>` : ''}
   ${faq.length ? `<section class="cream pfaq" data-theme="cream"><p class="t-eyebrow dim">Questions about this project</p><div class="pqg">${faq.map((f) => `<div class="qa"><h3>${esc(f.q)}</h3><p>${esc(f.a)}</p></div>`).join('')}</div></section>` : ''}
   ${contactSection('tomorrowland-stage-night.jpg')}
   ${footer()}`,
