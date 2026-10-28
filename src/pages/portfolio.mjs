@@ -81,7 +81,7 @@ const SPEC_TEXT = {
 
 const SPECS = [
   ['Overview photography', 'The full picture: stages, crowds and venues, shown the way the event was designed.', 'pinkpop-overview-stage-sunset.jpg', '50% 45%', 'Pinkpop main stage and festival sign at sunset, seen from above the crowd'],
-  ['SFX and pyro', 'Fire, fireworks, lasers and confetti, caught at the exact moment they peak.', 'portfolio/live-show-flame-jets-video-screen.jpg', '50% 50%', 'Live show with flame jets'],
+  ['SFX and pyro', 'Fire, fireworks, lasers and confetti, caught at the exact moment they peak.', 'arena-stage-pyro-fireworks-crowd.jpg', '50% 50%', 'Pyro fountains and fireworks behind an ornate arena stage in front of a packed crowd'],
   ['Superfast delivery', 'Fully edited images during the event, the rest of the set within 24 hours.', 'portfolio/f1-podium-driver-waving-trophies.jpg', '30% 40%', 'Formula 1 driver on the podium at the Las Vegas Grand Prix'],
 ];
 
