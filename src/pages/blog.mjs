@@ -62,7 +62,7 @@ const STATIC_POSTS = [
     short: 'My rates start at €650 (excl. VAT) for a show or a 4-hour event, a festival or sport day is €850 and a full corporate day is €1,350. Editing, delivery within 24 hours and all usage rights are included.',
     file: 'portfolio/mysteryland-sunset-stone-hand-stage.jpg', pos: '50% 45%', alt: 'Mysteryland main stage at sunset, a giant stone hand holding the DJ booth, red smoke and light beams over the crowd', cap: 'Mysteryland 2025 · main stage at sunset',
     card: 'portfolio/mysteryland-stage-sunset-fireworks.jpg', cardAlt: 'Festival main stage at sunset with fireworks',
-    toc: [['why', 'Why prices differ per event'], ['events', 'Corporate events'], ['festivals', 'Festivals and sport'], ['shows', 'Shows and music'], ['included', 'What is included']],
+    toc: [['why', 'Why prices differ per event'], ['events', 'Corporate events'], ['festivals', 'Festivals and sport'], ['shows', 'Shows and music'], ['included', 'What is included'], ['overview', 'All prices at a glance']],
     body: `
       <section id="why"><h2>Why prices differ per event.</h2>
         <p>There is no single price for an event photographer, because events are very different jobs. A conference is a few hours in one room with a fixed programme. A festival is a long day across several stages, in weather, with crowds and moving light. A show is one performance where timing and light decide everything.</p>
@@ -86,6 +86,19 @@ const STATIC_POSTS = [
       <section id="included"><h2>What is included.</h2>
         <p>Every price includes editing, delivery of the final images within 24 hours and all usage rights, so you can use the images wherever you need them. VAT, travel costs (€0.35 per kilometre from Hilversum) and any other costs are charged on top.</p>
         <p>The cheapest option is not always the best one. If you are still choosing, read my guide on how to <a href="/blog/how-to-brief-a-festival-photographer">brief a festival photographer</a>, and send me the date and the type of event for a fixed quote.</p>
+      </section>
+      <section id="overview"><h2>All prices at a glance.</h2>
+        <table class="pt"><thead><tr><th>Type of event</th><th>Price, excl. VAT</th></tr></thead><tbody>
+          <tr><td>Corporate event, 4 hours</td><td>€650</td></tr>
+          <tr><td>Corporate event, 6 hours</td><td>€900</td></tr>
+          <tr><td>Corporate event, 8 hours</td><td>€1,150</td></tr>
+          <tr><td>Corporate event, full day (up to 12 hours)</td><td>€1,350</td></tr>
+          <tr><td>Corporate event, each extra hour after 12 hours</td><td>€125</td></tr>
+          <tr><td>Festival, per day</td><td>€850</td></tr>
+          <tr><td>Sport event, per day</td><td>€850</td></tr>
+          <tr><td>Show or music performance, per show</td><td>€650</td></tr>
+        </tbody></table>
+        <p>Every price includes editing, delivery within 24 hours and all usage rights. VAT, travel (€0.35 per kilometre from Hilversum) and any other costs are extra.</p>
       </section>
       <section id="checklist"><div class="cks"><p class="t-eyebrow acc">Checklist · send this for a fixed quote</p><ul class="ck">${['Type of event: corporate, festival, sport or show', 'Date, start and end time, and the location', 'Number of days, and whether you need more than one photographer', 'What the images are for: social, press, sponsors, campaign', 'When you need the first images and the final set', 'Whether VAT, travel and other costs are included in the quote'].map((t) => `<li>${CHECK}<span>${t}</span></li>`).join('')}</ul></div></section>`,
     faq: [['How much does an event photographer cost in the Netherlands?', 'With Martin Hols, a show costs €650, a festival or sport day €850 and a corporate event starts at €650 for 4 hours, up to €1,350 for a full day. All prices exclude VAT and travel.'], ['Why do prices differ per type of event?', 'Because the work differs: a festival or sport day is long and unpredictable, a show is a single performance, and a conference is a fixed number of hours. Each type has its own tariff.'], ['What is included in the price?', 'Editing, delivery of the final images within 24 hours and all usage rights. VAT, travel (€0.35 per kilometre from Hilversum) and other costs are extra.']],
