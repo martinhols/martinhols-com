@@ -64,7 +64,7 @@
       cur = (i + v.length) % v.length; var t = v[cur];
       lbImg.src = t.getAttribute('href'); lbImg.alt = t.getAttribute('data-alt') || '';
       lb.querySelector('[data-lb-name]').textContent = t.getAttribute('data-name');
-      lb.querySelector('[data-lb-rank]').textContent = t.getAttribute('data-rank') + ' · ' + t.getAttribute('data-catname');
+      lb.querySelector('[data-lb-rank]').textContent = t.getAttribute('data-catname');
       lb.querySelector('[data-lb-count]').textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(v.length).padStart(2, '0');
     };
     var open = function (t) { lastFocus = t; lb.hidden = false; document.body.classList.add('lb-open'); show(vis().indexOf(t)); lb.querySelector('.x').focus(); };

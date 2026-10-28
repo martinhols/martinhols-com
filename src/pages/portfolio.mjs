@@ -76,7 +76,7 @@ const SPECS = [
   ['Super fast delivery', 'Fully edited images during the event, the rest of the set within 24 hours.', 'portfolio/f1-podium-driver-waving-trophies.jpg', '30% 40%', 'Formula 1 driver on the podium at the Las Vegas Grand Prix'],
 ];
 
-const tile = (p, i) => `<a class="tile ${p.size}" href="${p.full}" data-cat="${p.cats.join(' ')}" data-name="${esc(p.name)}" data-rank="${esc(p.rank)}" data-catname="${esc(CATS[p.cat])}" data-alt="${esc(p.alt)}" aria-label="Open photo: ${esc(p.alt)}">${img(p.file, p.alt, { style: `object-position:${p.pos}`, thumb: p.thumbOpt })}<span class="fade"></span><span class="cap"><span class="nm">${esc(p.name)}</span><span class="ce">${esc(p.rank)}</span></span><span class="rb">${ARROW}</span></a>`;
+const tile = (p, i) => `<a class="tile ${p.size}" href="${p.full}" data-cat="${p.cats.join(' ')}" data-name="${esc(p.name)}" data-rank="${esc(p.rank)}" data-catname="${esc(CATS[p.cat])}" data-alt="${esc(p.alt)}" aria-label="Open photo: ${esc(p.alt)}">${img(p.file, p.alt, { style: `object-position:${p.pos}`, thumb: p.thumbOpt })}<span class="fade"></span><span class="cap"><span class="nm">${esc(p.name)}</span></span><span class="rb">${ARROW}</span></a>`;
 
 const lightbox = `
   <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
