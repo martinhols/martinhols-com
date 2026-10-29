@@ -141,10 +141,13 @@ h1{font:300 88px/92px var(--font-display);letter-spacing:-.02em;margin:12px 0 0}
  .g2{grid-template-columns:1fr}.slots{grid-template-columns:repeat(2,1fr)}.tgrid{grid-template-columns:repeat(3,1fr)}
  .pgrid{grid-template-columns:repeat(2,1fr)}.limit{width:100%}.badge{display:none}.row{flex-wrap:wrap}.chips{min-width:0}.notch.n-tr{padding:12px 12px 16px 16px;gap:8px}.btn{padding:0 14px}
 }
+#pubbar{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:50;display:none;align-items:center;gap:16px;padding:10px 10px 10px 20px;border-radius:12px;background:#061a2e;color:#fff;box-shadow:0 8px 32px #0006;font:500 15px/20px var(--font-body)}
+#pubbar.on{display:flex}#pubbar i{width:10px;height:10px;border-radius:50%;background:#ff8b21;flex:none}#pubbar .btn{height:42px}
 </style>
 </head>
 <body>
 <div class="wrap" id="app"></div>
+<div id="pubbar" role="status"></div>
 <input type="file" id="fileIn" accept="image/*" multiple hidden>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
@@ -165,7 +168,11 @@ sp:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentC
 let S={cp:{c:'festivals',f:'all',n:24},tab:'project',proj:null,photos:[],sel:null,projects:[],singles:[],ss:0,all:[],pf:{f:'all',c:null,n:20},msg:'',err:false,busy:''};
 const cleanN=s=>s.replace(/\.[^.]+$/,'');
 const hook=()=>{try{return localStorage.getItem('deployHook')||''}catch(e){return''}};
-const say=(m,e)=>{S.msg=m;S.err=!!e;const x=$('#msg');if(x){x.textContent=m;x.className='msg'+(e?' err':'');x.style.display=m?'block':'none'}};
+const getDirty=()=>{try{return +localStorage.getItem('dirtyN')||0}catch(e){return 0}};
+const setDirty=n=>{try{n?localStorage.setItem('dirtyN',String(n)):localStorage.removeItem('dirtyN')}catch(e){}pubBar()};
+const markDirty=()=>setDirty(getDirty()+1);
+function pubBar(){const b=$('#pubbar');if(!b)return;const n=getDirty();b.className=n?'on':'';b.innerHTML=n?`<i></i><span>Unpublished changes</span><button class="btn">Publish site<span class="ic">${I.ar}</span></button>`:'';const k=b.querySelector('button');if(k)k.onclick=()=>publishSite()}
+const say=(m,e)=>{if(!e&&/Publish site|Publish the site/.test(m||''))markDirty();S.msg=m;S.err=!!e;const x=$('#msg');if(x){x.textContent=m;x.className='msg'+(e?' err':'');x.style.display=m?'block':'none'}};
 
 /* ---------- start & login ---------- */
 async function init(){const{data}=await sb.auth.getSession();data.session?(await loadAll(),show()):login()}
@@ -178,7 +185,7 @@ S.projects=p.data||[];S.all=ph.data||[];if(p.error||ph.error)S.msg=(p.error||ph.
 if(ph.error&&/photos/.test(ph.error.message))S.msg='De fototabel bestaat nog niet. Voer eerst "schema-2.sql" uit in Supabase.';
 S.singles=S.all.filter(x=>!x.project_id);if(S.proj){S.proj=S.projects.find(x=>x.id===S.proj.id)||S.proj;S.photos=S.all.filter(x=>x.project_id===S.proj.id)}}
 const cntP=()=>S.all.filter(x=>x.portfolio).length,cntT=()=>S.all.filter(x=>x.top).length;
-async function dbPhoto(id,patch){const{data,error}=await sb.from('photos').update(patch).eq('id',id).select().single();if(error)throw error;const i=S.all.findIndex(x=>x.id===id);S.all[i]=data;S.photos=S.proj?S.all.filter(x=>x.project_id===S.proj.id):[];S.singles=S.all.filter(x=>!x.project_id);return data}
+async function dbPhoto(id,patch){const{data,error}=await sb.from('photos').update(patch).eq('id',id).select().single();if(error)throw error;markDirty();const i=S.all.findIndex(x=>x.id===id);S.all[i]=data;S.photos=S.proj?S.all.filter(x=>x.project_id===S.proj.id):[];S.singles=S.all.filter(x=>!x.project_id);return data}
 
 /* ---------- uploads ---------- */
 function loadImg(file){return new Promise((res,rej)=>{const i=new Image,u=URL.createObjectURL(file);i.onload=()=>{res(i)};i.onerror=()=>rej(new Error('Not a valid image'));i.src=u})}
@@ -208,7 +215,7 @@ async function uploadFiles(files,toProject){
    const row={file,url,width:w,height:h,bytes:b.size,marked:false,portfolio:false,top:false};
    if(toProject){row.project_id=P.id;row.event=P.event_name||null;row.year=P.event_date?+P.event_date.slice(0,4):null;row.city=P.location||null;row.categories=P.categories||[];row.taken_on=P.event_date||null}
    if(MT){['alt','caption','event','year','city','taken_on'].forEach(k=>{if(MT[k]!=null&&MT[k]!=='')row[k]=MT[k]});if(Array.isArray(MT.categories))row.categories=MT.categories.filter(k=>CN[k]);if(Array.isArray(MT.subjects))row.subjects=MT.subjects;}
-   const{data,error}=await sb.from('photos').insert(row).select().single();if(error)throw error;S.all.push(data);URL.revokeObjectURL(im.src)
+   const{data,error}=await sb.from('photos').insert(row).select().single();if(error)throw error;S.all.push(data);markDirty();URL.revokeObjectURL(im.src)
   }catch(e){fails.push(`${f.name}: ${e.message||e}`)}}
  S.photos=S.proj?S.all.filter(x=>x.project_id===S.proj.id):[];S.singles=S.all.filter(x=>!x.project_id);
  if(!S.sel&&S.photos[0])S.sel=S.photos[0].id;show();
@@ -224,14 +231,23 @@ async function saveProject(silent){readForm();const P=S.proj;if(!P||!P.title){sa
  row.hero_url=(by('hero')||{}).url||null;row.gallery=[...new Set([by('hero'),by('card'),...ph.filter(x=>x.slot!=='hero'&&x.slot!=='card')].filter(Boolean).map(x=>x.url))];
  const q=P.id?sb.from('projects').update(row).eq('id',P.id):sb.from('projects').insert(row);const{data,error}=await q.select().single();
  if(error){say('Save failed: '+error.message,1);return false}
- S.proj=data;const i=S.projects.findIndex(x=>x.id===data.id);i<0?S.projects.unshift(data):S.projects[i]=data;if(!silent)say('Saved.');return true}
+ markDirty();S.proj=data;const i=S.projects.findIndex(x=>x.id===data.id);i<0?S.projects.unshift(data):S.projects[i]=data;if(!silent)say('Saved.');return true}
 function checks(){const P=S.proj||{},ph=S.photos,need=ph.filter(x=>(x.slot||x.portfolio)&&!(x.alt||'').trim()),placed=SLOTS.filter(([k])=>ph.some(x=>x.slot===k)).length,marked=ph.filter(x=>x.marked).length;
  const det=!!(P.title&&P.event_name&&P.location&&P.event_date&&(P.categories||[]).length&&P.summary);
  return [[det,'Project details','Name, client, event, place, date, categories'],[ph.length>0,'Photos uploaded',ph.length+' photos'],[ph.some(x=>x.slot==='hero'),'Hero chosen',(ph.find(x=>x.slot==='hero')||{}).alt||'Pick one in step 3'],[placed===2,'Hero and card chosen',`${placed} of 2.`],[ph.length>0&&!need.length,'Alt text',need.length?`${need.length} still need it.`:'All placed photos have alt text'],[marked>0,'Portfolio picks',`${marked} marked, ${ph.filter(x=>x.top).length} of them Top`]]}
 async function publishProject(){if(!(await saveProject(true)))return;const c=checks();if(!(c[0][0]&&c[1][0]&&c[2][0]&&c[4][0]))return say('Finish details, photos, hero and alt text first.',1);
- const{error}=await sb.from('projects').update({published:true}).eq('id',S.proj.id);if(error)return say(error.message,1);S.proj.published=true;await publishSite('Project published. ')}
-async function publishSite(prefix=''){let h=hook();if(!h){h=prompt('Paste the Vercel Deploy Hook URL (once).');if(!h)return;try{localStorage.setItem('deployHook',h.trim())}catch(e){}}
- try{const r=await fetch(h.trim(),{method:'POST'});say(r.ok?prefix+'Site is being rebuilt. Live in about a minute.':'Publish failed ('+r.status+').',!r.ok)}catch(e){say('Publish failed: '+e.message,1)}}
+ const{error}=await sb.from('projects').update({published:true}).eq('id',S.proj.id);if(error)return say(error.message,1);S.proj.published=true;markDirty();say('Saved to the website. It goes live with the next Publish site.')}
+let publishing=false;
+async function publishSite(prefix=''){if(publishing)return;publishing=true;
+ try{const{data}=await sb.auth.getSession(),t=data.session&&data.session.access_token;
+  if(!t){say('Sign in again first.',1);return}
+  const r=await fetch('/api/publish',{method:'POST',headers:{Authorization:'Bearer '+t}});
+  if(r.ok){setDirty(0);say(prefix+'Site is being rebuilt. Live in about a minute.');return}
+  if(r.status===501){ /* geen DEPLOY_HOOK_URL in Vercel: val terug op een hook in deze browser */
+   let h=hook();if(!h){h=prompt('Paste the Vercel Deploy Hook URL (once). Better: add it in Vercel as DEPLOY_HOOK_URL.');if(!h)return;try{localStorage.setItem('deployHook',h.trim())}catch(e){}}
+   const q=await fetch(h.trim(),{method:'POST'});if(q.ok){setDirty(0);say(prefix+'Site is being rebuilt. Live in about a minute.')}else say('Publish failed ('+q.status+').',1);return}
+  say('Publish failed ('+r.status+').',1)
+ }catch(e){say('Publish failed: '+e.message,1)}finally{publishing=false}}
 
 /* ---------- views ---------- */
 function head(title,main){return `<header class="top"><a class="brand" href="/admin"><img src="/img/martin-hols-portrait.jpg" alt=""><b>MartinHols.com</b><span class="badge">Admin · not public</span></a>
@@ -274,7 +290,7 @@ const fld=(id,l,v,ph='',extra='')=>`<div class="fd"><label class="lb" for="${id}
 
 function vProject(){const P=S.proj||{categories:[]},ph=S.photos,c=checks(),done=c.filter(x=>x[0]).length,sel=ph.find(x=>x.id===S.sel),slot=k=>ph.find(x=>x.slot===k);
  const sum=P.summary||'';
- app.innerHTML=head(P.id?'Edit project.':'Add a project.',`<button class="btn o" data-act="draft">Save draft</button>${btnPub('Publish','pub')}`)+`
+ app.innerHTML=head(P.id?'Edit project.':'Add a project.',`<button class="btn o" data-act="draft">Save draft</button>${btnPub('Save to website','pub')}`)+`
 <div class="cols"><div class="stack">
 <section class="panel"><p class="step">Step 1 of 4</p><h2>Project details</h2>
 ${S.projects.length?`<div class="fd" style="margin-top:16px"><label class="lb" for="f-open">Open existing project</label><select id="f-open"><option value="">New project</option>${S.projects.map(p=>`<option value="${p.id}" ${p.id===P.id?'selected':''}>${p.pinned?'★ ':''}${esc(p.title)}${p.published?'':' (draft)'}</option>`).join('')}</select></div>`:''}
@@ -297,7 +313,7 @@ ${sel?`<div class="selbar"><div class="t"><img class="imgc" src="${esc(sel.url)}
 ${ph.filter(x=>x.slot||x.portfolio).map(altRow).join('')||'<p class="hint">Nothing to describe yet.</p>'}</section>
 </div><aside class="side"><p class="eyebrow">Ready to publish?</p><h3>${done} of 6 done</h3><div class="bar"><i style="width:${done/6*100}%"></i></div>
 <ul class="ck">${c.map(([y,t,s])=>`<li><span class="o ${y?'y':''}">${I.chk}</span><span>${t}<small>${esc(s)}</small></span></li>`).join('')}</ul>
-${btnPub('Publish project','pub')}<button class="btn o c" data-act="draft">Save draft</button>
+${btnPub('Save to website','pub')}<button class="btn o c" data-act="draft">Save draft</button>
 <div class="where"><p class="lb">Where this appears</p><p>Project page</p><p>Projects overview</p><p>Home · Latest projects</p></div></aside></div>`}
 function altRow(p){const l=(SLOTS.find(s=>s[0]===p.slot)||[,'Portfolio'])[1],a=p.alt||'';return `<div class="ar"><div class="t"><img class="imgc" src="${esc(p.url)}" alt=""></div><div style="flex:1;min-width:0"><div class="row"><span class="lb">${l} · alt text</span><span class="cnt">${a.length} / 125</span></div>
 <div class="fd" style="margin-top:8px"><textarea data-alt="${p.id}" maxlength="125" style="min-height:64px" placeholder="Describe what you see.">${esc(a)}</textarea></div>
@@ -326,7 +342,7 @@ function editor(p,info,drawer){return `<div class="sedit"><div><div class="pv"><
 function vSingle(){const L=S.singles;let p=L[S.ss];const td0=L.filter(x=>!isDone(x));if(!p||(isDone(p)&&!S.keep))p=td0[0]||p||L[0];if(p)S.ss=L.indexOf(p);const todo=L.filter(x=>!isDone(x)||(x===p&&S.keep));
  const ck=p?[[phChecks(p)[0],'Alt text','Describes what is visible'],[phChecks(p)[1],'File name','Descriptive and lowercase'],[phChecks(p)[2],'Event and year',[p.event,p.year].filter(Boolean).join(' · ')||'Still empty'],[phChecks(p)[3],'City and country',p.city||'Still empty'],[phChecks(p)[4],'Categories',(p.categories||[]).map(k=>CN[k]).join(', ')||'Still empty']]:[];
  const open=L.filter(x=>!isDone(x)).length;
- app.innerHTML=head('Add photos.',`<button class="btn o" data-act="draft">Save draft</button>${btnPub('Publish','site')}`)+`
+ app.innerHTML=head('Add photos.',`<button class="btn o" data-act="draft">Save draft</button>${btnPub('Publish site','site')}`)+`
 <div class="sgrid"><aside><button class="drop" data-drop="single"><span class="ic">${I.up}</span><b>Drop photos here</b><span>One or many. Each gets its own details.</span></button>
 ${S.all.some(x=>needsTidy(x.file))?`<button class="btn o" data-act="tidy" style="margin-top:12px;width:100%">Tidy file names (${S.all.filter(x=>needsTidy(x.file)).length})</button>`:''}<button class="btn o" data-act="impmeta" style="margin-top:12px;width:100%">Import descriptions (${Object.keys(getMeta()).length} ready)</button><input type="file" id="metaIn" accept=".json,application/json" multiple hidden>
 <div class="row" style="margin:24px 0 8px"><span class="lb">To finish · ${open}</span><span class="cnt ${open?'warn':''}">${L.length-open} complete</span></div>
@@ -418,11 +434,12 @@ function bind(){
   else if(a==='savephoto'||a==='savenext'){const p=cur(),o=readSingle();await dbPhoto(p.id,o);say('Photo saved.');if(S.tab!=='portfolio'){const L=S.singles,n=L.length;let nx=-1;if(a==='savenext')for(let k=1;k<=n;k++){const j=(S.ss+k)%n;if(!isDone(L[j])){nx=j;break}}S.keep=nx<0;if(nx>=0)S.ss=nx}show()}
   else if(a==='impmeta'){$('#metaIn').click()}
   else if(a==='tidy'){const n=await tidyNames();say(n+' file names tidied. Publish the site to use them.');show()}
-  else if(a==='delphoto'){const p=cur();if(!confirm('Delete this photo?'))return;await sb.from('photos').delete().eq('id',p.id);await loadAll();S.ss=0;S.pe=null;show()}
+  else if(a==='delphoto'){const p=cur();if(!confirm('Delete this photo?'))return;await sb.from('photos').delete().eq('id',p.id);markDirty();await loadAll();S.ss=0;S.pe=null;show()}
  }catch(x){say(x.message||String(x),1)}});
 }
 document.addEventListener('change',async e=>{if(e.target.id!=='metaIn')return;try{let n=0;for(const f of e.target.files)n+=importMeta(await f.text());e.target.value='';if(!n)return;say(n+' descriptions loaded. Now drop the matching photos.');show()}catch(x){say('Import failed: '+x.message,1)}});
 $('#fileIn').onchange=e=>{uploadFiles(e.target.files,e.target.dataset.t==='project');e.target.value=''};
+pubBar();
 init();
 </script>
 </body>
