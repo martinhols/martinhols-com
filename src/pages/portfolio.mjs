@@ -19,8 +19,25 @@ const MAX_ALL = 120, MAX_CAT = 40;
 const rank = (arr) => arr.map((p, i) => ({ ...p, rank: `No. ${String(i + 1).padStart(2, '0')}` }));
 // De keuze in de admin gaat voor: Top, dan de rest van de selectie (nieuwste eerst). De 29 vaste foto's uit portfolio.json vullen alleen aan als de selectie te klein is.
 const ORDERED = [...DB.filter((x) => x.top), ...DB.filter((x) => !x.top), ...STATIC];
-const PHOTOS = rank(ORDERED.slice(0, MAX_ALL));
-export const CAT_LIST = Object.fromEntries(SITE.categories.map((k) => [k.slug, rank(ORDERED.filter((p) => p.cats.includes(k.slug)).slice(0, MAX_CAT))]));
+// Een beetje door elkaar: foto's blijven ongeveer op hun plek (Top vooral bovenaan), maar dezelfde gebeurtenis staat niet naast elkaar
+// en er staan niet te veel staande foto's in een rij. Vaste "random": zelfde keuze geeft bij elke build dezelfde volgorde.
+const seeded = (seed) => { let a = [...String(seed)].reduce((h, c) => (Math.imul(h, 31) + c.charCodeAt(0)) | 0, 7); return () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; };
+const GENERIC = new Set(['Event photography', 'Live show', 'Festival grounds']);
+const mix = (arr, seed) => {
+  const r = seeded(seed);
+  const rest = arr.map((p, i) => ({ p, k: i + (r() - 0.5) * 16 })).sort((x, y) => x.k - y.k).map((x) => x.p);
+  const out = [];
+  const fits = (p) => {
+    const last3 = out.slice(-3), last4 = out.slice(-4);
+    if (p.name && !GENERIC.has(p.name) && last3.some((q) => q.name === p.name)) return false;
+    if (p.size === 't' && last4.filter((q) => q.size === 't').length >= 2) return false;
+    return true;
+  };
+  while (rest.length) { let i = rest.findIndex((p, j) => j < 12 && fits(p)); if (i < 0) i = 0; out.push(rest.splice(i, 1)[0]); }
+  return out;
+};
+const PHOTOS = rank(mix(ORDERED.slice(0, MAX_ALL), 'all'));
+export const CAT_LIST = Object.fromEntries(SITE.categories.map((k) => [k.slug, rank(mix(ORDERED.filter((p) => p.cats.includes(k.slug)).slice(0, MAX_CAT), k.slug))]));
 // Voor landingspagina's: eerst de portfolio-selectie van de categorie, daarna aangevuld met andere foto's uit die categorie (ook uit projecten).
 export const catGallery = (slug, max) => {
   const base = CAT_LIST[slug] || [];
