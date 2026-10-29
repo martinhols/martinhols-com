@@ -14,8 +14,8 @@ const altFor = (x) => (x.alt || '').trim() || [x.event || x.caption, x.city, x.y
 const DB = dbPhotos.filter((x) => x.portfolio && localMap[x.url] && (x.categories || []).length)
   .map((x) => ({ slug: x.id, cat: x.categories[0], cats: x.categories, size: sizeOf(x), pos: x.crop || '50% 50%', name: x.event || x.caption || 'Event photography', alt: altFor(x), top: x.top, date: dateOf(x), full: siteUrl(x.url), file: x.url, thumbOpt: true, db: x }));
 DB.sort((a, b) => b.date.localeCompare(a.date));
-// Eén grote selectie (portfolio aan). Top-foto's eerst, dan de rest. Hoofdpagina max. 100, elke categoriepagina max. 40.
-const MAX_ALL = 100, MAX_CAT = 40;
+// Eén grote selectie (portfolio aan). Top-foto's eerst, dan de rest. Hoofdpagina max. 120, elke categoriepagina max. 40.
+const MAX_ALL = 120, MAX_CAT = 40;
 const rank = (arr) => arr.map((p, i) => ({ ...p, rank: `No. ${String(i + 1).padStart(2, '0')}` }));
 const ORDERED = [...DB.filter((x) => x.top), ...STATIC, ...DB.filter((x) => !x.top)];
 const PHOTOS = rank(ORDERED.slice(0, MAX_ALL));
