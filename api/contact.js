@@ -15,6 +15,28 @@ export default async function handler(req, res) {
   const b = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {};
   if (clean(b.website)) return res.status(200).json({ ok: true }); // honeypot: doe alsof het gelukt is
 
+  // Extra spambeveiliging: tijdcontrole, te veel links, limiet per IP en (indien ingesteld) Cloudflare Turnstile.
+  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
+  const now = Date.now();
+  globalThis.__hits = globalThis.__hits || new Map();
+  const hits = (globalThis.__hits.get(ip) || []).filter((t) => now - t < 600000);
+  if (hits.length >= 5) return res.status(429).json({ ok: false, error: 'rate' });
+  globalThis.__hits.set(ip, [...hits, now]);
+  if (b.ts && now - Number(b.ts) < 3000) return res.status(200).json({ ok: true }); // te snel ingevuld: doe alsof het gelukt is
+  if ((String(b.message || '').match(/https?:\/\/|www\./gi) || []).length > 2) return res.status(200).json({ ok: true });
+  const secret = process.env.TURNSTILE_SECRET;
+  if (secret) {
+    const token = clean(b['cf-turnstile-response'], 4096);
+    let okCaptcha = false;
+    if (token) {
+      try {
+        const v = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ secret, response: token, remoteip: ip }) });
+        okCaptcha = !!(await v.json()).success;
+      } catch {}
+    }
+    if (!okCaptcha) return res.status(400).json({ ok: false, error: 'captcha' });
+  }
+
   const company = clean(b.company, 200), name = clean(b.name, 200), email = clean(b.email, 200), message = clean(b.message);
   if (!name || !company || !/^\S+@\S+\.\S+$/.test(email) || !message) return res.status(400).json({ ok: false, error: 'invalid' });
 

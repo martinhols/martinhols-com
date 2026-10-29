@@ -1,5 +1,5 @@
 import { SITE } from '../site.mjs';
-import { arrowsLink, img, header, footer, ARROW, ARROW16 } from '../layout.mjs';
+import { arrowsLink, img, header, footer, turnstile, ARROW, ARROW16 } from '../layout.mjs';
 
 const real = (v) => (v && !String(v).startsWith('[') ? v : '');
 const co = { kvk: real(SITE.company.kvk), vat: real(SITE.company.vat), address: real(SITE.company.address) };
@@ -55,6 +55,8 @@ export const page = {
       </div>
       <div class="fld"><span class="flb" id="type-l">Type of event</span><div class="ty" role="radiogroup" aria-labelledby="type-l">${types.map(([id, l], i) => `<input type="radio" name="type" value="${l}" id="t-${id}"${i === 0 ? ' checked' : ''}><label for="t-${id}">${l}</label>`).join('')}</div></div>
       <label class="fld"><span>Message</span><textarea name="message" placeholder="What are you planning?" required></textarea></label>
+      <input type="hidden" name="ts" value="">
+      ${turnstile()}
       <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
       <p class="status" id="form-status" role="status" aria-live="polite" hidden></p>
       <div class="send">

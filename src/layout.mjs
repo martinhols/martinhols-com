@@ -14,6 +14,7 @@ export const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
 
 /** Maakt van elke "The Arrows" in een (al ge-escapete) tekst een link naar thearrows.nl. */
 export const arrowsLink = (html) => String(html).replace(/The Arrows/g, `<a class="arl" href="${SITE.arrows}" target="_blank" rel="noopener">The Arrows</a>`);
+export const turnstile = () => (SITE.turnstile ? `<div class="cf-turnstile" data-sitekey="${SITE.turnstile}" data-theme="dark" data-appearance="interaction-only"></div>` : '');
 export const ARROW = '<svg class="arrow" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"></path></svg>';
 export const ARROW16 = ARROW.replace(/width="20" height="20"/, 'width="16" height="16"');
 const MAIL = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>';
@@ -166,7 +167,7 @@ ${ld}
 ${page.body}
 </div>
 ${mobileMenu()}
-<script src="/assets/site.js" defer></script>
+${page.body.includes('cf-turnstile') ? '<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>\n' : ''}<script src="/assets/site.js" defer></script>
 ${SITE.ga4 ? `<meta name="ga4-id" content="${SITE.ga4}">` : ''}
 <div class="cookie" id="cookie" role="dialog" aria-modal="false" aria-labelledby="cookie-t" hidden>
   <div class="ck-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9 4 4 0 0 1-4-4 4 4 0 0 1-5-5z"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="14" cy="15" r="1" fill="currentColor"/><circle cx="8" cy="16" r=".8" fill="currentColor"/></svg></div>

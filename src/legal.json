@@ -100,7 +100,8 @@
    [
     "Cookies and tracking",
     [
-     "I use Google Analytics 4 to see which pages are useful. It only loads after you accept analytics cookies in the banner, and I do not use it for advertising or sell this data. You can change your choice at any time with “Cookie settings” in the footer. Without your consent, no analytics cookies are set."
+     "I use Google Analytics 4 to see which pages are useful. It only loads after you accept analytics cookies in the banner, and I do not use it for advertising or sell this data. You can change your choice at any time with “Cookie settings” in the footer. Without your consent, no analytics cookies are set.",
+     "My contact forms are protected against spam with Cloudflare Turnstile. When you send a form, Cloudflare checks that you are a real visitor and may process technical data such as your IP address for that purpose. This does not use advertising cookies."
     ]
    ],
    [

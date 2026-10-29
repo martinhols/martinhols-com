@@ -1,7 +1,7 @@
 // Template voor SEO/advertentie-landingspagina's. Eén config per pagina, zie src/pages/amsterdam.mjs.
 // Volgorde: hero, klanten, portfolio van één categorie, FAQ, over mij, prijstabel, laatste projecten, offerteformulier.
 import { SITE } from './site.mjs';
-import { esc, img, header, footer, ARROW, ARROW16, ICONS } from './layout.mjs';
+import { esc, img, header, footer, turnstile, ARROW, ARROW16, ICONS } from './layout.mjs';
 import { tile, lightbox, projSec, catGallery } from './pages/portfolio.mjs';
 import { PROJECTS, CATS } from './pages/projects.mjs';
 
@@ -148,6 +148,8 @@ export function landing(c) {
       </div>
       <div class="fld"><span class="flb" id="type-l">Type of event</span><div class="ty" role="radiogroup" aria-labelledby="type-l">${TYPES.map(([id, l]) => `<input type="radio" name="type" value="${l}" id="t-${id}"${l === c.catName ? ' checked' : ''}><label for="t-${id}">${l}</label>`).join('')}</div></div>
       <label class="fld"><span>Message</span><textarea name="message" placeholder="What are you planning?" required></textarea></label>
+      <input type="hidden" name="ts" value="">
+      ${turnstile()}
       <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
       <p class="status" id="form-status" role="status" aria-live="polite" hidden></p>
       <div class="send">
