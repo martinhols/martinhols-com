@@ -17,7 +17,8 @@ DB.sort((a, b) => b.date.localeCompare(a.date));
 // Eén grote selectie (portfolio aan). Top-foto's eerst, dan de rest. Hoofdpagina max. 120, elke categoriepagina max. 40.
 const MAX_ALL = 120, MAX_CAT = 40;
 const rank = (arr) => arr.map((p, i) => ({ ...p, rank: `No. ${String(i + 1).padStart(2, '0')}` }));
-const ORDERED = [...DB.filter((x) => x.top), ...STATIC, ...DB.filter((x) => !x.top)];
+// De keuze in de admin gaat voor: Top, dan de rest van de selectie (nieuwste eerst). De 29 vaste foto's uit portfolio.json vullen alleen aan als de selectie te klein is.
+const ORDERED = [...DB.filter((x) => x.top), ...DB.filter((x) => !x.top), ...STATIC];
 const PHOTOS = rank(ORDERED.slice(0, MAX_ALL));
 export const CAT_LIST = Object.fromEntries(SITE.categories.map((k) => [k.slug, rank(ORDERED.filter((p) => p.cats.includes(k.slug)).slice(0, MAX_CAT))]));
 // Voor landingspagina's: eerst de portfolio-selectie van de categorie, daarna aangevuld met andere foto's uit die categorie (ook uit projecten).
