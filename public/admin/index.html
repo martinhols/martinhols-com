@@ -142,7 +142,7 @@ h1{font:300 88px/92px var(--font-display);letter-spacing:-.02em;margin:12px 0 0}
  .pgrid{grid-template-columns:repeat(2,1fr)}.limit{width:100%}.badge{display:none}.row{flex-wrap:wrap}.chips{min-width:0}.notch.n-tr{padding:12px 12px 16px 16px;gap:8px}.btn{padding:0 14px}
 }
 #pubbar{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:50;display:none;align-items:center;gap:16px;padding:10px 10px 10px 20px;border-radius:12px;background:#061a2e;color:#fff;box-shadow:0 8px 32px #0006;font:500 15px/20px var(--font-body)}
-#pubbar.on{display:flex}#pubbar i{width:10px;height:10px;border-radius:50%;background:#ff8b21;flex:none}#pubbar .btn{height:42px}
+@keyframes mhspin{to{transform:rotate(360deg)}}.spin{width:18px;height:18px;border-radius:50%;border:2.5px solid #ffffff40;border-top-color:#ff8b21;animation:mhspin .8s linear infinite;flex:none;display:inline-block}.btn .spin{border-color:#061a2e40;border-top-color:#061a2e}#pubbar.on{display:flex}#pubbar i{width:10px;height:10px;border-radius:50%;background:#ff8b21;flex:none}#pubbar .btn{height:42px}
 </style>
 </head>
 <body>
@@ -171,7 +171,15 @@ const hook=()=>{try{return localStorage.getItem('deployHook')||''}catch(e){retur
 const getDirty=()=>{try{return +localStorage.getItem('dirtyN')||0}catch(e){return 0}};
 const setDirty=n=>{try{n?localStorage.setItem('dirtyN',String(n)):localStorage.removeItem('dirtyN')}catch(e){}pubBar()};
 const markDirty=()=>setDirty(getDirty()+1);
-function pubBar(){const b=$('#pubbar');if(!b)return;const n=getDirty();b.className=n?'on':'';b.innerHTML=n?`<i></i><span>Unpublished changes</span><button class="btn">Publish site<span class="ic">${I.ar}</span></button>`:'';const k=b.querySelector('button');if(k)k.onclick=()=>publishSite()}
+let building=0,doneUntil=0,bt=null;
+function pubBar(){const b=$('#pubbar');if(!b)return;const n=getDirty(),left=building?Math.ceil((building-Date.now())/1000):0;
+ if(publishing){b.className='on';b.innerHTML='<span class="spin"></span><span>Publishing…</span>';return}
+ if(building&&left>0){b.className='on';b.innerHTML=`<span class="spin"></span><span>Rebuilding the site · live in about ${left} s</span>`;return}
+ if(building){building=0;doneUntil=Date.now()+8000;setTimeout(pubBar,8100)}
+ if(doneUntil>Date.now()){b.className='on';b.innerHTML='<span>Should be live now. Refresh the site to check.</span>';return}
+ b.className=n?'on':'';b.innerHTML=n?`<i></i><span>Unpublished changes</span><button class="btn">Publish site<span class="ic">${I.ar}</span></button>`:'';const k=b.querySelector('button');if(k)k.onclick=()=>publishSite()}
+function startBuild(){building=Date.now()+60000;clearInterval(bt);bt=setInterval(()=>{pubBar();if(Date.now()>building)clearInterval(bt)},1000);pubBar()}
+
 const say=(m,e)=>{if(!e&&/Publish site|Publish the site/.test(m||''))markDirty();S.msg=m;S.err=!!e;const x=$('#msg');if(x){x.textContent=m;x.className='msg'+(e?' err':'');x.style.display=m?'block':'none'}};
 
 /* ---------- start & login ---------- */
@@ -238,16 +246,16 @@ function checks(){const P=S.proj||{},ph=S.photos,need=ph.filter(x=>(x.slot||x.po
 async function publishProject(){if(!(await saveProject(true)))return;const c=checks();if(!(c[0][0]&&c[1][0]&&c[2][0]&&c[4][0]))return say('Finish details, photos, hero and alt text first.',1);
  const{error}=await sb.from('projects').update({published:true}).eq('id',S.proj.id);if(error)return say(error.message,1);S.proj.published=true;markDirty();say('Saved to the website. It goes live with the next Publish site.')}
 let publishing=false;
-async function publishSite(prefix=''){if(publishing)return;publishing=true;
+async function publishSite(prefix=''){if(publishing)return;publishing=true;document.querySelectorAll('[data-act="site"]').forEach(x=>{x.disabled=true;x.innerHTML='<span class="spin"></span>Publishing…'});pubBar();
  try{const{data}=await sb.auth.getSession(),t=data.session&&data.session.access_token;
   if(!t){say('Sign in again first.',1);return}
   const r=await fetch('/api/publish',{method:'POST',headers:{Authorization:'Bearer '+t}});
-  if(r.ok){setDirty(0);say(prefix+'Site is being rebuilt. Live in about a minute.');return}
+  if(r.ok){setDirty(0);startBuild();say(prefix+'Site is being rebuilt. Live in about a minute.');return}
   if(r.status===501){ /* geen DEPLOY_HOOK_URL in Vercel: val terug op een hook in deze browser */
    let h=hook();if(!h){h=prompt('Paste the Vercel Deploy Hook URL (once). Better: add it in Vercel as DEPLOY_HOOK_URL.');if(!h)return;try{localStorage.setItem('deployHook',h.trim())}catch(e){}}
-   const q=await fetch(h.trim(),{method:'POST'});if(q.ok){setDirty(0);say(prefix+'Site is being rebuilt. Live in about a minute.')}else say('Publish failed ('+q.status+').',1);return}
+   const q=await fetch(h.trim(),{method:'POST'});if(q.ok){setDirty(0);startBuild();say(prefix+'Site is being rebuilt. Live in about a minute.')}else say('Publish failed ('+q.status+').',1);return}
   say('Publish failed ('+r.status+').',1)
- }catch(e){say('Publish failed: '+e.message,1)}finally{publishing=false}}
+ }catch(e){say('Publish failed: '+e.message,1)}finally{publishing=false;pubBar();document.querySelectorAll('[data-act="site"]').forEach(x=>{x.disabled=false;x.innerHTML='Publish site<span class="ic">'+I.ar+'</span>'})}}
 
 /* ---------- views ---------- */
 function head(title,main){return `<header class="top"><a class="brand" href="/admin"><img src="/img/martin-hols-portrait.jpg" alt=""><b>MartinHols.com</b><span class="badge">Admin · not public</span></a>
