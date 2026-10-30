@@ -2,6 +2,7 @@
 // en zet de foto's op de site zelf. Lukt het ophalen niet, dan bouwt de site met de vaste inhoud.
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { SUPABASE } from './site.mjs';
 
 export let dbProjects = [], dbPosts = [], dbPhotos = [], dbSeo = [];
@@ -21,10 +22,25 @@ async function get(table, order, onlyPublished = true) {
   }
 }
 
+// Fotocache: elke Supabase-foto wordt maar één keer gedownload en daarna uit de cache gehaald.
+// node_modules/.cache blijft op Vercel tussen builds bewaard (build cache) en lokaal ook.
+// Upload-URL's zijn uniek (tijdstempel in de naam), dus een URL verandert nooit van inhoud.
+const CACHE = path.join(process.cwd(), 'node_modules/.cache/img-db');
+fs.mkdirSync(CACHE, { recursive: true });
+const cacheKey = (url) => crypto.createHash('sha1').update(url).digest('hex');
+const stats = { hit: 0, miss: 0 };
+
 async function download(url, file) {
+  const key = path.join(CACHE, cacheKey(url));
+  if (fs.existsSync(key + '.missing')) throw new Error(`404 ${url} (cache)`);
+  if (fs.existsSync(key)) { fs.copyFileSync(key, file); stats.hit++; return; }
   const r = await fetch(url, { signal: AbortSignal.timeout(30000) });
+  if (r.status === 400 || r.status === 404) { fs.writeFileSync(key + '.missing', ''); throw new Error(`${r.status} ${url}`); }
   if (!r.ok) throw new Error(`${r.status} ${url}`);
-  fs.writeFileSync(file, Buffer.from(await r.arrayBuffer()));
+  const buf = Buffer.from(await r.arrayBuffer());
+  fs.writeFileSync(key, buf);
+  fs.writeFileSync(file, buf);
+  stats.miss++;
 }
 
 // Kopieert alle gebruikte foto's naar dist/img/db en vult localMap.
@@ -54,7 +70,7 @@ async function localize(dist, urls, dims, names = {}) {
     }
   };
   await Promise.all(Array.from({ length: 6 }, work));
-  console.log(`[data] ${Object.keys(localMap).length} foto's naar de site gekopieerd`);
+  console.log(`[data] ${Object.keys(localMap).length} foto's naar de site gekopieerd (${stats.hit} uit cache, ${stats.miss} van Supabase)`);
 }
 
 export async function prepareData(dist) {
