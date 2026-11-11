@@ -61,7 +61,7 @@ export const page = {
         },
         {
           '@type': 'Person', '@id': `${SITE.url}/#martin`, name: SITE.person, jobTitle: 'Event photographer',
-          url: SITE.url + '/', image: `${SITE.url}/img/martin-hols-portrait.jpg`, email: SITE.email, telephone: SITE.phone,
+          url: SITE.url + '/', image: `${SITE.url}/img/martin-hols-event-photographer.jpg`, email: SITE.email, telephone: SITE.phone,
           award: SITE.award, workLocation: { '@type': 'Place', name: 'Netherlands' },
           worksFor: { '@id': `${SITE.url}/#business` },
           knowsAbout: ['Event photography', 'Festival photography'],
@@ -87,13 +87,13 @@ export const page = {
     </div>
 
     <div class="portrait-d">
-      ${img('martin-hols-portrait.jpg', 'Portrait of Martin Hols, smiling, in a black shirt against a warm orange backdrop', { priority: true })}
+      ${img('martin-hols-event-photographer.jpg', 'Martin Hols, event photographer, smiling up at the camera on a festival site with two Canon cameras', { priority: true })}
       <div class="award"><div class="ai">${ICONS.STAR}</div><div><p class="t-eyebrow">Award winner</p><p class="t-caption">European Event<br>Photography Award</p></div></div>
       <div class="namecard"><p class="t-eyebrow acc" style="font-size:12px;line-height:16px;letter-spacing:.22em">Event photographer</p><p class="nm">Martin Hols</p></div>
     </div>
 
     <div class="portrait-m">
-      ${img('martin-hols-portrait.jpg', 'Portrait of Martin Hols')}
+      ${img('martin-hols-avatar.jpg', 'Portrait of Martin Hols')}
       <div><p class="nm">Martin Hols</p><p class="t-eyebrow">Event photographer</p></div>
     </div>
     <a class="m-btn p btn-q" href="/contact">Request a quote <span class="ic">${ARROW16}</span></a>
@@ -131,7 +131,7 @@ export const page = {
 
   <section class="about" aria-labelledby="about-h">
     <div class="ph">
-      ${img('martin-hols-portrait.jpg', 'Portrait of Martin Hols')}
+      ${img('martin-hols-event-photographer.jpg', 'Portrait of Martin Hols')}
       <div class="award"><div class="ai">${ICONS.STAR}</div><div><p class="t-eyebrow">Award winner</p><p class="t-caption">European Event<br>Photography Award</p></div></div>
       <div class="award-m"><div class="ai">${ICONS.STAR}</div><div><p class="t-eyebrow">Award winner</p><p class="w">European Event Photography Award</p></div></div>
     </div>

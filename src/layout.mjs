@@ -49,7 +49,7 @@ export function header(active = '') {
     return `<div class="dd">${a.replace('</a>', '<svg class="chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></a>')}<div class="ddm"><a href="/portfolio">Hall of fame</a>${SITE.categories.map((c) => `<a href="/portfolio/${c.slug}">${c.name}</a>`).join('')}</div></div>`;
   }).join('');
   return `
-    <a class="site-logo" href="/" aria-label="${SITE.name} home">${img('martin-hols-portrait.jpg', '', { priority: true, style: 'object-position:50% 22%' })}<span>${SITE.name}</span></a>
+    <a class="site-logo" href="/" aria-label="${SITE.name} home">${img('martin-hols-avatar.jpg', '', { priority: true })}<span>${SITE.name}</span></a>
     <nav class="site-nav" aria-label="Main">${nav}</nav>
     <div class="notch n-tr">
       <div class="nt-desk">
@@ -75,7 +75,7 @@ export function mobileMenu() {
 <div class="mmenu" id="mmenu" role="dialog" aria-modal="true" aria-label="Menu">
   <div class="in">
     <div class="top">
-      <a class="logo" href="/">${img('martin-hols-portrait.jpg', '')}${SITE.name}</a>
+      <a class="logo" href="/">${img('martin-hols-avatar.jpg', '')}${SITE.name}</a>
       <div style="display:flex;gap:8px"><a class="rb acc-b" href="tel:${SITE.phone}" aria-label="Call ${SITE.phoneText}" style="background:var(--accent);color:var(--on-accent)">${PHONE}</a>${igA(' style="background:var(--accent);color:var(--on-accent)"')}<button type="button" class="rb menu-btn" aria-label="Close menu" data-menu-close>${CLOSE}</button></div>
     </div>
     <ol>${items}</ol>
@@ -112,7 +112,7 @@ export function footer() {
   return `
   <footer class="cream foot" data-theme="cream">
     <div class="row">
-      <a class="brand" href="/" aria-label="${SITE.name} home">${img('martin-hols-portrait.jpg', '')}<span>${SITE.name}</span></a>
+      <a class="brand" href="/" aria-label="${SITE.name} home">${img('martin-hols-avatar.jpg', '')}<span>${SITE.name}</span></a>
       <div class="cols">
         <div><p class="t-eyebrow dim">Portfolio</p><div class="fl">${cats}</div></div>
         <div><p class="t-eyebrow dim">Pages</p><div class="fl"><a href="/projects">Projects</a><a href="/about">About</a><a href="/blog">Blog</a></div></div>

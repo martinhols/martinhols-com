@@ -258,7 +258,7 @@ async function publishSite(prefix=''){if(publishing)return;publishing=true;docum
  }catch(e){say('Publish failed: '+e.message,1)}finally{publishing=false;pubBar();document.querySelectorAll('[data-act="site"]').forEach(x=>{x.disabled=false;x.innerHTML='Publish site<span class="ic">'+I.ar+'</span>'})}}
 
 /* ---------- views ---------- */
-function head(title,main){return `<header class="top"><a class="brand" href="/admin"><img src="/img/martin-hols-portrait.jpg" alt=""><b>MartinHols.com</b><span class="badge">Admin · not public</span></a>
+function head(title,main){return `<header class="top"><a class="brand" href="/admin"><img src="/img/martin-hols-avatar.jpg" alt=""><b>MartinHols.com</b><span class="badge">Admin · not public</span></a>
 <div class="notch n-tr">${main}</div><div><p class="eyebrow">Photo intake</p><h1>${title}</h1></div>
 <div class="tabs">${[['project','New project'],['single','Single photos'],['portfolio','Portfolio'],['site','Site images'],['dupes','Duplicates'],['seo','SEO']].map(([k,l])=>`<button data-tab="${k}" class="${S.tab===k?'on':''}">${l}</button>`).join('')}</div></header><div class="msg ${S.err?'err':''}" id="msg" style="display:${S.msg?'block':'none'}">${esc(S.msg)}</div>`}
 const btnPub=(l,act)=>`<button class="btn" data-act="${act}">${l}<span class="ic">${I.ar}</span></button>`;

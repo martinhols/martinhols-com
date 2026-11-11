@@ -33,7 +33,7 @@ export function legalPage(key, path, title, description) {
   const secs = c.sections.map(([t, parts], i) => `<section class="sec" id="s${i + 1}"><div class="num">${String(i + 1).padStart(2, '0')}</div><div><h2>${esc(t)}</h2>${parts.map((p) => part(p, false)).join('')}</div></section>`).join('');
   const short = c.short.map((t, i) => `<li><span class="n">${String(i + 1).padStart(2, '0')}</span><span>${esc(t)}</span></li>`).join('');
   return {
-    path, title, description, noindex: true, ogImage: 'martin-hols-portrait.jpg',
+    path, title, description, noindex: true, ogImage: 'martin-hols-event-photographer.jpg',
     jsonld: [{ '@context': 'https://schema.org', '@type': 'WebPage', name: c.title, url: SITE.url + path, dateModified: '2026-10-26', isPartOf: { '@id': `${SITE.url}/#website` } }],
     body: `
   <header class="panel subhero" id="main">

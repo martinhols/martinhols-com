@@ -10,7 +10,7 @@ export const page = {
   path: '/contact',
   title: 'Contact & request a quote | Martin Hols, event photographer',
   description: 'Planning an event? Tell Martin Hols the date, the place and what you need. Email martin@thearrows.nl, call +31 6 4114 84 79 or send a quote request. Replies usually the same day.',
-  ogImage: 'martin-hols-portrait.jpg',
+  ogImage: 'martin-hols-event-photographer.jpg',
   jsonld: [{
     '@context': 'https://schema.org', '@type': 'ContactPage', url: `${SITE.url}/contact`, name: 'Contact Martin Hols',
     about: { '@id': `${SITE.url}/#business` },

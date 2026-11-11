@@ -90,7 +90,7 @@ export const page = {
   path: '/about',
   title: 'About Martin Hols | Event and festival photographer',
   description: 'Martin Hols is an event and festival photographer from Hilversum, the Netherlands. 2,132 events in 10+ years, winner of the European Event Photography Award, trusted by Albert Heijn, Tomorrowland and Formula 1.',
-  ogImage: 'martin-hols-portrait.jpg',
+  ogImage: 'martin-hols-event-photographer.jpg',
   jsonld: [
     {
       '@context': 'https://schema.org',
@@ -98,7 +98,7 @@ export const page = {
         { '@type': 'AboutPage', '@id': `${SITE.url}/about#page`, url: `${SITE.url}/about`, name: 'About Martin Hols', inLanguage: 'en', about: { '@id': `${SITE.url}/#martin` }, isPartOf: { '@id': `${SITE.url}/#website` } },
         {
           '@type': 'Person', '@id': `${SITE.url}/#martin`, name: SITE.person, jobTitle: 'Event photographer', url: `${SITE.url}/about`,
-          image: `${SITE.url}/img/martin-hols-portrait.jpg`, email: SITE.email, telephone: SITE.phone, award: [SITE.award, 'Winner, Music Events – Concerts, European Event Photography Awards 2025'], subjectOf: { '@type': 'WebPage', url: 'https://www.eventphotographyawards.com/2025', name: 'European Event Photography Awards 2025 winners' },
+          image: `${SITE.url}/img/martin-hols-event-photographer.jpg`, email: SITE.email, telephone: SITE.phone, award: [SITE.award, 'Winner, Music Events – Concerts, European Event Photography Awards 2025'], subjectOf: { '@type': 'WebPage', url: 'https://www.eventphotographyawards.com/2025', name: 'European Event Photography Awards 2025 winners' },
           description: 'Event and festival photographer from Hilversum, the Netherlands. Covered 2,132 events in more than ten years, from festival main stages to brand activations and Formula 1.',
           homeLocation: { '@type': 'Place', name: 'Hilversum, the Netherlands' },
           worksFor: { '@type': 'Organization', name: 'The Arrows', url: SITE.arrows },
@@ -121,12 +121,12 @@ export const page = {
       <div class="m-btns">${mbtns}</div>
     </div>
     <div class="portrait-d">
-      ${img('martin-hols-portrait.jpg', 'Portrait of Martin Hols, smiling, in a black shirt against a warm orange backdrop', { priority: true })}
+      ${img('martin-hols-event-photographer.jpg', 'Martin Hols, event photographer, smiling up at the camera on a festival site with two Canon cameras', { priority: true })}
       ${award}
       <div class="namecard"><p class="t-eyebrow acc" style="font-size:12px;line-height:16px;letter-spacing:.22em">Event photographer</p><p class="nm">Martin Hols</p></div>
     </div>
     <div class="portrait-m ah-pm">
-      ${img('martin-hols-portrait.jpg', 'Portrait of Martin Hols', { priority: true })}
+      ${img('martin-hols-event-photographer.jpg', 'Portrait of Martin Hols', { priority: true })}
       <div><p class="nm">Martin Hols</p><p class="t-eyebrow">Event photographer</p></div>
     </div>
   </header>

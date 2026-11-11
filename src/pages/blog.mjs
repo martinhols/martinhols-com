@@ -222,7 +222,7 @@ const post = (p) => {
         <h1>${esc(p.title)}</h1>
         <div class="ans"><p class="t-eyebrow acc">${p.type === 'story' ? 'In short' : 'Short answer'}</p><p>${p.short}</p></div>
       </div>
-      <div class="au">${img('martin-hols-portrait.jpg', 'Martin Hols', { style: 'object-position:50% 22%' })}<div><p class="nm">Martin Hols</p><p class="t-caption dim">Event photographer · ${esc(SITE.award)}</p></div></div>
+      <div class="au">${img('martin-hols-avatar.jpg', 'Martin Hols')}<div><p class="nm">Martin Hols</p><p class="t-caption dim">Event photographer · ${esc(SITE.award)}</p></div></div>
     </div>
     <figure class="ah-r">${img(p.file, p.alt, { priority: true, style: `object-position:${p.pos}` })}<figcaption>${p.cap}</figcaption></figure>
   </header>
@@ -237,7 +237,7 @@ const post = (p) => {
   </section>
 
   <section class="cream aut" data-theme="cream">
-    <div class="ai">${img('martin-hols-portrait.jpg', 'Martin Hols', { style: 'object-position:50% 22%' })}<div><p class="t-eyebrow dim">About the author</p><p class="nm">Martin Hols</p><p class="bio">${AUTHOR}</p></div></div>
+    <div class="ai">${img('martin-hols-avatar.jpg', 'Martin Hols')}<div><p class="t-eyebrow dim">About the author</p><p class="nm">Martin Hols</p><p class="bio">${AUTHOR}</p></div></div>
     <a class="btn btn-o" href="/about" style="color:var(--ink);border-color:var(--line-strong)">More about Martin <span class="ic">${ARROW16}</span></a>
   </section>
 
