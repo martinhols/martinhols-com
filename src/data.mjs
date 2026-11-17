@@ -110,8 +110,15 @@ export function bestPhoto(cat) {
   return t[0] ? { file: t[0].url, alt: (t[0].alt || '').trim() || [t[0].event, t[0].city, t[0].year].filter(Boolean).join(', ') || 'Event photography', pos: posOf(t[0]) } : null;
 }
 
+const slideOf = (x) => ({ file: x.url, name: x.event || x.caption || 'Event photography', pos: posOf(x), alt: (x.alt || '').trim() || [x.event, x.city, x.year].filter(Boolean).join(', ') || 'Event photography' });
+
 // De gekozen hero-foto's voor de homepage, op volgorde (leeg = vaste selectie).
 export function heroPhotos() {
-  return dbPhotos.filter((x) => x.home_hero && localMap[x.url]).sort((a, b) => a.home_hero - b.home_hero)
-    .map((x) => ({ file: x.url, name: x.event || x.caption || 'Event photography', pos: posOf(x), alt: (x.alt || '').trim() || [x.event, x.city, x.year].filter(Boolean).join(', ') || 'Event photography' }));
+  return dbPhotos.filter((x) => x.home_hero && localMap[x.url]).sort((a, b) => a.home_hero - b.home_hero).map(slideOf);
+}
+
+// Hero-foto's voor een landingspagina: vaste lijst foto-id's (tabel photos), in die volgorde.
+// Foto's die ontbreken of nog niet op de site staan worden overgeslagen. Het zijn portfolio-foto's, dus ze staan al in de fotocache (geen extra downloads).
+export function photosById(ids = []) {
+  return ids.map((id) => dbPhotos.find((x) => x.id === id && localMap[x.url])).filter(Boolean).map(slideOf);
 }

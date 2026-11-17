@@ -4,6 +4,7 @@ import { SITE } from './site.mjs';
 import { esc, img, header, footer, turnstile, ARROW, ARROW16, ICONS } from './layout.mjs';
 import { tile, lightbox, projSec, catGallery } from './pages/portfolio.mjs';
 import { PROJECTS, CATS } from './pages/projects.mjs';
+import { photosById } from './data.mjs';
 
 const LOGOS = [
   ['logo-albert-heijn.png', 'Albert Heijn', 'width:159px;height:64px'],
@@ -17,7 +18,9 @@ const TYPES = [['fest', 'Festivals'], ['corp', 'Corporate'], ['sport', 'Sport'],
 export function landing(c) {
   const url = SITE.url + c.path;
   const list = catGallery(c.cat, c.galleryMax || 12);
-  const slides = (list.length >= 2 ? list.slice(0, 6) : [{ file: c.hero.file, alt: c.hero.alt, pos: c.hero.pos || '50% 50%', name: c.catName }]).map((p) => ({ file: p.file, alt: p.alt, pos: p.pos, name: p.name }));
+  // Hero-slider: bij voorkeur de vaste lijst `heroPhotoIds` (minstens 2 gevonden), anders de eerste 6 van de categorie.
+  const picked = photosById(c.heroPhotoIds);
+  const slides = (picked.length >= 2 ? picked : list.length >= 2 ? list.slice(0, 6) : [{ file: c.hero.file, alt: c.hero.alt, pos: c.hero.pos || '50% 50%', name: c.catName }]).map((p) => ({ file: p.file, alt: p.alt, pos: p.pos, name: p.name }));
   // Geen projecten in deze categorie? Toon dan de laatste projecten in het algemeen.
   const latest = () => { const L = [...PROJECTS].sort((a, b) => String((b.db && (b.db.event_date || b.db.created_at)) || '').localeCompare(String((a.db && (a.db.event_date || a.db.created_at)) || ''))).slice(0, 3); return L.length ? `
   <section class="panel projects" aria-labelledby="projects-h">

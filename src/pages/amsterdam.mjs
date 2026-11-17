@@ -6,6 +6,15 @@ export const page = landing({
   description: 'Event photographer in Amsterdam for conferences, company events and brand activations. Edited photos during the event, the rest within 24 hours. Fixed prices, usage rights included.',
   cat: 'corporate', catName: 'Corporate',
   hero: { file: 'portfolio/corporate-event-circular-auditorium.jpg', pos: '50% 45%', alt: 'Corporate event in a circular auditorium under a truss ceiling' },
+  // Zes beste corporate-foto's voor de hero-slider (photos.id, in volgorde). Allemaal portfolio-foto's; Sendcloud en Etos zijn in Amsterdam gemaakt.
+  heroPhotoIds: [
+    '7f9b4ec2-1bc0-4d83-a0eb-bb5029612434', // Sendcloud Unboxed 2026: hoofdpodium (Top)
+    '8643e3e2-1a91-4466-bcdc-a155c0757da7', // Albert Heijn Conference: spreker op het podium (corporate-headerfoto)
+    '0d29484d-a7e6-4a22-9e98-a0d347aefff0', // Etos Managerdagen: confetti voor het podium
+    'd3ac28be-5041-424f-89d4-4aacf773db2f', // Sea Ranger Ship: doop door de Koningin
+    '5b7f904d-41e6-4e95-b151-ff1a7951242d', // Sendcloud Unboxed 2026: moment van de show
+    '1ce67a69-6e94-4c36-be86-4b695d9f87ab', // Baker Tilly Generations: publiek voor het podium
+  ],
   eyebrow: 'Amsterdam', eyebrow2: 'Corporate event photography',
   h1: 'Event photographer in Amsterdam.',
   lead: 'Conferences, company events and brand activations. Fully edited photos during the event, the rest within 24 hours.',
