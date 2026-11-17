@@ -110,7 +110,8 @@
   var bar = s.querySelector('.bar i');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var i = 0, timer = null;
-  function show(k) {
+  // Let op: niet "show" noemen. De lightbox hierboven heeft ook een `show` (var, geldt voor de hele functie) en die overschreef deze op pagina's met een galerij.
+  function showSlide(k) {
     i = (k + n) % n;
     track.style.transform = 'translateX(' + (-i * 100) + '%)';
     slides.forEach(function (el, j) { el.classList.toggle('on', j === i); });
@@ -123,7 +124,7 @@
   function ready(k) { var im = slides[(k + n) % n].querySelector('img'); return !im || im.complete; }
   function warm() { slides.forEach(function (el) { var im = el.querySelector('img'); if (im && im.loading === 'lazy') im.loading = 'eager'; }); }
   if (document.readyState === 'complete') warm(); else window.addEventListener('load', warm);
-  function tick() { if (ready(i + 1)) { show(i + 1); play(); } else { timer = setTimeout(tick, 300); } }
+  function tick() { if (ready(i + 1)) { showSlide(i + 1); play(); } else { timer = setTimeout(tick, 300); } }
   function play() { stop(); if (!reduce) timer = setTimeout(tick, 4000); }
   function stop() { if (timer) { clearTimeout(timer); timer = null; } }
   s.addEventListener('focusin', function () { s.classList.add('paused'); stop(); });
