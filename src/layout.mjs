@@ -1,6 +1,11 @@
 import { localMap } from './data.mjs';
 import { SITE } from './site.mjs';
 import fs from 'node:fs';
+import crypto from 'node:crypto';
+
+// /assets/* krijgt een jaar cache (immutable, zie vercel.json). Daarom hangt het script een korte hash van zijn inhoud aan de URL:
+// verandert site.js, dan verandert de URL en haalt iedereen meteen de nieuwe versie op.
+const JS_V = crypto.createHash('sha1').update(fs.readFileSync(new URL('./js/site.js', import.meta.url))).digest('hex').slice(0, 10);
 
 // Kritieke CSS inline: geen render-blokkerend verzoek meer (kleine minify: commentaar en witruimte eruit).
 const cssDir = new URL('./css/', import.meta.url);
@@ -167,7 +172,7 @@ ${ld}
 ${page.body}
 </div>
 ${mobileMenu()}
-${page.body.includes('cf-turnstile') ? '<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>\n' : ''}<script src="/assets/site.js" defer></script>
+${page.body.includes('cf-turnstile') ? '<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>\n' : ''}<script src="/assets/site.js?v=${JS_V}" defer></script>
 ${SITE.ga4 ? `<meta name="ga4-id" content="${SITE.ga4}">` : ''}
 <div class="cookie" id="cookie" role="dialog" aria-modal="false" aria-labelledby="cookie-t" hidden>
   <div class="ck-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9 4 4 0 0 1-4-4 4 4 0 0 1-5-5z"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="14" cy="15" r="1" fill="currentColor"/><circle cx="8" cy="16" r=".8" fill="currentColor"/></svg></div>
