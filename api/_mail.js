@@ -14,7 +14,15 @@ function isoDate(s) {
   return `${y}-${String(mo).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
 }
 
-export function hqLink({ name, company, email, date, location, type, message }) {
+/** Leesbare herkomst: campagne/bron als die er is, anders de verwijzende site, anders direct. */
+export function cameFrom(f) {
+  const utm = [f.utm_source, f.utm_medium, f.utm_campaign].filter(Boolean).join(' / ');
+  if (utm) return utm + (f.gclid ? ' (Google Ads)' : '');
+  if (f.gclid) return 'Google Ads';
+  return f.referrer || 'Direct or unknown';
+}
+
+export function hqLink({ name, company, email, date, location, type, message, landing, referrer, utm_source, utm_medium, utm_campaign, gclid }) {
   const iso = isoDate(date);
   const data = {
     title: [company, type].filter(Boolean).join(' · ') || 'Offerteaanvraag website',
@@ -23,14 +31,14 @@ export function hqLink({ name, company, email, date, location, type, message }) 
     ...(location && { location }),
     contact: { name, email },
     ...(iso && { days: [{ date: iso, photography: PHOTOGRAPHY[type] || 'event' }] }),
-    briefing: `Aanvraag via martinhols.com${date && !iso ? ` · datum: ${date}` : ''}\n${message}`.slice(0, 1500),
+    briefing: `Aanvraag via martinhols.com${date && !iso ? ` · datum: ${date}` : ''}\nHerkomst: ${cameFrom({ referrer, utm_source, utm_medium, utm_campaign, gclid })}${landing ? ` · eerste pagina: ${landing}` : ''}\n${message}`.slice(0, 1500),
   };
   return HQ + Buffer.from(JSON.stringify(data), 'utf8').toString('base64url');
 }
 
 export function buildMail(f) {
   const link = hqLink(f);
-  const rows = [['Name', f.name], ['Email', f.email], ['Company / event', f.company], ['Event date', f.date], ['Location', f.location], ['Type of event', f.type]].filter(([, v]) => v);
+  const rows = [['Name', f.name], ['Email', f.email], ['Company / event', f.company], ['Event date', f.date], ['Location', f.location], ['Type of event', f.type], ['Came from', cameFrom(f)], ['First page', f.landing]].filter(([, v]) => v);
   const row = ([k, v]) => `<tr><td style="padding:12px 0;border-top:1px solid #E4DDCF;width:150px;font:600 11px/16px Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6B7785;vertical-align:top">${esc(k)}</td><td style="padding:12px 0;border-top:1px solid #E4DDCF;font:500 16px/24px Arial,sans-serif;color:#051E31">${k === 'Email' ? `<a href="mailto:${esc(v)}" style="color:#051E31">${esc(v)}</a>` : esc(v)}</td></tr>`;
   const btn = (href, label, bg, fg, border) => `<a href="${esc(href)}" style="display:inline-block;margin:0 8px 8px 0;padding:14px 22px;background:${bg};color:${fg};border:1px solid ${border};border-radius:8px;font:700 15px/20px Arial,sans-serif;text-decoration:none">${label}</a>`;
   const html = `<!doctype html><html><body style="margin:0;background:#F4EFE6"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F4EFE6"><tr><td align="center" style="padding:24px 12px">

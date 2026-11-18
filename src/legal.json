@@ -46,6 +46,12 @@
         "Up to 2 years after the last contact"
        ],
        [
+        "Where your request came from",
+        "When you send the contact form: the first page you visited in this session, the website you came from and any campaign tag in the link (for example from an ad). No cookie is used for this; it is kept in your browser only until you close the tab",
+        "To see which pages and channels lead to requests, so I can improve the site",
+        "Up to 2 years after the last contact, together with your message"
+       ],
+       [
         "Agreements and invoices",
         "Company and contact names, billing details",
         "To do the job, invoice it and keep my books",
@@ -101,7 +107,7 @@
     "Cookies and tracking",
     [
      "I use Google Analytics 4 to see which pages are useful. It only loads after you accept analytics cookies in the banner, and I do not use it for advertising or sell this data. You can change your choice at any time with “Cookie settings” in the footer. Without your consent, no analytics cookies are set.",
-     "My contact forms are protected against spam with Cloudflare Turnstile. When you send a form, Cloudflare checks that you are a real visitor and may process technical data such as your IP address for that purpose. This does not use advertising cookies."
+     "When you send the contact form, I also receive the first page you visited, the website or campaign you came from, and I record that a request was sent (the last one in Google Analytics only if you accepted analytics cookies). My contact forms are protected against spam with Cloudflare Turnstile. When you send a form, Cloudflare checks that you are a real visitor and may process technical data such as your IP address for that purpose. This does not use advertising cookies."
     ]
    ],
    [
