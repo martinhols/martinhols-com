@@ -43,7 +43,7 @@ export default async function handler(req, res) {
   const key = process.env.RESEND_API_KEY, to = process.env.CONTACT_TO, from = process.env.CONTACT_FROM;
   if (!key || !to || !from) return res.status(503).json({ ok: false, error: 'not-configured' });
 
-  const { html, text, subject } = buildMail({ name, company, email, date: clean(b.date, 100), location: clean(b.location, 200), type: clean(b.type, 100), message });
+  const { html, text, subject } = buildMail({ name, company, email, date: clean(b.date, 100), location: clean(b.location, 200), type: clean(b.type, 100), message, landing: clean(b.landing, 200), referrer: clean(b.referrer, 200), utm_source: clean(b.utm_source, 100), utm_medium: clean(b.utm_medium, 100), utm_campaign: clean(b.utm_campaign, 150), utm_term: clean(b.utm_term, 150), gclid: clean(b.gclid, 2) });
 
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',

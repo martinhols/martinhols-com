@@ -17,6 +17,17 @@
   }
 
 
+  // Herkomst van het bezoek: alleen voor deze sessie bewaard (sessionStorage), en pas verstuurd als iemand het formulier verzendt.
+  var FT = 'mh-ft';
+  try {
+    if (!sessionStorage.getItem(FT)) {
+      var qs = new URLSearchParams(location.search), rh = '';
+      try { rh = new URL(document.referrer).hostname; } catch (x) {}
+      if (rh === location.hostname) rh = '';
+      sessionStorage.setItem(FT, JSON.stringify({ landing: location.pathname, referrer: rh, utm_source: qs.get('utm_source') || '', utm_medium: qs.get('utm_medium') || '', utm_campaign: qs.get('utm_campaign') || '', utm_term: qs.get('utm_term') || '', gclid: qs.get('gclid') ? '1' : '' }));
+    }
+  } catch (x) {}
+
   // Contactformulier
   var f = document.getElementById('quote-form');
   if (f) {
@@ -35,10 +46,12 @@
       });
       if (bad) { say('Please fill in your name, a valid email, your company or event and a short message.', 'err'); var first = f.querySelector('[aria-invalid="true"]'); if (first) first.focus(); f.__first = null; return; }
       var data = {}; new FormData(f).forEach(function (v, k) { data[k] = v; });
+      var ft = {}; try { ft = JSON.parse(sessionStorage.getItem(FT) || '{}'); } catch (x) {}
+      ['landing', 'referrer', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'gclid'].forEach(function (k) { if (ft[k]) data[k] = ft[k]; });
       btn.disabled = true;
       fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
         .then(function (r) { if (!r.ok) return r.json().catch(function () { return {}; }).then(function (j) { var e = new Error('send failed'); e.info = (j.error || r.status) + (j.detail ? ': ' + j.detail : ''); throw e; }); return r.json(); })
-        .then(function () { f.reset(); if (f.elements.ts) f.elements.ts.value = String(Date.now()); if (window.turnstile) try { window.turnstile.reset(); } catch (x) {} say('Thank you. I received your request and reply within one working day.', 'ok'); })
+        .then(function () { if (window.gtag) try { gtag('event', 'generate_lead', { event_category: 'quote_form', landing_page: data.landing || '', lead_source: data.utm_source || data.referrer || 'direct', event_type: data.type || '' }); } catch (x) {} f.reset(); if (f.elements.ts) f.elements.ts.value = String(Date.now()); if (window.turnstile) try { window.turnstile.reset(); } catch (x) {} say('Thank you. I received your request and reply within one working day.', 'ok'); })
         .catch(function (e) { say('Sorry, sending failed. Please email me directly at martin@thearrows.nl.' + (e && e.info ? ' (' + e.info + ')' : ''), 'err'); })
         .then(function () { btn.disabled = false; if (window.turnstile) try { window.turnstile.reset(); } catch (x) {} });
     });
