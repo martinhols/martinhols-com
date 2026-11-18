@@ -59,8 +59,8 @@ fs.writeFileSync(path.join(dist, 'seo-pages.json'), JSON.stringify(seoList.filte
 // sitemap + robots
 const today = new Date().toISOString().slice(0, 10);
 fs.writeFileSync(path.join(dist, 'sitemap.xml'),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  pages.filter((p) => !p.noindex).map((p) => `  <url><loc>${SITE.url}${p.path === '/' ? '/' : p.path}</loc><lastmod>${today}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n` +
+  pages.filter((p) => !p.noindex).map((p) => `  <url><loc>${SITE.url}${p.path === '/' ? '/' : p.path}</loc><lastmod>${today}</lastmod>${(p.alternates || []).map(([hl, ap]) => `<xhtml:link rel="alternate" hreflang="${hl}" href="${SITE.url}${ap}"/>`).join('')}</url>`).join('\n') + `\n</urlset>\n`);
 const bots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-Web', 'PerplexityBot', 'Google-Extended', 'Applebot-Extended', 'CCBot', 'Bingbot'];
 fs.writeFileSync(path.join(dist, 'robots.txt'),
   `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /seo-audit.json\nDisallow: /seo-pages.json\n\n` + bots.map((b) => `User-agent: ${b}\nAllow: /\n`).join('\n') + `\nSitemap: ${SITE.url}/sitemap.xml\n`);
@@ -76,7 +76,7 @@ fs.writeFileSync(path.join(dist, 'llms.txt'),
   `## Services and rates\nFestivals and sport: EUR 850 per day. Shows and concerts: EUR 650 per show. Corporate events and conferences: EUR 650 for 4 hours, EUR 900 for 6 hours, EUR 1,150 for 8 hours, EUR 1,350 for a full day (up to 12 hours), EUR 125 per extra hour. All usage rights are included. VAT and travel costs (EUR 0.35 per km from Hilversum) are extra.\n\n` +
   sect('Main pages', live.filter((p) => ['/', '/about', '/contact', '/projects', '/portfolio'].includes(p.path))) + '\n' +
   sect('Portfolio categories', group(/^\/portfolio\//)) + '\n' +
-  sect('Landing pages', live.filter((p) => !used.has(p.path) && /^\/event-photographer/.test(p.path))) + '\n' +
+  sect('Landing pages', live.filter((p) => !used.has(p.path) && /^\/(event-photographer|nl\/)/.test(p.path))) + '\n' +
   sect('Blog', group(/^\/blog\//)) + '\n' +
   sect('Projects', group(/^\/projects\//)) + '\n' +
   `## Contact\nEmail ${SITE.email}, phone ${SITE.phoneText}. Request a quote: ${SITE.url}/contact\n`);

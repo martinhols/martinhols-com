@@ -24,8 +24,14 @@
     var st = document.getElementById('form-status');
     var btn = f.querySelector('button[type=submit]');
     var say = function (msg, cls) { st.textContent = msg; st.className = 'status ' + cls; st.hidden = false; };
-    if (/[?&]sent=1/.test(location.search)) say('Thank you. I received your request and reply within one working day.', 'ok');
-    if (/[?&]error=1/.test(location.search)) say('Sorry, sending failed. Please email me directly at martin@thearrows.nl.', 'err');
+    // Meldingen komen uit data-attributen (per taal); zonder attribuut geldt de Engelse tekst.
+    var M = {
+      ok: f.getAttribute('data-ok') || 'Thank you. I received your request and reply within one working day.',
+      err: f.getAttribute('data-err') || 'Sorry, sending failed. Please email me directly at martin@thearrows.nl.',
+      bad: f.getAttribute('data-bad') || 'Please fill in your name, a valid email, your company or event and a short message.'
+    };
+    if (/[?&]sent=1/.test(location.search)) say(M.ok, 'ok');
+    if (/[?&]error=1/.test(location.search)) say(M.err, 'err');
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       var bad = false;
@@ -33,13 +39,13 @@
         var el = f.elements[n]; var ok = el.value.trim() && (n !== 'email' || /^\S+@\S+\.\S+$/.test(el.value.trim()));
         el.setAttribute('aria-invalid', ok ? 'false' : 'true'); if (!ok) { bad = true; if (bad === true && !f.__first) { f.__first = el; } }
       });
-      if (bad) { say('Please fill in your name, a valid email, your company or event and a short message.', 'err'); var first = f.querySelector('[aria-invalid="true"]'); if (first) first.focus(); f.__first = null; return; }
+      if (bad) { say(M.bad, 'err'); var first = f.querySelector('[aria-invalid="true"]'); if (first) first.focus(); f.__first = null; return; }
       var data = {}; new FormData(f).forEach(function (v, k) { data[k] = v; });
       btn.disabled = true;
       fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
         .then(function (r) { if (!r.ok) return r.json().catch(function () { return {}; }).then(function (j) { var e = new Error('send failed'); e.info = (j.error || r.status) + (j.detail ? ': ' + j.detail : ''); throw e; }); return r.json(); })
-        .then(function () { f.reset(); if (f.elements.ts) f.elements.ts.value = String(Date.now()); if (window.turnstile) try { window.turnstile.reset(); } catch (x) {} say('Thank you. I received your request and reply within one working day.', 'ok'); })
-        .catch(function (e) { say('Sorry, sending failed. Please email me directly at martin@thearrows.nl.' + (e && e.info ? ' (' + e.info + ')' : ''), 'err'); })
+        .then(function () { f.reset(); if (f.elements.ts) f.elements.ts.value = String(Date.now()); if (window.turnstile) try { window.turnstile.reset(); } catch (x) {} say(M.ok, 'ok'); })
+        .catch(function (e) { say(M.err + (e && e.info ? ' (' + e.info + ')' : ''), 'err'); })
         .then(function () { btn.disabled = false; if (window.turnstile) try { window.turnstile.reset(); } catch (x) {} });
     });
   }

@@ -1,5 +1,6 @@
 import { localMap } from './data.mjs';
 import { SITE } from './site.mjs';
+import { tr } from './i18n.mjs';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 
@@ -47,49 +48,51 @@ export function img(file, alt, opts = {}) {
   return `<img ${a.join(' ')}>`;
 }
 
-export function header(active = '') {
+export function header(active = '', lang = 'en') {
+  const t = tr(lang);
   const nav = SITE.nav.map((n) => {
-    const a = `<a href="${n.href}"${active === n.href ? ' aria-current="page"' : ''}>${n.label}</a>`;
+    const a = `<a href="${n.href}"${active === n.href ? ' aria-current="page"' : ''}>${t.nav[n.href] || n.label}</a>`;
     if (n.href !== '/portfolio') return a;
-    return `<div class="dd">${a.replace('</a>', '<svg class="chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></a>')}<div class="ddm"><a href="/portfolio">Hall of fame</a>${SITE.categories.map((c) => `<a href="/portfolio/${c.slug}">${c.name}</a>`).join('')}</div></div>`;
+    return `<div class="dd">${a.replace('</a>', '<svg class="chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></a>')}<div class="ddm"><a href="/portfolio">${t.hof}</a>${SITE.categories.map((c) => `<a href="/portfolio/${c.slug}">${t.cats[c.slug] || c.name}</a>`).join('')}</div></div>`;
   }).join('');
   return `
-    <a class="site-logo" href="/" aria-label="${SITE.name} home">${img('martin-hols-avatar.jpg', '', { priority: true })}<span>${SITE.name}</span></a>
-    <nav class="site-nav" aria-label="Main">${nav}</nav>
+    <a class="site-logo" href="/" aria-label="${SITE.name} ${t.home}">${img('martin-hols-avatar.jpg', '', { priority: true })}<span>${SITE.name}</span></a>
+    <nav class="site-nav" aria-label="${t.mainNav}">${nav}</nav>
     <div class="notch n-tr">
       <div class="nt-desk">
-        <a class="rb acc-b" href="mailto:${SITE.email}" aria-label="Email ${SITE.email}" title="${SITE.email}">${MAIL}</a>
-        <a class="rb acc-b" href="tel:${SITE.phone}" aria-label="Call ${SITE.phoneText}" title="${SITE.phoneText}">${PHONE}</a>
+        <a class="rb acc-b" href="mailto:${SITE.email}" aria-label="${t.email} ${SITE.email}" title="${SITE.email}">${MAIL}</a>
+        <a class="rb acc-b" href="tel:${SITE.phone}" aria-label="${t.call} ${SITE.phoneText}" title="${SITE.phoneText}">${PHONE}</a>
         ${igA(' style="margin-right:8px"')}
-        <a class="btn btn-p" href="/contact">Request a quote <span class="ic">${ARROW16}</span></a>
+        <a class="btn btn-p" href="/contact">${t.quote} <span class="ic">${ARROW16}</span></a>
       </div>
       <div class="nt-mob">
-        <a class="rb acc-b" href="tel:${SITE.phone}" aria-label="Call ${SITE.phoneText}">${PHONE}</a>
-        <button type="button" class="rb menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mmenu" data-menu-open>${MENU}</button>
+        <a class="rb acc-b" href="tel:${SITE.phone}" aria-label="${t.call} ${SITE.phoneText}">${PHONE}</a>
+        <button type="button" class="rb menu-btn" aria-label="${t.menuOpen}" aria-expanded="false" aria-controls="mmenu" data-menu-open>${MENU}</button>
       </div>
     </div>`;
 }
 
-export function mobileMenu() {
+export function mobileMenu(lang = 'en') {
+  const t = tr(lang);
   const items = SITE.nav.map((n, i) => {
     const sub = n.href === '/portfolio'
-      ? `<div class="sub">${SITE.categories.map((c, j) => `<a href="/portfolio/${c.slug}"><small>0${i + 1} ${String.fromCharCode(65 + j)}</small>${c.name}</a>`).join('')}</div>` : '';
-    return `<li><a href="${n.href}"><small>0${i + 1}</small>${n.label}${ARROW}</a>${sub}</li>`;
+      ? `<div class="sub">${SITE.categories.map((c, j) => `<a href="/portfolio/${c.slug}"><small>0${i + 1} ${String.fromCharCode(65 + j)}</small>${t.cats[c.slug] || c.name}</a>`).join('')}</div>` : '';
+    return `<li><a href="${n.href}"><small>0${i + 1}</small>${t.nav[n.href] || n.label}${ARROW}</a>${sub}</li>`;
   }).join('');
   return `
 <div class="mmenu" id="mmenu" role="dialog" aria-modal="true" aria-label="Menu">
   <div class="in">
     <div class="top">
       <a class="logo" href="/">${img('martin-hols-avatar.jpg', '')}${SITE.name}</a>
-      <div style="display:flex;gap:8px"><a class="rb acc-b" href="tel:${SITE.phone}" aria-label="Call ${SITE.phoneText}" style="background:var(--accent);color:var(--on-accent)">${PHONE}</a>${igA(' style="background:var(--accent);color:var(--on-accent)"')}<button type="button" class="rb menu-btn" aria-label="Close menu" data-menu-close>${CLOSE}</button></div>
+      <div style="display:flex;gap:8px"><a class="rb acc-b" href="tel:${SITE.phone}" aria-label="${t.call} ${SITE.phoneText}" style="background:var(--accent);color:var(--on-accent)">${PHONE}</a>${igA(' style="background:var(--accent);color:var(--on-accent)"')}<button type="button" class="rb menu-btn" aria-label="${t.menuClose}" data-menu-close>${CLOSE}</button></div>
     </div>
     <ol>${items}</ol>
     <div class="bot">
       <a class="l" href="mailto:${SITE.email}">${SITE.email}</a>
       <a class="l" href="tel:${SITE.phone}">${SITE.phoneText}</a>
       <a class="l" href="${SITE.instagram}" target="_blank" rel="noopener">Instagram @martin.hols</a>
-      <a class="m-btn p" href="/contact">Request a quote <span class="ic">${ARROW16}</span></a>
-      <p class="t-caption dim" style="margin:8px 0 0">Part of ${arrowsLink('The Arrows')}</p>
+      <a class="m-btn p" href="/contact">${t.quote} <span class="ic">${ARROW16}</span></a>
+      <p class="t-caption dim" style="margin:8px 0 0">${t.partOf} ${arrowsLink('The Arrows')}</p>
     </div>
   </div>
 </div>`;
@@ -112,31 +115,34 @@ export function contactSection(photo = 'tomorrowland-mainstage-fireworks.jpg') {
   </section>`;
 }
 
-export function footer() {
-  const cats = SITE.categories.map((c) => `<a href="/portfolio/${c.slug}">${c.name}</a>`).join('');
+export function footer(lang = 'en') {
+  const t = tr(lang), F = t.footer;
+  const cats = SITE.categories.map((c) => `<a href="/portfolio/${c.slug}">${t.cats[c.slug] || c.name}</a>`).join('');
   return `
   <footer class="cream foot" data-theme="cream">
     <div class="row">
-      <a class="brand" href="/" aria-label="${SITE.name} home">${img('martin-hols-avatar.jpg', '')}<span>${SITE.name}</span></a>
+      <a class="brand" href="/" aria-label="${SITE.name} ${t.home}">${img('martin-hols-avatar.jpg', '')}<span>${SITE.name}</span></a>
       <div class="cols">
-        <div><p class="t-eyebrow dim">Portfolio</p><div class="fl">${cats}</div></div>
-        <div><p class="t-eyebrow dim">Pages</p><div class="fl"><a href="/projects">Projects</a><a href="/about">About</a><a href="/blog">Blog</a></div></div>
-        <div><p class="t-eyebrow dim">Contact</p><div class="fl"><a href="mailto:${SITE.email}">${SITE.email}</a><a href="tel:${SITE.phone}">${SITE.phoneText}</a><a href="${SITE.instagram}" target="_blank" rel="noopener">Instagram</a></div></div>
-        <div><p class="t-eyebrow dim">Legal</p><div class="fl"><a href="/privacy">Privacy policy</a><a href="/terms">Terms &amp; conditions</a><button type="button" class="linkbtn" data-cookie-settings>Cookie settings</button></div></div>
+        <div><p class="t-eyebrow dim">${F.portfolio}</p><div class="fl">${cats}</div></div>
+        <div><p class="t-eyebrow dim">${F.pages}</p><div class="fl"><a href="/projects">${F.projects}</a><a href="/about">${F.about}</a><a href="/blog">${F.blog}</a>${lang === 'nl' ? '<a href="/nl/eventfotograaf">Eventfotograaf</a>' : '<a href="/event-photographer-netherlands">Event photographer Netherlands</a>'}</div></div>
+        <div><p class="t-eyebrow dim">${F.contact}</p><div class="fl"><a href="mailto:${SITE.email}">${SITE.email}</a><a href="tel:${SITE.phone}">${SITE.phoneText}</a><a href="${SITE.instagram}" target="_blank" rel="noopener">Instagram</a></div></div>
+        <div><p class="t-eyebrow dim">${F.legal}</p><div class="fl"><a href="/privacy">${F.privacy}</a><a href="/terms">${F.terms.replace('&', '&amp;')}</a><button type="button" class="linkbtn" data-cookie-settings>${F.cookies}</button></div></div>
       </div>
     </div>
-    <p class="t-caption copy">© 2026 ${SITE.name} · Part of <b>${arrowsLink('The Arrows')}</b></p>
+    <p class="t-caption copy">© 2026 ${SITE.name} · ${t.partOf} <b>${arrowsLink('The Arrows')}</b></p>
   </footer>`;
 }
 
 /** Hele pagina. page: {path,title,description,ogImage,jsonld[],active,body,bodyClass} */
 export function layout(page) {
+  const t = tr(page.lang);
+  const alt = (page.alternates || []).map(([hl, p]) => `<link rel="alternate" hreflang="${hl}" href="${SITE.url}${p}">`).join('\n');
   const url = SITE.url + (page.path === '/' ? '/' : page.path);
   const oi = page.ogImage || 'tomorrowland-mainstage-fireworks.jpg';
   const og = /^https?:/.test(oi) ? (localMap[oi] ? SITE.url + localMap[oi].src : oi) : SITE.url + '/img/' + oi;
   const ld = (page.jsonld || []).map((o) => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n');
   return `<!doctype html>
-<html lang="en">
+<html lang="${t.lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -144,9 +150,11 @@ export function layout(page) {
 <meta name="description" content="${esc(page.description)}">
 ${page.noindex ? '<meta name="robots" content="noindex, follow">\n' : '<meta name="robots" content="index, follow, max-image-preview:large">\n'}
 <link rel="canonical" href="${url}">
+${alt}
 <meta name="theme-color" content="#F4EFE6">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${SITE.name}">
+<meta property="og:locale" content="${t.locale}">
 <meta property="og:title" content="${esc(page.ogTitle || page.title)}">
 <meta property="og:description" content="${esc(page.ogDescription || page.description)}">
 <meta property="og:url" content="${url}">
@@ -167,17 +175,17 @@ ${page.noindex ? '<meta name="robots" content="noindex, follow">\n' : '<meta nam
 ${ld}
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main">${t.skip}</a>
 <div class="page" id="top">
 ${page.body}
 </div>
-${mobileMenu()}
+${mobileMenu(page.lang)}
 ${page.body.includes('cf-turnstile') ? '<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>\n' : ''}<script src="/assets/site.js?v=${JS_V}" defer></script>
 ${SITE.ga4 ? `<meta name="ga4-id" content="${SITE.ga4}">` : ''}
 <div class="cookie" id="cookie" role="dialog" aria-modal="false" aria-labelledby="cookie-t" hidden>
   <div class="ck-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9 4 4 0 0 1-4-4 4 4 0 0 1-5-5z"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="14" cy="15" r="1" fill="currentColor"/><circle cx="8" cy="16" r=".8" fill="currentColor"/></svg></div>
-  <div class="ck-b"><p class="ck-t" id="cookie-t">Cookies, only if you want</p><p class="ck-d">I use Google Analytics to see which pages are useful. It stays off until you say yes. No ads, no selling data. <a href="/privacy#s6">Read more</a></p></div>
-  <div class="cb-btns"><button type="button" data-cookie="no">Decline</button><button type="button" data-cookie="yes" class="y">Accept analytics</button></div>
+  <div class="ck-b"><p class="ck-t" id="cookie-t">${t.cookie.t}</p><p class="ck-d">${t.cookie.d} <a href="/privacy#s6">${t.cookie.more}</a></p></div>
+  <div class="cb-btns"><button type="button" data-cookie="no">${t.cookie.no}</button><button type="button" data-cookie="yes" class="y">${t.cookie.yes}</button></div>
 </div>
 </body>
 </html>
